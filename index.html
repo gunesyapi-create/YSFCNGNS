@@ -2,114 +2,258 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>3D Saf Kod Survival Oyunu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate WebCraft 3D Engine</title>
     <style>
-        body { margin: 0; overflow: hidden; font-family: sans-serif; background: #000; }
-        #ui { position: absolute; top: 20px; left: 20px; color: white; font-size: 20px; font-weight: bold; text-shadow: 2px 2px #000; pointer-events: none; }
-        #crosshair { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 24px; pointer-events: none; }
-        #inventory { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 320px; height: 220px; background: rgba(20,20,20,0.9); color: white; padding: 20px; display: none; border-radius: 10px; border: 2px solid #555; }
+        * { box-sizing: border-box; }
+        body { margin: 0; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #050505; user-select: none; }
+        
+        /* HUD & Arayüz */
+        #hud { position: absolute; top: 20px; left: 20px; color: white; font-size: 16px; font-weight: bold; text-shadow: 2px 2px 4px #000; pointer-events: none; line-height: 1.6; z-index: 10; }
+        #crosshair { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: rgba(255,255,255,0.9); font-size: 24px; pointer-events: none; z-index: 10; }
+        
+        /* Minecraft Hotbar (Alt Çubuk) */
+        #hotbar { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; background: rgba(0,0,0,0.75); padding: 8px; border-radius: 12px; border: 2px solid #444; z-index: 10; }
+        .slot { width: 60px; height: 60px; background: rgba(45,45,45,0.85); border: 2px solid #666; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-size: 11px; font-weight: bold; position: relative; cursor: pointer; transition: 0.1s; }
+        .slot.active { border-color: #fff; background: rgba(90,90,90,0.95); transform: scale(1.05); box-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        .slot span { font-size: 11px; position: absolute; bottom: 3px; right: 6px; color: #ffeb3b; text-shadow: 1px 1px #000; }
+
+        /* Envanter & Crafting Ekranı (E Tuşu) */
+        #inventory-screen { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 720px; height: 500px; background: rgba(18,18,18,0.96); color: white; padding: 30px; display: none; border-radius: 14px; border: 3px solid #555; box-shadow: 0 20px 50px rgba(0,0,0,0.9); z-index: 20; }
+        #inventory-screen h2 { margin-top: 0; border-bottom: 2px solid #444; padding-bottom: 12px; font-size: 24px; color: #4caf50; }
+        .inv-section { margin-top: 20px; }
+        .btn-action { padding: 10px 18px; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; transition: 0.2s; margin-right: 10px; }
+        .btn-craft { background: #e53935; }
+        .btn-craft:hover { background: #c62828; }
+        .btn-eat { background: #43a047; }
+        .btn-eat:hover { background: #2e7d32; }
+        .btn-save { background: #1e88e5; }
+        .btn-save:hover { background: #1565c0; }
+
+        /* Bildirim Balonu */
+        #notification { position: absolute; top: 90px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); color: #4caf50; padding: 10px 20px; border-radius: 25px; font-weight: bold; font-size: 15px; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 30; border: 2px solid #4caf50; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
     </style>
 </head>
 <body>
 
-    <div id="ui">CAN: 100 | AÇLIK: 100<br>ODUN: 0 | TAŞ: 0</div>
+    <div id="hud">
+        CAN: <span id="hp-val">100</span> | AÇLIK: <span id="hunger-val">100</span><br>
+        ZAMAN: <span id="time-val">Gündüz</span> | HAVA: <span id="weather-val">Güneşli</span><br>
+        KOORDİNAT: <span id="pos-val">0, 0, 0</span>
+    </div>
     <div id="crosshair">+</div>
-    <div id="inventory">
-        <h2>ENVANTER</h2>
-        <p id="inv-text">- Odun: 0<br>- Taş: 0</p>
-        <p style="font-size: 14px; color: #aaa;">[E] Kapat</p>
+    <div id="notification">Ultimate WebCraft Başlatıldı!</div>
+
+    <!-- Minecraft Hotbar -->
+    <div id="hotbar">
+        <div class="slot active" id="h-slot-0">Odun<span id="count-wood">0</span></div>
+        <div class="slot" id="h-slot-1">Taş<span id="count-stone">0</span></div>
+        <div class="slot" id="h-slot-2">Yiyecek<span id="count-food">5</span></div>
+        <div class="slot" id="h-slot-3">Blok<span id="count-block">15</span></div>
+        <div class="slot" id="h-slot-4">Meşale<span id="count-torch">3</span></div>
     </div>
 
-    <!-- 3D Grafik Kütüphanesi (Three.js) -->
+    <!-- Envanter & Yönetim Paneli -->
+    <div id="inventory-screen">
+        <h2>ENVANTER & ÜRETİM MERKEZİ</h2>
+        <p style="color: #ccc; font-size: 15px;">Kaynakları yönet, eşya üret veya oyununu kaydet:</p>
+        
+        <div class="inv-section">
+            <h3 style="color: #ffeb3b; margin-bottom: 10px;">Üretim ve Hayatta Kalma:</h3>
+            <button class="btn-action btn-craft" onclick="craftItem('pickaxe')">Taş Kazma Üret (10 Odun + 5 Taş)</button>
+            <button class="btn-action btn-eat" onclick="eatFood()">Yemek Ye (+25 Açlık)</button>
+            <button class="btn-action btn-save" onclick="saveGame()">Oyunu Kaydet</button>
+            <button class="btn-action" style="background:#8e44ad;" onclick="loadGame()">Oyunu Yükle</button>
+        </div>
+
+        <div class="inv-section" style="margin-top: 40px;">
+            <p style="font-size: 13px; color: #aaa;">[E] Tuşuna basarak envanteri kapatabilir ve oyuna dönebilirsin.</p>
+        </div>
+    </div>
+
+    <!-- Three.js Kütüphanesi -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x87CEEB); // Gökyüzü
+        // --- 1. WEB AUDIO API SES MOTORU ---
+        class SoundEngine {
+            constructor() {
+                this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            playPop() {
+                if (this.ctx.state === 'suspended') this.ctx.resume();
+                let osc = this.ctx.createOscillator();
+                let gain = this.ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(350, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(700, this.ctx.currentTime + 0.12);
+                gain.gain.setValueAtTime(0.25, this.ctx.currentTime);
+                gain.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.12);
+                osc.connect(gain); gain.connect(this.ctx.destination);
+                osc.start(); osc.stop(this.ctx.currentTime + 0.12);
+            }
+            playBreak() {
+                if (this.ctx.state === 'suspended') this.ctx.resume();
+                let osc = this.ctx.createOscillator();
+                let gain = this.ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(140, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(45, this.ctx.currentTime + 0.18);
+                gain.gain.setValueAtTime(0.35, this.ctx.currentTime);
+                gain.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.18);
+                osc.connect(gain); gain.connect(this.ctx.destination);
+                osc.start(); osc.stop(this.ctx.currentTime + 0.18);
+            }
+        }
+        const sound = new SoundEngine();
 
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 2, 5);
+        // --- 2. OYUN MOTORU & SAHNE ---
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x7ec0ee);
+        scene.fog = new THREE.FogExp2(0x7ec0ee, 0.008);
+
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1500);
+        camera.position.set(0, 15, 25);
 
         const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         document.body.appendChild(renderer.domElement);
 
-        // Işık ve Deniz
-        const light = new THREE.DirectionalLight(0xffffff, 1.2);
-        light.position.set(20, 40, 20);
-        scene.add(light);
-        scene.add(new THREE.AmbientLight(0x505050));
+        // Işıklandırma ve Güneş / Ay
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.55);
+        scene.add(ambientLight);
 
+        const sun = new THREE.DirectionalLight(0xfffaed, 1.3);
+        sun.position.set(80, 120, 80);
+        sun.castShadow = true;
+        sun.shadow.mapSize.width = 2048;
+        sun.shadow.mapSize.height = 2048;
+        scene.add(sun);
+
+        // Oyuncu Meşalesi (Elde Taşınan Işık)
+        const playerTorch = new THREE.PointLight(0xffaa00, 1.5, 15);
+        playerTorch.position.set(0, 0, 0);
+        camera.add(playerTorch);
+        scene.add(camera);
+
+        // Okyanus
         const sea = new THREE.Mesh(
-            new THREE.PlaneGeometry(1500, 1500),
-            new THREE.MeshBasicMaterial({ color: 0x1e90ff, transparent: true, opacity: 0.85 })
+            new THREE.PlaneGeometry(4000, 4000),
+            new THREE.MeshStandardMaterial({ color: 0x1e90ff, roughness: 0.1 })
         );
         sea.rotation.x = -Math.PI / 2;
-        sea.position.y = -1.2;
+        sea.position.y = -1.0;
         scene.add(sea);
 
-        // Adalar (Ana Ada ve Karşıdaki Uzak Adalar)
-        createIsland(0, 0, 80, 80, 0x2e8b57);   // Bizim Ada
-        createIsland(140, 110, 60, 60, 0x228b22); // Sağ Ada
-        createIsland(-130, -120, 70, 70, 0x228b22);// Sol Ada
+        // --- 3. PROCEDURAL DAĞLAR VE ARAZİ ---
+        const terrainGeo = new THREE.PlaneGeometry(300, 300, 100, 100);
+        terrainGeo.rotateX(-Math.PI / 2);
+        const posAttr = terrainGeo.attributes.position;
 
-        function createIsland(x, z, w, h, color) {
-            const island = new THREE.Mesh(
-                new THREE.BoxGeometry(w, 3, h),
-                new THREE.MeshLambertMaterial({ color: color })
-            );
-            island.position.set(x, -1.5, z);
-            scene.add(island);
+        function getTerrainHeight(x, z) {
+            let dist = Math.sqrt(x*x + z*z);
+            if (dist > 130) return -8;
+            let h = Math.cos(x * 0.025) * Math.sin(z * 0.025) * 12 + Math.sin(x * 0.07) * Math.cos(z * 0.07) * 4;
+            return h * Math.max(0, (130 - dist) / 130);
         }
 
-        // Ağaçlar ve Taşlar
+        for (let i = 0; i < posAttr.count; i++) {
+            let x = posAttr.getX(i);
+            let z = posAttr.getZ(i);
+            posAttr.setY(i, getTerrainHeight(x, z));
+        }
+        terrainGeo.computeVertexNormals();
+
+        const terrainMat = new THREE.MeshStandardMaterial({ color: 0x2e8b57, roughness: 0.9, flatShading: true });
+        const terrain = new THREE.Mesh(terrainGeo, terrainMat);
+        terrain.receiveShadow = true;
+        scene.add(terrain);
+
+        // --- 4. KAYNAKLAR, ZOMBİLER VE BLOKLAR ---
         const interactables = [];
+        const placedBlocks = [];
+        const zombies = [];
 
-        function createTree(x, z) {
+        function spawnTree(x, z) {
+            let y = getTerrainHeight(x, z);
+            if (y < 1.2) return;
             const group = new THREE.Group();
-            const trunk = new THREE.Mesh(new THREE.BoxGeometry(0.8, 3, 0.8), new THREE.MeshLambertMaterial({ color: 0x8B4513 }));
-            trunk.position.y = 1.5;
-            group.add(trunk);
+            
+            const trunk = new THREE.Mesh(new THREE.BoxGeometry(1, 4.5, 1), new THREE.MeshStandardMaterial({ color: 0x5c4033 }));
+            trunk.position.y = 2.25; trunk.castShadow = true; group.add(trunk);
 
-            const leaves = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), new THREE.MeshLambertMaterial({ color: 0x228B22 }));
-            leaves.position.y = 3.5;
-            group.add(leaves);
+            const leaves = new THREE.Mesh(new THREE.BoxGeometry(3.8, 3.8, 3.8), new THREE.MeshStandardMaterial({ color: 0x228b22 }));
+            leaves.position.y = 5.2; leaves.castShadow = true; group.add(leaves);
 
-            group.position.set(x, 0, z);
+            group.position.set(x, y, z);
             group.userData = { type: 'tree' };
             scene.add(group);
             interactables.push(group);
         }
 
-        function createRock(x, z) {
+        function spawnRock(x, z) {
+            let y = getTerrainHeight(x, z);
+            if (y < 0.6) return;
             const rock = new THREE.Mesh(
-                new THREE.BoxGeometry(1.5, 1.2, 1.5),
-                new THREE.MeshLambertMaterial({ color: 0x808080 })
+                new THREE.DodecahedronGeometry(1.5),
+                new THREE.MeshStandardMaterial({ color: 0x708090, roughness: 0.7 })
             );
-            rock.position.set(x, 0.6, z);
+            rock.position.set(x, y + 0.8, z);
+            rock.castShadow = true; rock.receiveShadow = true;
             rock.userData = { type: 'rock' };
             scene.add(rock);
             interactables.push(rock);
         }
 
-        for (let i = 0; i < 15; i++) createTree(Math.random() * 60 - 30, Math.random() * 60 - 30);
-        for (let i = 0; i < 8; i++) createRock(Math.random() * 60 - 30, Math.random() * 60 - 30);
+        function spawnZombie(x, z) {
+            let y = getTerrainHeight(x, z);
+            const zBody = new THREE.Mesh(
+                new THREE.BoxGeometry(1, 2.5, 0.8),
+                new THREE.MeshStandardMaterial({ color: 0x2d5a27, roughness: 0.8 })
+            );
+            zBody.position.set(x, y + 1.25, z);
+            zBody.castShadow = true;
+            scene.add(zBody);
+            zombies.push({ mesh: zBody, health: 50 });
+        }
 
-        // Oyuncu Mekanikleri
-        let health = 100, hunger = 100, wood = 0, stone = 0;
+        // Haritaya Ağaçlar, Taşlar ve Zombiler Serp
+        for (let i = 0; i < 45; i++) spawnTree((Math.random() - 0.5) * 200, (Math.random() - 0.5) * 200);
+        for (let i = 0; i < 30; i++) spawnRock((Math.random() - 0.5) * 200, (Math.random() - 0.5) * 200);
+        for (let i = 0; i < 5; i++) spawnZombie((Math.random() - 0.5) * 120, (Math.random() - 0.5) * 120);
+
+        // --- 5. OYUNCU DURUMU VE KONTROLLER ---
+        let playerState = {
+            health: 100,
+            hunger: 100,
+            wood: 0,
+            stone: 0,
+            food: 5,
+            blocks: 15,
+            torches: 3,
+            pickaxe: 0
+        };
+
         let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
+        let velocityY = 0, isJumping = false;
         let isInvOpen = false;
+        let yaw = 0, pitch = 0;
+        let gameTime = 0;
+        let isNight = false;
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'w' || e.key === 'W') moveForward = true;
             if (e.key === 's' || e.key === 'S') moveBackward = true;
             if (e.key === 'a' || e.key === 'A') moveLeft = true;
             if (e.key === 'd' || e.key === 'D') moveRight = true;
+            if (e.key === ' ' && !isJumping) { velocityY = 0.2; isJumping = true; }
             
-            // E Tuşu ile Envanter Aç/Kapat
             if (e.key === 'e' || e.key === 'E') {
                 isInvOpen = !isInvOpen;
-                document.getElementById('inventory').style.display = isInvOpen ? 'block' : 'none';
-                document.getElementById('inv-text').innerHTML = `- Odun: ${wood}<br>- Taş: ${stone}`;
+                document.getElementById('inventory-screen').style.display = isInvOpen ? 'block' : 'none';
+                if (isInvOpen) document.exitPointerLock();
+                else document.body.requestPointerLock();
             }
         });
 
@@ -126,45 +270,221 @@
 
         document.addEventListener('mousemove', (e) => {
             if (document.pointerLockElement === document.body && !isInvOpen) {
-                camera.rotation.y -= e.movementX * 0.0025;
+                let sensitivity = 0.002;
+                yaw -= e.movementX * sensitivity;
+                pitch -= e.movementY * sensitivity;
+                pitch = Math.max(-Math.PI / 2.2, Math.min(Math.PI / 2.2, pitch));
+                camera.rotation.order = 'YXZ';
+                camera.rotation.y = yaw;
+                camera.rotation.x = pitch;
             }
         });
 
-        // Sol Tık ile Ağaç Kesme / Taş Kırma
+        // Sol Tık (Kaynak Kır / Zombiye Vur) / Sağ Tık (Blok Koy)
         window.addEventListener('mousedown', (e) => {
-            if (e.button === 0 && !isInvOpen) {
+            if (isInvOpen) return;
+
+            if (e.button === 0) {
+                sound.playBreak();
+                // Zombilere vuruş kontrolü
+                for (let i = zombies.length - 1; i >= 0; i--) {
+                    let z = zombies[i];
+                    if (camera.position.distanceTo(z.mesh.position) < 4.5) {
+                        z.health -= 25;
+                        showNotification("Zombiye Hasar Verildi!");
+                        if (z.health <= 0) {
+                            scene.remove(z.mesh);
+                            zombies.splice(i, 1);
+                            showNotification("Zombi Etkisiz Hale Getirildi!");
+                        }
+                        updateHUD();
+                        return;
+                    }
+                }
+                // Kaynak kırma kontrolü
                 for (let i = interactables.length - 1; i >= 0; i--) {
-                    const obj = interactables[i];
-                    if (camera.position.distanceTo(obj.position) < 5) {
-                        if (obj.userData.type === 'tree') wood += 5;
-                        if (obj.userData.type === 'rock') stone += 3;
+                    let obj = interactables[i];
+                    if (camera.position.distanceTo(obj.position) < 6.5) {
+                        if (obj.userData.type === 'tree') {
+                            playerState.wood += 5;
+                            showNotification("+5 Odun Toplandı!");
+                        } else if (obj.userData.type === 'rock') {
+                            playerState.stone += 3;
+                            showNotification("+3 Taş Toplandı!");
+                        }
                         scene.remove(obj);
                         interactables.splice(i, 1);
+                        updateHUD();
                         break;
                     }
+                }
+            } else if (e.button === 2) {
+                e.preventDefault();
+                if (playerState.blocks > 0) {
+                    playerState.blocks -= 1;
+                    sound.playPop();
+                    const dir = new THREE.Vector3();
+                    camera.getWorldDirection(dir);
+                    const spawnPos = camera.position.clone().add(dir.multiplyScalar(3));
+                    
+                    const blockGeo = new THREE.BoxGeometry(1.5, 1.5, 1.5);
+                    const blockMat = new THREE.MeshStandardMaterial({ color: 0x8b5a2b, roughness: 0.8 });
+                    const newBlock = new THREE.Mesh(blockGeo, blockMat);
+                    newBlock.position.copy(spawnPos);
+                    newBlock.castShadow = true; newBlock.receiveShadow = true;
+                    scene.add(newBlock);
+                    placedBlocks.push(newBlock);
+                    
+                    showNotification("Blok Yerleştirildi!");
+                    updateHUD();
+                } else {
+                    showNotification("Yetersiz Blok!");
                 }
             }
         });
 
-        // Oyun Döngüsü
+        window.addEventListener('contextmenu', e => e.preventDefault());
+
+        function showNotification(text) {
+            let notif = document.getElementById('notification');
+            notif.innerText = text;
+            notif.style.opacity = '1';
+            setTimeout(() => { notif.style.opacity = '0'; }, 2000);
+        }
+
+        function craftItem(item) {
+            if (item === 'pickaxe' && playerState.wood >= 10 && playerState.stone >= 5) {
+                playerState.wood -= 10;
+                playerState.stone -= 5;
+                playerState.pickaxe += 1;
+                sound.playPop();
+                showNotification("Taş Kazma Başarıyla Üretildi!");
+                updateHUD();
+            } else {
+                showNotification("Yetersiz Malzeme! (10 Odun, 5 Taş gerekli)");
+            }
+        }
+
+        function eatFood() {
+            if (playerState.food > 0) {
+                playerState.food -= 1;
+                playerState.hunger = Math.min(100, playerState.hunger + 25);
+                sound.playPop();
+                showNotification("Yemek yedin (+25 Açlık)");
+                updateHUD();
+            } else {
+                showNotification("Hiç yiyeceğin kalmadı!");
+            }
+        }
+
+        function saveGame() {
+            localStorage.setItem('webcraft_save', JSON.stringify(playerState));
+            showNotification("Oyun Başarıyla Kaydedildi!");
+        }
+
+        function loadGame() {
+            let saved = localStorage.getItem('webcraft_save');
+            if (saved) {
+                playerState = JSON.parse(saved);
+                updateHUD();
+                showNotification("Kayıt Yüklendi!");
+            } else {
+                showNotification("Kayıt bulunamadı!");
+            }
+        }
+
+        function updateHUD() {
+            document.getElementById('hp-val').innerText = Math.floor(playerState.health);
+            document.getElementById('hunger-val').innerText = Math.floor(playerState.hunger);
+            document.getElementById('count-wood').innerText = playerState.wood;
+            document.getElementById('count-stone').innerText = playerState.stone;
+            document.getElementById('count-food').innerText = playerState.food;
+            document.getElementById('count-block').innerText = playerState.blocks;
+            document.getElementById('count-torch').innerText = playerState.torches;
+        }
+
+        // --- 6. ANA OYUN DÖNGÜSÜ ---
         const clock = new THREE.Clock();
+
         function animate() {
             requestAnimationFrame(animate);
             const delta = clock.getDelta();
 
-            if (!isInvOpen) {
-                hunger -= 0.6 * delta;
-                if (hunger <= 0) { hunger = 0; health -= 1.5 * delta; }
+            // Gün-Gece ve Açlık Döngüsü
+            gameTime += delta;
+            let sunAngle = gameTime * 0.04;
+            sun.position.x = Math.cos(sunAngle) * 120;
+            sun.position.y = Math.sin(sunAngle) * 120;
 
-                const speed = 6 * delta;
-                if (moveForward) camera.translateZ(-speed);
-                if (moveBackward) camera.translateZ(speed);
-                if (moveLeft) camera.translateX(-speed);
-                if (moveRight) camera.translateX(speed);
-                camera.position.y = 2;
+            if (sun.position.y < 0) {
+                isNight = true;
+                scene.background.set(0x0a0a23);
+                scene.fog.color.set(0x0a0a23);
+                ambientLight.intensity = 0.15;
+                document.getElementById('time-val').innerText = "Gece";
+            } else {
+                isNight = false;
+                scene.background.set(0x7ec0ee);
+                scene.fog.color.set(0x7ec0ee);
+                ambientLight.intensity = 0.55;
+                document.getElementById('time-val').innerText = "Gündüz";
             }
 
-            document.getElementById('ui').innerHTML = `CAN: ${Math.floor(health)} | AÇLIK: ${Math.floor(hunger)}<br>ODUN: ${wood} | TAŞ: ${stone}`;
+            if (!isInvOpen) {
+                playerState.hunger -= 0.25 * delta;
+                if (playerState.hunger <= 0) {
+                    playerState.hunger = 0;
+                    playerState.health -= 0.8 * delta;
+                }
+                updateHUD();
+            }
+
+            // Zombi Yapay Zekası (Oyuncuyu Takip Etme)
+            for (let z of zombies) {
+                let dir = new THREE.Vector3().subVectors(camera.position, z.mesh.position);
+                dir.y = 0;
+                let dist = dir.length();
+                if (dist < 35 && dist > 2) {
+                    dir.normalize();
+                    z.mesh.position.addScaledVector(dir, 2.5 * delta);
+                    z.mesh.lookAt(camera.position.x, z.mesh.position.y, camera.position.z);
+                }
+                if (dist < 2.2) {
+                    playerState.health -= 10 * delta;
+                    updateHUD();
+                }
+            }
+
+            // WASD Hareketi ve Fizik
+            if (!isInvOpen) {
+                const speed = 9.0 * delta;
+                let moveDir = new THREE.Vector3();
+                let forward = new THREE.Vector3(0, 0, -1).applyAxisAngle(new THREE.Vector3(0, 1, 0), yaw);
+                let right = new THREE.Vector3(1, 0, 0).applyAxisAngle(new THREE.Vector3(0, 1, 0), yaw);
+
+                if (moveForward) moveDir.add(forward);
+                if (moveBackward) moveDir.sub(forward);
+                if (moveLeft) moveDir.sub(right);
+                if (moveRight) moveDir.add(right);
+                moveDir.normalize();
+
+                camera.position.addScaledVector(moveDir, speed);
+
+                let groundY = getTerrainHeight(camera.position.x, camera.position.z) + 2.5;
+                if (isJumping) {
+                    camera.position.y += velocityY;
+                    velocityY -= 0.65 * delta;
+                    if (camera.position.y <= groundY) {
+                        camera.position.y = groundY;
+                        isJumping = false;
+                        velocityY = 0;
+                    }
+                } else {
+                    camera.position.y = groundY;
+                }
+
+                document.getElementById('pos-val').innerText = `${Math.floor(camera.position.x)}, ${Math.floor(camera.position.y)}, ${Math.floor(camera.position.z)}`;
+            }
 
             renderer.render(scene, camera);
         }
