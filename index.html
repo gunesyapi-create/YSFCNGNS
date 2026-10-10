@@ -1,266 +1,183 @@
-extends Node3D
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>3D Saf Kod Survival Oyunu</title>
+    <style>
+        body { margin: 0; overflow: hidden; font-family: sans-serif; background: #000; }
+        #ui { position: absolute; top: 20px; left: 20px; color: white; font-size: 20px; font-weight: bold; text-shadow: 2px 2px #000; pointer-events: none; }
+        #crosshair { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 24px; pointer-events: none; }
+        #inventory { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 320px; height: 220px; background: rgba(20,20,20,0.9); color: white; padding: 20px; display: none; border-radius: 10px; border: 2px solid #555; }
+    </style>
+</head>
+<body>
 
-# --- 1. OYUNCU VE OYUN STATLARI ---
-var health: float = 100.0
-var hunger: float = 100.0
-var wood_count: int = 0
-var stone_count: int = 0
+    <div id="ui">CAN: 100 | AÇLIK: 100<br>ODUN: 0 | TAŞ: 0</div>
+    <div id="crosshair">+</div>
+    <div id="inventory">
+        <h2>ENVANTER</h2>
+        <p id="inv-text">- Odun: 0<br>- Taş: 0</p>
+        <p style="font-size: 14px; color: #aaa;">[E] Kapat</p>
+    </div>
 
-# --- 2. OYUNCU VE KAMERA AYARLARI ---
-var player: Node3D
-var camera: Camera3D
-var move_speed: float = 6.0
-var mouse_sensitivity: float = 0.003
-var camera_rotation_x: float = 0.0
+    <!-- 3D Kütüphanesi (Three.js CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // 1. Sahne, Kamera ve Motor
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x87CEEB); // Gökyüzü
 
-# --- 3. ARAYÜZ (UI) ELEMANLARI ---
-var stats_label: Label
-var inventory_panel: Panel
-var inventory_label: Label
-var is_inventory_open: bool = false
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 2, 5);
 
-func _ready():
-	# Fareyi oyuna kitle
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	
-	# A) GÜNEŞ (IŞIKLANDIRMA)
-	var sun = DirectionalLight3D.new()
-	sun.position = Vector3(0, 30, 0)
-	sun.rotation_degrees = Vector3(-50, 30, 0)
-	add_child(sun)
-	
-	# B) DENİZ (Okyanus Oluşturma)
-	var sea = MeshInstance3D.new()
-	var sea_mesh = PlaneMesh.new()
-	sea_mesh.size = Vector2(800, 800)
-	sea.mesh = sea_mesh
-	sea.position.y = -0.5
-	var sea_mat = StandardMaterial3D.new()
-	sea_mat.albedo_color = Color(0.0, 0.3, 0.8, 0.8) # Mavi Su
-	sea.material_override = sea_mat
-	add_child(sea)
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
 
-	# C) ADALARI OLUŞTUR
-	# 1. Ana Ada (Bizim doğduğumuz yer)
-	create_island(Vector3(0, 0, 0), Vector2(80, 80), Color(0.2, 0.7, 0.3))
-	# 2. Karşıdaki Diğer Adalar
-	create_island(Vector3(120, 0, 80), Vector2(50, 50), Color(0.2, 0.6, 0.2))
-	create_island(Vector3(-100, 0, -110), Vector2(60, 60), Color(0.2, 0.6, 0.2))
-	
-	# D) OYUNCU VE KAMERA
-	player = Node3D.new()
-	player.position = Vector3(0, 1.5, 0)
-	add_child(player)
-	
-	camera = Camera3D.new()
-	player.add_child(camera)
-	
-	# E) DOĞAL KAYNAKLARI EKLE (Ağaçlar ve Taşlar)
-	spawn_resources()
-	
-	# F) ARAYÜZ (HUD & ENVANTER) KURULUMU
-	setup_ui()
+        // 2. Işıklandırma ve Deniz
+        const light = new THREE.DirectionalLight(0xffffff, 1.2);
+        light.position.set(20, 40, 20);
+        scene.add(light);
+        scene.add(new THREE.AmbientLight(0x505050));
 
+        const sea = new THREE.Mesh(
+            new THREE.PlaneGeometry(1500, 1500),
+            new THREE.MeshBasicMaterial({ color: 0x1e90ff, transparent: true, opacity: 0.85 })
+        );
+        sea.rotation.x = -Math.PI / 2;
+        sea.position.y = -1.2;
+        scene.add(sea);
 
-# --- 4. ADA OLUŞTURMA FONKSİYONU ---
-func create_island(pos: Vector3, size: Vector2, color: Color):
-	var island = MeshInstance3D.new()
-	var island_mesh = BoxMesh.new()
-	island_mesh.size = Vector3(size.x, 3.0, size.y)
-	island.mesh = island_mesh
-	island.position = pos - Vector3(0, 1.5, 0)
-	
-	var mat = StandardMaterial3D.new()
-	mat.albedo_color = color
-	island.material_override = mat
-	add_child(island)
+        // 3. Adalar (Ana Ada + Karşıdaki Adalar)
+        createIsland(0, 0, 80, 80, 0x2e8b57);   // Bizim Ada
+        createIsland(140, 110, 60, 60, 0x228b22); // Sağ Ada
+        createIsland(-130, -120, 70, 70, 0x228b22);// Sol Ada
 
+        function createIsland(x, z, w, h, color) {
+            const island = new THREE.Mesh(
+                new THREE.BoxGeometry(w, 3, h),
+                new THREE.MeshLambertMaterial({ color: color })
+            );
+            island.position.set(x, -1.5, z);
+            scene.add(island);
+        }
 
-# --- 5. KAYNAKLARI (AĞAÇ & TAŞ) HARİTAYA KOYMA ---
-func spawn_resources():
-	# Ana Adada 10 Ağaç, 6 Taş
-	for i in range(10):
-		create_tree(Vector3(randf_range(-30, 30), 0, randf_range(-30, 30)))
-	for i in range(6):
-		create_rock(Vector3(randf_range(-30, 30), 0, randf_range(-30, 30)))
+        // 4. Ağaçlar ve Taşlar
+        const interactables = [];
 
+        function createTree(x, z) {
+            const group = new THREE.Group();
+            const trunk = new THREE.Mesh(new THREE.BoxGeometry(0.8, 3, 0.8), new THREE.MeshLambertMaterial({ color: 0x8B4513 }));
+            trunk.position.y = 1.5;
+            group.add(trunk);
 
-func create_tree(pos: Vector3):
-	var tree = Node3D.new()
-	tree.position = pos
-	tree.add_to_group("trees")
-	
-	# Gövde
-	var trunk = MeshInstance3D.new()
-	var trunk_mesh = BoxMesh.new()
-	trunk_mesh.size = Vector3(0.8, 3.5, 0.8)
-	trunk.mesh = trunk_mesh
-	trunk.position = Vector3(0, 1.75, 0)
-	var t_mat = StandardMaterial3D.new()
-	t_mat.albedo_color = Color(0.4, 0.2, 0.1)
-	trunk.material_override = t_mat
-	tree.add_child(trunk)
-	
-	# Yapraklar
-	var leaves = MeshInstance3D.new()
-	var l_mesh = BoxMesh.new()
-	l_mesh.size = Vector3(2.8, 2.8, 2.8)
-	leaves.mesh = l_mesh
-	leaves.position = Vector3(0, 4.0, 0)
-	var l_mat = StandardMaterial3D.new()
-	l_mat.albedo_color = Color(0.1, 0.7, 0.2)
-	leaves.material_override = l_mat
-	tree.add_child(leaves)
-	
-	add_child(tree)
+            const leaves = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), new THREE.MeshLambertMaterial({ color: 0x228B22 }));
+            leaves.position.y = 3.5;
+            group.add(leaves);
 
+            group.position.set(x, 0, z);
+            group.userData = { type: 'tree' };
+            scene.add(group);
+            interactables.push(group);
+        }
 
-func create_rock(pos: Vector3):
-	var rock = MeshInstance3D.new()
-	var r_mesh = BoxMesh.new()
-	r_mesh.size = Vector3(1.5, 1.2, 1.5)
-	rock.mesh = r_mesh
-	rock.position = pos + Vector3(0, 0.6, 0)
-	rock.add_to_group("rocks")
-	
-	var r_mat = StandardMaterial3D.new()
-	r_mat.albedo_color = Color(0.5, 0.5, 0.5) # Gri Kaya
-	rock.material_override = r_mat
-	add_child(rock)
+        function createRock(x, z) {
+            const rock = new THREE.Mesh(
+                new THREE.BoxGeometry(1.5, 1.2, 1.5),
+                new THREE.MeshLambertMaterial({ color: 0x808080 })
+            );
+            rock.position.set(x, 0.6, z);
+            rock.userData = { type: 'rock' };
+            scene.add(rock);
+            interactables.push(rock);
+        }
 
+        // Haritaya Rastgele Kaynak Dizilimi
+        for (let i = 0; i < 15; i++) createTree(Math.random() * 60 - 30, Math.random() * 60 - 30);
+        for (let i = 0; i < 8; i++) createRock(Math.random() * 60 - 30, Math.random() * 60 - 30);
 
-# --- 6. ARAYÜZ (HUD, ENVANTER PANELİ, NİŞANGAH) ---
-func setup_ui():
-	# Sol Üst Statlar
-	stats_label = Label.new()
-	stats_label.position = Vector2(20, 20)
-	add_child(stats_label)
-	
-	# Ekran Ortası Nişangah (+)
-	var crosshair = Label.new()
-	crosshair.text = "+"
-	crosshair.position = Vector2(1280 / 2 - 5, 720 / 2 - 10)
-	add_child(crosshair)
-	
-	# Envanter Paneli (E ile Açılan)
-	inventory_panel = Panel.new()
-	inventory_panel.size = Vector2(300, 200)
-	inventory_panel.position = Vector2(490, 260)
-	inventory_panel.visible = false
-	add_child(inventory_panel)
-	
-	inventory_label = Label.new()
-	inventory_label.position = Vector2(20, 20)
-	inventory_panel.add_child(inventory_label)
+        // 5. Oyuncu Statları ve Hareket Kontrolleri
+        let health = 100, hunger = 100, wood = 0, stone = 0;
+        let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
+        let isInvOpen = false;
 
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'w' || e.key === 'W') moveForward = true;
+            if (e.key === 's' || e.key === 'S') moveBackward = true;
+            if (e.key === 'a' || e.key === 'A') moveLeft = true;
+            if (e.key === 'd' || e.key === 'D') moveRight = true;
+            
+            // E Tuşu ile Envanter
+            if (e.key === 'e' || e.key === 'E') {
+                isInvOpen = !isInvOpen;
+                document.getElementById('inventory').style.display = isInvOpen ? 'block' : 'none';
+                document.getElementById('inv-text').innerHTML = `- Odun: ${wood}<br>- Taş: ${stone}`;
+            }
+        });
 
-# --- 7. OYUN DÖNGÜSÜ ---
-func _process(delta):
-	# A) Açlık Azalma
-	hunger -= 0.8 * delta
-	if hunger <= 0:
-		hunger = 0
-		health -= 2.0 * delta
+        document.addEventListener('keyup', (e) => {
+            if (e.key === 'w' || e.key === 'W') moveForward = false;
+            if (e.key === 's' || e.key === 'S') moveBackward = false;
+            if (e.key === 'a' || e.key === 'A') moveLeft = false;
+            if (e.key === 'd' || e.key === 'D') moveRight = false;
+        });
 
-	# B) Stat Etiketlerini Güncelle
-	stats_label.text = "CAN: " + str(int(health)) + "\nAÇLIK: " + str(int(hunger)) + "\nODUN: " + str(wood_count) + "\nTAŞ: " + str(stone_count)
-	
-	# C) Envanter Paneli Açıksa Oyuncu Hareket Etmesin
-	if is_inventory_open:
-		return
+        // Fare ile Etrafa Bakma (Pointer Lock)
+        document.addEventListener('click', () => {
+            if (!isInvOpen) document.body.requestPointerLock();
+        });
 
-	# D) WASD Hareketi
-	var input_dir = Vector2.ZERO
-	if Input.is_key_pressed(KEY_W): input_dir.y -= 1
-	if Input.is_key_pressed(KEY_S): input_dir.y += 1
-	if Input.is_key_pressed(KEY_A): input_dir.x -= 1
-	if Input.is_key_pressed(KEY_D): input_dir.x += 1
-	
-	input_dir = input_dir.normalized()
-	var forward = -player.global_transform.basis.z
-	var right = player.global_transform.basis.x
-	var direction = (forward * -input_dir.y + right * input_dir.x).normalized()
-	
-	player.position += direction * move_speed * delta
+        document.addEventListener('mousemove', (e) => {
+            if (document.pointerLockElement === document.body && !isInvOpen) {
+                camera.rotation.y -= e.movementX * 0.0025;
+            }
+        });
 
+        // Sol Tık ile Kaynak Toplama
+        window.addEventListener('mousedown', (e) => {
+            if (e.button === 0 && !isInvOpen) {
+                for (let i = interactables.length - 1; i >= 0; i--) {
+                    const obj = interactables[i];
+                    if (camera.position.distanceTo(obj.position) < 5) {
+                        if (obj.userData.type === 'tree') wood += 5;
+                        if (obj.userData.type === 'rock') stone += 3;
+                        scene.remove(obj);
+                        interactables.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+        });
 
-# --- 8. TUŞ KONTROLLERİ (E, Q, MOUSE) ---
-func _unhandled_input(event):
-	# Fare ile Etrafa Bakma (Envanter kapalıyken)
-	if event is InputEventMouseMotion and not is_inventory_open:
-		player.rotate_y(-event.relative.x * mouse_sensitivity)
-		camera_rotation_x -= event.relative.y * mouse_sensitivity
-		camera_rotation_x = clamp(camera_rotation_x, deg_to_rad(-80), deg_to_rad(80))
-		camera.rotation.x = camera_rotation_x
+        // 6. Oyun Döngüsü
+        const clock = new THREE.Clock();
+        function animate() {
+            requestAnimationFrame(animate);
+            const delta = clock.getDelta();
 
-	# Tuş Basışları
-	if event is InputEventKey and event.pressed:
-		# 'E' Tuşu: Envanteri Aç / Kapat
-		if event.keycode == KEY_E:
-			toggle_inventory()
-			
-		# 'Q' Tuşu: Yere Eşya At
-		if event.keycode == KEY_Q and not is_inventory_open:
-			drop_item()
+            if (!isInvOpen) {
+                hunger -= 0.6 * delta;
+                if (hunger <= 0) { hunger = 0; health -= 1.5 * delta; }
 
-	# Sol Tık: Kaynak Topla
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed and not is_inventory_open:
-		harvest_resource()
+                const speed = 6 * delta;
+                if (moveForward) camera.translateZ(-speed);
+                if (moveBackward) camera.translateZ(speed);
+                if (moveLeft) camera.translateX(-speed);
+                if (moveRight) camera.translateX(speed);
+                camera.position.y = 2; // Göz yüksekliği
+            }
 
+            document.getElementById('ui').innerHTML = `CAN: ${Math.floor(health)} | AÇLIK: ${Math.floor(hunger)}<br>ODUN: ${wood} | TAŞ: ${stone}`;
 
-# --- 9. MEKANİKLER (ENVANTER, EŞYA ATMA, KAYNAK TOPLAMA) ---
-func toggle_inventory():
-	is_inventory_open = !is_inventory_open
-	inventory_panel.visible = is_inventory_open
-	
-	if is_inventory_open:
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE # Fareyi serbest bırak
-		inventory_label.text = "=== ENVANTER ===\n\n- ODUN: " + str(wood_count) + "\n- TAŞ: " + str(stone_count) + "\n\n[Q] - Yere Eşya At\n[E] - Kapat"
-	else:
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED # Fareyi oyuna kitle
+            renderer.render(scene, camera);
+        }
+        animate();
 
-
-func drop_item():
-	if wood_count > 0:
-		wood_count -= 1
-		spawn_dropped_cube(Color(0.4, 0.2, 0.1)) # Kahverengi Odun Küpü
-		print("1 Odun Yere Atıldı!")
-	elif stone_count > 0:
-		stone_count -= 1
-		spawn_dropped_cube(Color(0.5, 0.5, 0.5)) # Gri Taş Küpü
-		print("1 Taş Yere Atıldı!")
-
-
-func spawn_dropped_cube(color: Color):
-	var item = MeshInstance3D.new()
-	var mesh = BoxMesh.new()
-	mesh.size = Vector3(0.4, 0.4, 0.4)
-	item.mesh = mesh
-	
-	# Oyuncunun baktığı yönün 1.5 metre önüne at
-	var spawn_pos = player.global_position - player.global_transform.basis.z * 1.5
-	spawn_pos.y = 0.2 # Yerde dursun
-	item.position = spawn_pos
-	
-	var mat = StandardMaterial3D.new()
-	mat.albedo_color = color
-	item.material_override = mat
-	add_child(item)
-
-
-func harvest_resource():
-	# Ağaç Kesme
-	for tree in get_tree().get_nodes_in_group("trees"):
-		if player.global_position.distance_to(tree.global_position) < 4.5:
-			tree.queue_free()
-			wood_count += 5
-			print("Ağaç Kesildi! +5 Odun")
-			return
-			
-	# Taş Kırma
-	for rock in get_tree().get_nodes_in_group("rocks"):
-		if player.global_position.distance_to(rock.global_position) < 4.5:
-			rock.queue_free()
-			stone_count += 3
-			print("Taş Kırıldı! +3 Taş")
-			return
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
