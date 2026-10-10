@@ -20,12 +20,10 @@
         <p style="font-size: 14px; color: #aaa;">[E] Kapat</p>
     </div>
 
-    <!-- 3D Kütüphanesi (Three.js CDN) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        // 1. Sahne, Kamera ve Motor
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x87CEEB); // Gökyüzü
+        scene.background = new THREE.Color(0x87CEEB);
 
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.set(0, 2, 5);
@@ -34,7 +32,6 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
-        // 2. Işıklandırma ve Deniz
         const light = new THREE.DirectionalLight(0xffffff, 1.2);
         light.position.set(20, 40, 20);
         scene.add(light);
@@ -48,10 +45,9 @@
         sea.position.y = -1.2;
         scene.add(sea);
 
-        // 3. Adalar (Ana Ada + Karşıdaki Adalar)
-        createIsland(0, 0, 80, 80, 0x2e8b57);   // Bizim Ada
-        createIsland(140, 110, 60, 60, 0x228b22); // Sağ Ada
-        createIsland(-130, -120, 70, 70, 0x228b22);// Sol Ada
+        createIsland(0, 0, 80, 80, 0x2e8b57);
+        createIsland(140, 110, 60, 60, 0x228b22);
+        createIsland(-130, -120, 70, 70, 0x228b22);
 
         function createIsland(x, z, w, h, color) {
             const island = new THREE.Mesh(
@@ -62,7 +58,6 @@
             scene.add(island);
         }
 
-        // 4. Ağaçlar ve Taşlar
         const interactables = [];
 
         function createTree(x, z) {
@@ -92,11 +87,9 @@
             interactables.push(rock);
         }
 
-        // Haritaya Rastgele Kaynak Dizilimi
         for (let i = 0; i < 15; i++) createTree(Math.random() * 60 - 30, Math.random() * 60 - 30);
         for (let i = 0; i < 8; i++) createRock(Math.random() * 60 - 30, Math.random() * 60 - 30);
 
-        // 5. Oyuncu Statları ve Hareket Kontrolleri
         let health = 100, hunger = 100, wood = 0, stone = 0;
         let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
         let isInvOpen = false;
@@ -107,7 +100,6 @@
             if (e.key === 'a' || e.key === 'A') moveLeft = true;
             if (e.key === 'd' || e.key === 'D') moveRight = true;
             
-            // E Tuşu ile Envanter
             if (e.key === 'e' || e.key === 'E') {
                 isInvOpen = !isInvOpen;
                 document.getElementById('inventory').style.display = isInvOpen ? 'block' : 'none';
@@ -122,7 +114,6 @@
             if (e.key === 'd' || e.key === 'D') moveRight = false;
         });
 
-        // Fare ile Etrafa Bakma (Pointer Lock)
         document.addEventListener('click', () => {
             if (!isInvOpen) document.body.requestPointerLock();
         });
@@ -133,7 +124,6 @@
             }
         });
 
-        // Sol Tık ile Kaynak Toplama
         window.addEventListener('mousedown', (e) => {
             if (e.button === 0 && !isInvOpen) {
                 for (let i = interactables.length - 1; i >= 0; i--) {
@@ -149,7 +139,6 @@
             }
         });
 
-        // 6. Oyun Döngüsü
         const clock = new THREE.Clock();
         function animate() {
             requestAnimationFrame(animate);
@@ -164,7 +153,7 @@
                 if (moveBackward) camera.translateZ(speed);
                 if (moveLeft) camera.translateX(-speed);
                 if (moveRight) camera.translateX(speed);
-                camera.position.y = 2; // Göz yüksekliği
+                camera.position.y = 2;
             }
 
             document.getElementById('ui').innerHTML = `CAN: ${Math.floor(health)} | AÇLIK: ${Math.floor(hunger)}<br>ODUN: ${wood} | TAŞ: ${stone}`;
