@@ -3,282 +3,357 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NIGHTMARE CORRIDOR - KORKU OYUNU</title>
+    <title>THE MAZE RUNNER 3D: GLADE & LABYRINTH</title>
+    <!-- Three.js ve PeerJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
     <style>
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            margin: 0;
-            background: #030305;
+            background: #000;
             color: #fff;
             font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
+            height: 100vh;
         }
 
-        #lobby-screen {
-            background: rgba(10, 10, 15, 0.98);
-            border: 2px solid #550000;
-            box-shadow: 0 0 40px rgba(255, 0, 0, 0.2);
+        /* LOBİ */
+        #lobby {
+            position: absolute;
+            z-index: 10;
+            background: rgba(15, 12, 10, 0.95);
+            border: 2px solid #8b5a2b;
             padding: 30px;
-            border-radius: 10px;
+            border-radius: 8px;
             text-align: center;
             width: 380px;
+            box-shadow: 0 0 30px #8b5a2b;
         }
 
-        h1 { color: #ff2222; text-shadow: 0 0 10px #ff0000; letter-spacing: 3px; margin-top: 0; }
-        .input-group { margin: 15px 0; text-align: left; }
-        label { display: block; font-size: 11px; margin-bottom: 5px; color: #888; }
+        h1 { color: #d2b48c; text-shadow: 0 0 10px #8b5a2b; margin-bottom: 5px; }
         input {
-            width: 100%; padding: 10px; background: #050508; border: 1px solid #550000;
-            color: #fff; border-radius: 4px; outline: none; font-size: 14px;
+            width: 100%; padding: 10px; margin: 8px 0; background: #1a120c;
+            border: 1px solid #8b5a2b; color: #fff; font-family: inherit;
         }
         button {
-            width: 100%; padding: 12px; margin-top: 10px; background: #880000; color: #fff;
-            border: none; font-weight: bold; border-radius: 4px; cursor: pointer; transition: 0.2s; font-size: 14px;
+            width: 100%; padding: 12px; margin-top: 10px; background: #8b5a2b;
+            color: #fff; border: none; font-weight: bold; cursor: pointer; font-family: inherit;
         }
-        button:hover { background: #cc0000; box-shadow: 0 0 15px #ff0000; }
-        #status { margin-top: 15px; font-size: 13px; color: #ffaa00; }
+        button:hover { background: #d2b48c; color:#000; box-shadow: 0 0 15px #d2b48c; }
 
-        #game-screen { display: none; flex-direction: column; align-items: center; position: relative; }
-        canvas { border: 2px solid #222; background: #000; box-shadow: 0 0 30px rgba(0,0,0,0.9); }
-        
+        /* HUD & SİSTEM PANELİ */
         #hud {
-            position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.85);
-            padding: 10px 15px; border-radius: 4px; border: 1px solid #440000; font-size: 13px; color: #ff4444;
+            display: none;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 5;
+            background: rgba(0,0,0,0.85);
+            padding: 15px;
+            border: 1px solid #8b5a2b;
+            color: #d2b48c;
+            font-size: 13px;
+        }
+
+        #timer-box {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 5;
+            background: rgba(0,0,0,0.85);
+            padding: 15px;
+            border: 1px solid #ff3333;
+            color: #fff;
+            text-align: right;
+            font-size: 13px;
+        }
+
+        #crosshair {
+            display: none;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 6px; height: 6px;
+            background: #fff;
+            border-radius: 50%; z-index: 5; pointer-events: none;
         }
     </style>
 </head>
 <body>
 
-    <!-- LOBİ -->
-    <div id="lobby-screen">
-        <h1>NIGHTMARE</h1>
-        <p style="font-size:11px; color:#666;">Karanlıkta Hayatta Kalma Oyunu</p>
-        
-        <div class="input-group">
-            <label>OYUNCU ADI</label>
-            <input type="text" id="nickname" value="Kurban" maxlength="10">
-        </div>
-
-        <button onclick="createRoom()">ODA KUR (HOST)</button>
-        <div style="margin: 15px 0; border-bottom: 1px solid #222;"></div>
-        <div class="input-group">
-            <label>ODA KODU</label>
-            <input type="text" id="room-code-input" placeholder="Örn: 6666">
-        </div>
-        <button onclick="joinRoom()" style="background:#004444;">ODAYA KATIL</button>
-        <div id="status">Sistem hazır...</div>
+    <!-- LOBİ EKRANI -->
+    <div id="lobby">
+        <h1>THE MAZE RUNNER</h1>
+        <p style="font-size:11px; color:#aaa;">Ölümcül Kaçış 3D Multiplayer</p>
+        <br>
+        <input type="text" id="nickname" value="Kayrançı" placeholder="İsminiz">
+        <button onclick="createRoom()">ODA KUR (HOST / GRIEVER)</button>
+        <br><br>
+        <input type="text" id="room-code" placeholder="Oda Kodu Gir">
+        <button onclick="joinRoom()" style="background:#3a2512;">ODAYA KATIL (KAYRANÇI)</button>
+        <p id="status" style="margin-top:15px; font-size:12px; color:#ffcc00;"></p>
     </div>
 
-    <!-- OYUN -->
-    <div id="game-screen">
-        <div id="hud">
-            Rol: <b id="my-role" style="color:#fff;">Yükleniyor...</b><br>
-            Toplanan Sigortalar: <b id="sigorta-count">0</b> / 3
-        </div>
-        <canvas id="gameCanvas" width="800" height="500"></canvas>
+    <!-- HUD -->
+    <div id="hud">
+        ROL: <b id="role-text">...</b><br>
+        ŞİFRE KÜPLERİ: <b id="cube-count" style="color:#00ffff;">0 / 4</b><br>
+        GÜN KONTROLÜ: <span id="day-count">1. GÜN</span>
     </div>
+
+    <!-- ZAMAN VE ASANSÖR PANELİ -->
+    <div id="timer-box">
+        KAPI DURUMU: <b id="door-status" style="color:#00ff00;">AÇIK (GÜNDÜZ)</b><br>
+        ASANSÖR (KUTU): <b id="elevator-status" style="color:#ffcc00;">3 Gün Kaldı</b>
+    </div>
+
+    <div id="crosshair"></div>
 
     <script>
-        let peer = null, conn = null, isHost = false;
-        let myNick = "Kurban", myRole = "Survivor";
-        let players = {}, myId = null;
+        let peer, conn, isHost = false, myId;
+        let myRole = "Runner"; // "Runner" veya "Griever"
+        let scene, camera, renderer, flashlight, dirLight;
+        let otherMesh, doorMesh;
+        let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
         
-        // Sigortalar (Toplanacak Eşyalar)
-        let sigortalar = [
-            { x: 150, y: 100, collected: false },
-            { x: 650, y: 120, collected: false },
-            { x: 400, y: 400, collected: false }
+        let dayNumber = 1;
+        let isDayTime = true;
+        let doorOpen = true;
+        let cubesCollected = 0;
+        let elevatorMesh;
+
+        // Labirent Haritası (Ortada Alan/Glade var, etrafı devasa labirent)
+        const map = [
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1],
+            [1,0,1,0,1,0,1,1,1,1,1,0,1,0,1,0,1],
+            [1,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,1],
+            [1,0,1,1,1,0,1,0,0,0,1,0,1,1,1,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], // Zemin Geçişi
+            [1,1,1,0,1,1,1,0,0,0,1,1,1,0,1,1,1],
+            [1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1],
+            [1,0,1,1,1,0,0,0,0,0,0,0,1,1,1,0,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         ];
-        let collectedCount = 0;
-
-        const canvas = document.getElementById("gameCanvas");
-        const ctx = canvas.getContext("2d");
-        const keys = {};
-
-        window.addEventListener("keydown", e => {
-            keys[e.code] = true;
-            if (e.code === 'KeyE') checkSigorta();
-        });
-        window.addEventListener("keyup", e => keys[e.code] = false);
 
         function createRoom() {
-            myNick = document.getElementById("nickname").value || "Kurban";
             const code = Math.floor(1000 + Math.random() * 9000).toString();
-            peer = new Peer("nightmare-" + code);
-            document.getElementById("status").innerText = "Oda açılıyor...";
+            peer = new Peer("maze-" + code);
+            document.getElementById("status").innerText = "Labirent kuruluyor...";
 
-            peer.on('open', () => {
-                isHost = true;
-                myId = peer.id;
-                document.getElementById("status").innerHTML = `Oda Kuruldu!<br><b>KOD: <span style="color:#ff2222; font-size:18px;">${code}</span></b><br>Arkadaşın bekleniyor...`;
+            peer.on('open', id => {
+                isHost = true; myId = id;
+                document.getElementById("status").innerHTML = `Oda Kodu: <b style="font-size:16px; color:#d2b48c;">${code}</b><br>Kayrançıların Gelmesi Bekleniyor...`;
             });
 
             peer.on('connection', c => {
                 conn = c;
                 setupConnection();
-                setTimeout(() => startGameAsHost(), 1000);
+                setTimeout(() => {
+                    myRole = "Griever";
+                    conn.send({ type: 'init', role: 'Runner' });
+                    startGame();
+                }, 1000);
             });
         }
 
         function joinRoom() {
-            myNick = document.getElementById("nickname").value || "Kurban";
-            const code = document.getElementById("room-code-input").value.trim();
-            if (!code) { alert("Kod gir!"); return; }
-            
+            const code = document.getElementById("room-code").value.trim();
+            if(!code) return alert("Oda kodu gir!");
             peer = new Peer();
-            document.getElementById("status").innerText = "Bağlanılıyor...";
+            document.getElementById("status").innerText = "Kayrana giriliyor...";
 
             peer.on('open', id => {
                 myId = id;
-                conn = peer.connect("nightmare-" + code);
+                conn = peer.connect("maze-" + code);
                 setupConnection();
             });
         }
 
         function setupConnection() {
             conn.on('open', () => {
-                document.getElementById("lobby-screen").style.display = "none";
-                document.getElementById("game-screen").style.display = "flex";
+                conn.on('data', data => {
+                    if (data.type === 'init') {
+                        myRole = data.role;
+                        startGame();
+                    } else if (data.type === 'move') {
+                        if (otherMesh) otherMesh.position.set(data.x, data.y, data.z);
+                    } else if (data.type === 'win') {
+                        alert(data.msg);
+                        location.reload();
+                    }
+                });
+            });
+        }
+
+        function startGame() {
+            document.getElementById("lobby").style.display = "none";
+            document.getElementById("hud").style.display = "block";
+            document.getElementById("timer-box").style.display = "block";
+            document.getElementById("crosshair").style.display = "block";
+
+            document.getElementById("role-text").innerText = myRole === "Griever" ? "IZDIRAP VEREN (GRIEVER)" : "KAYRANÇI (RUNNER)";
+            document.getElementById("role-text").style.color = myRole === "Griever" ? "#ff3333" : "#00ffff";
+
+            scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x1a120c, 0.05);
+
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+
+            // Güneş / Gece Işığı
+            dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
+            dirLight.position.set(20, 40, 20);
+            scene.add(dirLight);
+
+            const ambientLight = new THREE.AmbientLight(0x444444);
+            scene.add(ambientLight);
+
+            // El Feneri
+            flashlight = new THREE.SpotLight(0xffffff, 0, 15, Math.PI / 5, 0.5);
+            scene.add(flashlight);
+            scene.add(flashlight.target);
+
+            // Devasa Taş Duvarlar ve Zemin
+            const wallGeo = new THREE.BoxGeometry(2, 6, 2); // Çok yüksek duvarlar
+            const wallMat = new THREE.MeshBasicMaterial({ color: 0x4a4a4a });
+            const floorGeo = new THREE.PlaneGeometry(50, 50);
+            const floorMat = new THREE.MeshBasicMaterial({ color: 0x2e3b23 }); // Çim Alan (Glade)
+
+            const floor = new THREE.Mesh(floorGeo, floorMat);
+            floor.rotation.x = -Math.PI / 2;
+            scene.add(floor);
+
+            for (let r = 0; r < map.length; r++) {
+                for (let c = 0; c < map[r].length; c++) {
+                    if (map[r][c] === 1) {
+                        const wall = new THREE.Mesh(wallGeo, wallMat);
+                        wall.position.set(c * 2 - 16, 3, r * 2 - 9);
+                        scene.add(wall);
+                    }
+                }
+            }
+
+            // Ortadaki Asansör (Kutu / Box)
+            const elevGeo = new THREE.BoxGeometry(3, 0.2, 3);
+            const elevMat = new THREE.MeshBasicMaterial({ color: 0x111111 });
+            elevatorMesh = new THREE.Mesh(elevGeo, elevMat);
+            elevatorMesh.position.set(0, 0.1, 0);
+            scene.add(elevatorMesh);
+
+            // Devasa Labirent Kapısı (Açılıp Kapanan Taş Kapı)
+            const doorGeo = new THREE.BoxGeometry(4, 6, 0.5);
+            const doorMat = new THREE.MeshBasicMaterial({ color: 0x222222 });
+            doorMesh = new THREE.Mesh(doorGeo, doorMat);
+            doorMesh.position.set(0, 3, -3);
+            scene.add(doorMesh);
+
+            // Rakip Oyuncu Modeli
+            const otherGeo = new THREE.SphereGeometry(0.6, 16, 16);
+            const otherMat = new THREE.MeshBasicMaterial({ color: myRole === "Griever" ? 0x00ffff : 0xff0000 });
+            otherMesh = new THREE.Mesh(otherGeo, otherMat);
+            scene.add(otherMesh);
+
+            camera.position.set(0, 1.2, 4); // Başlangıçta Kayrandasın
+
+            document.body.addEventListener('click', () => document.body.requestPointerLock());
+            document.addEventListener('mousemove', e => {
+                if (document.pointerLockElement === document.body) {
+                    camera.rotation.y -= e.movementX * 0.002;
+                }
+            });
+
+            window.addEventListener('keydown', e => {
+                if (e.code === 'KeyW') moveForward = true;
+                if (e.code === 'KeyS') moveBackward = true;
+                if (e.code === 'KeyA') moveLeft = true;
+                if (e.code === 'KeyD') moveRight = true;
+            });
+
+            window.addEventListener('keyup', e => {
+                if (e.code === 'KeyW') moveForward = false;
+                if (e.code === 'KeyS') moveBackward = false;
+                if (e.code === 'KeyA') moveLeft = false;
+                if (e.code === 'KeyD') moveRight = false;
+            });
+
+            // Gece/Gündüz & Kapı Zamanlayıcısı (Her 15 saniyede bir gündüz/gece değişir)
+            setInterval(toggleDayNightCycle, 15000);
+
+            animate();
+        }
+
+        // --- GECE/GÜNDÜZ VE KAPILARIN KAPANMASI ---
+        function toggleDayNightCycle() {
+            isDayTime = !isDayTime;
+
+            if (isDayTime) {
+                dayNumber++;
+                document.getElementById("day-count").innerText = dayNumber + ". GÜN";
+                document.getElementById("door-status").innerText = "AÇIK (GÜNDÜZ)";
+                document.getElementById("door-status").style.color = "#00ff00";
                 
-                players[myId] = { x: 100, y: 250, color: isHost ? "#ff2222" : "#00ffcc", nick: myNick, role: "Survivor", isDead: false };
-                requestAnimationFrame(gameLoop);
-            });
+                dirLight.intensity = 1.2; // Güneş açar
+                scene.fog.color.setHex(0x1a120c);
+                flashlight.intensity = 0;
+                doorMesh.position.y = 3; // Kapı yukarı açılır
 
-            conn.on('data', data => {
-                if (data.type === 'start') {
-                    players = data.players;
-                    myRole = players[myId].role;
-                    document.getElementById("my-roleppermint" || "my-role").innerText = myRole === "Monster" ? "CANAVAR (KATİL)" : "KURBAN (KAÇIŞÇI)";
-                    document.getElementById("my-role").style.color = myRole === "Monster" ? "#ff2222" : "#00ffcc";
-                } else if (data.type === 'move') {
-                    if (players[data.id]) {
-                        players[data.id].x = data.x;
-                        players[data.id].y = data.y;
-                        players[data.id].isDead = data.isDead;
-                    } else {
-                        players[data.id] = data.player;
-                    }
-                } else if (data.type === 'sigortaUpdate') {
-                    sigortalar = data.sigortalar;
-                    collectedCount = data.count;
-                    document.getElementById("sigorta-count").innerText = collectedCount;
-                } else if (data.type === 'attack') {
-                    if (players[data.targetId]) players[data.targetId].isDead = true;
+                // Her 5 Günde Bir Asansör Gelir
+                if (dayNumber % 5 === 0) {
+                    document.getElementById("elevator-status").innerText = "KUTU GELDİ! (MALZEME ALINDI)";
+                    document.getElementById("elevator-status").style.color = "#00ff00";
+                    elevatorMesh.position.y = 0.5; // Asansör yükselir
+                } else {
+                    document.getElementById("elevator-status").innerText = (5 - (dayNumber % 5)) + " Gün Kaldı";
+                    document.getElementById("elevator-status").style.color = "#ffcc00";
+                    elevatorMesh.position.y = 0.1;
                 }
-            });
+
+            } else {
+                document.getElementById("door-status").innerText = "KAPALI (GECE - IZDIRAP VERENLER AÇ)";
+                document.getElementById("door-status").style.color = "#ff0000";
+
+                dirLight.intensity = 0.05; // Gece olur
+                scene.fog.color.setHex(0x000000);
+                flashlight.intensity = 2; // Fenerler yanar
+                doorMesh.position.y = -3; // Devasa kapı kapanır!
+            }
         }
 
-        function startGameAsHost() {
-            let keysArr = Object.keys(players);
-            // Rastgele birini canavar yap
-            let monsterKey = keysArr[Math.floor(Math.random() * keysArr.length)];
-            
-            for (let k in players) {
-                players[k].role = (k === monsterKey) ? "Monster" : "Survivor";
+        function animate() {
+            requestAnimationFrame(animate);
+
+            const speed = myRole === "Griever" ? 0.08 : 0.065;
+            const dir = new THREE.Vector3();
+            camera.getWorldDirection(dir);
+            dir.y = 0;
+
+            if (moveForward) camera.position.addScaledVector(dir, speed);
+            if (moveBackward) camera.position.addScaledVector(dir, -speed);
+
+            flashlight.position.copy(camera.position);
+            flashlight.target.position.copy(camera.position).add(dir);
+
+            if (conn) {
+                conn.send({
+                    type: 'move',
+                    x: camera.position.x, y: camera.position.y, z: camera.position.z
+                });
             }
 
-            myRole = players[myId].role;
-            document.getElementById("my-role").innerText = myRole === "Monster" ? "CANAVAR (KATİL)" : "KURBAN (KAÇIŞÇI)";
-            document.getElementById("my-role").style.color = myRole === "Monster" ? "#ff2222" : "#00ffcc";
-
-            conn.send({ type: 'start', players: players });
-        }
-
-        function gameLoop() {
-            let p = players[myId];
-            if (p && !p.isDead) {
-                let moved = false;
-                let speed = myRole === "Monster" ? 4 : 3.2; // Canavar biraz daha hızlı
-
-                if (keys["KeyW"] || keys["ArrowUp"]) { p.y -= speed; moved = true; }
-                if (keys["KeyS"] || keys["ArrowDown"]) { p.y += speed; moved = true; }
-                if (keys["KeyA"] || keys["ArrowLeft"]) { p.x -= speed; moved = true; }
-                if (keys["KeyD"] || keys["ArrowRight"]) { p.x += speed; moved = true; }
-
-                p.x = Math.max(20, Math.min(canvas.width - 20, p.x));
-                p.y = Math.max(20, Math.min(canvas.height - 20, p.y));
-
-                // Canavarsa yakındaki kurbana saldır (Q tuşu ile)
-                if (myRole === "Monster" && keys["KeyQ"]) {
-                    for (let id in players) {
-                        if (id !== myId) {
-                            let target = players[id];
-                            if (Math.hypot(p.x - target.x, p.y - target.y) < 45 && !target.isDead) {
-                                target.isDead = true;
-                                if (conn) conn.send({ type: 'attack', targetId: id });
-                                alert("Bir kurbanı avladın!");
-                            }
-                        }
-                    }
-                }
-
-                if (moved && conn) {
-                    conn.send({ type: 'move', id: myId, x: p.x, y: p.y, isDead: p.isDead, player: p });
-                }
+            // Yakalanma
+            if (myRole === "Griever" && camera.position.distanceTo(otherMesh.position) < 1.2) {
+                alert("IZDIRAP VEREN KAYRANÇIYI YAKALADI VEYA SANCAKLANDI!");
+                conn.send({ type: 'win', msg: 'Griever kayrançıyı avladı!' });
+                location.reload();
             }
 
-            // --- ÇİZİM VE KARANLIK EFEKTİ ---
-            ctx.fillStyle = "#050508";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Labirent Duvarları / Engeller
-            ctx.fillStyle = "#1a1a24";
-            ctx.fillRect(300, 100, 40, 250);
-            ctx.fillRect(500, 200, 200, 40);
-
-            // Sigortaları Çiz
-            sigortalar.forEach(s => {
-                if (!s.collected) {
-                    ctx.fillStyle = "#ffcc00";
-                    ctx.shadowBlur = 10;
-                    ctx.shadowColor = "#ffcc00";
-                    ctx.fillRect(s.x - 8, s.y - 8, 16, 16);
-                    ctx.shadowBlur = 0;
-                }
-            });
-
-            // Oyuncuları Çiz
-            for (let id in players) {
-                let pl = players[id];
-                ctx.fillStyle = pl.isDead ? "#333" : (pl.role === "Monster" ? "#ff0000" : "#00ffcc");
-                ctx.beginPath(); ctx.arc(pl.x, pl.y, 14, 0, Math.PI * 2); ctx.fill();
-
-                ctx.fillStyle = "#fff";
-                ctx.font = "11px sans-serif";
-                ctx.textAlign = "center";
-                ctx.fillText(pl.nick, pl.x, pl.y - 20);
-            }
-
-            // --- EL FENERİ / KARANLIK MASKESİ (FOG OF WAR) ---
-            if (p && !p.isDead) {
-                let gradient = ctx.createRadialGradient(p.x, p.y, 30, p.x, p.y, myRole === "Monster" ? 180 : 130);
-                gradient.addColorStop(0, "rgba(0,0,0,0)");
-                gradient.addColorStop(1, "rgba(0,0,0,0.95)");
-                ctx.fillStyle = gradient;
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-            }
-
-            requestAnimationFrame(gameLoop);
-        }
-
-        function checkSigorta() {
-            let p = players[myId];
-            if (!p || myRole === "Monster" || p.isDead) return;
-
-            sigortalar.forEach(s => {
-                if (!s.collected && Math.hypot(p.x - s.x, p.y - s.y) < 35) {
-                    s.collected = true;
-                    collectedCount++;
-                    document.getElementById("sigorta-count").innerText = collectedCount;
-                    if (conn) conn.send({ type: 'sigortaUpdate', sigortalar: sigortalar, count: collectedCount });
-                    alert("Sigorta bulundu! (" + collectedCount + "/3)");
-                }
-            });
+            renderer.render(scene, camera);
         }
     </script>
 </body>
