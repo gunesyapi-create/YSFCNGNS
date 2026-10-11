@@ -1,1 +1,6 @@
 
+User-agent: *
+Allow: /
+
+Sitemap: https://gunesyapi-create.github.io/YSFCNGNS/sitemap.xml
+
