@@ -2,80 +2,252 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <meta name="theme-color" content="#05090c">
-  <title>Labirent: Ölümcül Kalış</title>
-  <link rel="stylesheet" href="./style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#08090c">
+<meta name="description" content="Labirent: Ölümcül Kalış - 3D korku ve hayatta kalma oyunu">
+<title>Labirent: Ölümcül Kalış</title>
+<link rel="manifest" href="./manifest.json">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#050608;color:white;font-family:Arial,sans-serif;touch-action:none}
+button,input{font:inherit}
+#game{position:fixed;inset:0}
+canvas{display:block;width:100%;height:100%}
+#hud{position:fixed;inset:0;pointer-events:none;z-index:2}
+#top{position:absolute;top:16px;left:16px;font-size:12px;text-shadow:0 2px 5px black}
+#status{margin-top:8px;color:#eee}
+#crosshair{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:20px}
+#hint{position:absolute;bottom:15px;left:50%;transform:translateX(-50%);font-size:12px;color:#ddd;text-align:center}
+#menu{position:fixed;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;padding:18px;background:radial-gradient(ellipse,#17191deF,#020304f8)}
+.panel{width:min(100%,440px);padding:30px;border:1px solid #8e2937;border-radius:12px;background:#0b0c10f5;box-shadow:0 20px 80px #000}
+.kicker{color:#ff4353;font-size:11px;letter-spacing:4px}
+h1{font-size:clamp(32px,8vw,49px);line-height:1.04;margin:16px 0}
+h1 span{color:#e62c40}
+p{font-size:14px;line-height:1.7;color:#bbb}
+label{display:block;font-size:12px;margin:14px 0 7px}
+input{width:100%;padding:12px;border:1px solid #444;background:#08090c;color:white;border-radius:5px;touch-action:manipulation}
+button{padding:13px;border:1px solid #b42b3c;border-radius:6px;background:#8c1829;color:white;cursor:pointer}
+#start{width:100%;margin-top:16px;font-weight:bold;letter-spacing:1px}
+#err{color:#ff6977;font-size:12px}
+#mobile{display:none;position:fixed;inset:0;z-index:3;pointer-events:none}
+#stickArea{position:absolute;left:20px;bottom:25px;width:120px;height:120px;border:2px solid #ffffff55;border-radius:50%;background:#ffffff10;pointer-events:auto;touch-action:none}
+#stick{position:absolute;left:50%;top:50%;width:44px;height:44px;margin:-22px;border-radius:50%;background:#ffffff77}
+#look{position:absolute;right:0;top:25%;bottom:0;width:48%;pointer-events:auto;touch-action:none;color:#ffffff40;text-align:center;font-size:11px;padding-top:30px}
+#flash,#sprint{position:absolute;right:18px;width:60px;height:48px;pointer-events:auto;touch-action:none}
+#flash{bottom:92px;font-size:22px}
+#sprint{bottom:30px;font-size:11px}
+@media(pointer:coarse),(max-width:700px){#mobile{display:block}#hint{top:66px;bottom:auto;font-size:10px;width:90%}.panel{padding:23px}}
+.hidden{display:none!important}
+</style>
 </head>
 <body>
-  <div id="game"></div>
-  <div id="vignette"></div>
+<div id="game"></div>
 
-  <div id="hud">
-    <div id="top">
-      <div id="title">LABİRENT /// ÖLÜMCÜL KALIŞ</div>
-      <div id="status">Oyun hazırlanıyor...</div>
-    </div>
-
-    <div id="players">
-      Oyuncular: <b id="playerCount">1</b>
-      <div id="playerNames"></div>
-    </div>
-
-    <div id="crosshair"></div>
-
-    <div id="hint">
-      WASD: Hareket | Fare: Bakış | Shift: Koş | F: Fener
-    </div>
-
-    <div id="mobileControls">
-      <div id="stickArea">
-        <div id="stick"></div>
-      </div>
-      <div id="lookPad">KAMERAYI KONTROL ET</div>
-      <button id="flashButton">🔦</button>
-      <button id="runButton">KOŞ</button>
-    </div>
+<div id="hud">
+  <div id="top">
+    <strong style="color:#f44355;letter-spacing:2px">LABİRENT: ÖLÜMCÜL KALIŞ</strong>
+    <div id="status">Çıkışı bul ve hayatta kal.</div>
   </div>
+  <div id="crosshair">+</div>
+  <div id="hint">PC: WASD + Fare · F: Fener · SHIFT: Koş</div>
+</div>
 
-  <div id="overlay">
-    <section class="panel">
-      <div class="kicker">ÇEVRİM İÇİ HAYATTA KALMA</div>
-      <h1>LABİRENT:<br>
-        <span>ÖLÜMCÜL KALIŞ</span>
-      </h1>
+<div id="mobile">
+  <div id="stickArea"><div id="stick"></div></div>
+  <div id="look">BAKIŞ<br>Burada sürükle</div>
+  <button id="flash">🔦</button>
+  <button id="sprint">KOŞ</button>
+</div>
 
-      <p class="desc">
-        Karanlık labirentte çıkışı bul.
-        Tehlikelerden kaç, el fenerini kullan
-        ve hayatta kal.
-      </p>
-
-      <label for="nickname">Oyuncu adın</label>
-      <input id="nickname" maxlength="18"
-             placeholder="Oyuncu adını yaz">
-
-      <label for="serverUrl">Çok oyunculu sunucu adresi</label>
-      <input id="serverUrl"
-             placeholder="wss://sunucu-adresin">
-
-      <p class="small">
-        Sunucu adresi boşsa tek oyunculu deneme modu açılır.
-        İnternetten birlikte oynamak için WebSocket sunucusu gerekir.
-      </p>
-
-      <button id="startButton">LABİRENTE GİR</button>
-      <p id="error"></p>
-
-      <div class="controlsNote">
-        PC: WASD, fare, Shift, F<br>
-        Telefon: Joystick, dokunmatik kamera, koşma ve fener
-      </div>
-    </section>
+<div id="menu">
+  <div class="panel">
+    <div class="kicker">HAYATTA KALABİLECEK MİSİN?</div>
+    <h1>LABİRENT:<br><span>ÖLÜMCÜL KALIŞ</span></h1>
+    <p>Karanlık koridorlarda kayboldun. Fenerini kullan, etrafını keşfet ve çıkışı bul. Dikkatli ol: yalnız değilsin.</p>
+    <label for="player">Oyuncu adı</label>
+    <input id="player" maxlength="18" placeholder="Oyuncu" value="Oyuncu">
+    <button id="start">OYUNA BAŞLA</button>
+    <p style="font-size:11px">PC: WASD ile yürü, fareyle bak. Telefon: sol joystick ile yürü, sağ alanda bak.</p>
+    <div id="err"></div>
   </div>
+</div>
 
-  <script type="module" src="./client.js"></script>
+<script type="module">
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js";
+
+const $=id=>document.getElementById(id);
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0x030507);
+scene.fog=new THREE.FogExp2(0x030507,.027);
+
+const camera=new THREE.PerspectiveCamera(76,innerWidth/innerHeight,.1,150);
+camera.rotation.order="YXZ";
+const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:"high-performance"});
+renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
+renderer.setSize(innerWidth,innerHeight);
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+$("game").appendChild(renderer.domElement);
+
+scene.add(new THREE.HemisphereLight(0x788396,0x17100c,.6));
+scene.add(new THREE.AmbientLight(0x30313a,.3));
+
+const N=17,S=4,H=4;
+const maze=[
+"11111111111111111",
+"10000010000000001",
+"10111010111111001",
+"10001010000001001",
+"11101011111001001",
+"10001000001001001",
+"10111111001001001",
+"10000001001000001",
+"10111001011111001",
+"10001001000000001",
+"11101011101111001",
+"10001000001000001",
+"10111111001011001",
+"10000000000001001",
+"10111101111101001",
+"10000000000000001",
+"11111111111111111"
+];
+const center=i=>(i-(N-1)/2)*S;
+const wall=(x,z)=>{let c=Math.round(x/S+(N-1)/2),r=Math.round(z/S+(N-1)/2);return r<0||c<0||r>=N||c>=N||maze[r][c]==="1"};
+const mat=(color,roughness=.9)=>new THREE.MeshStandardMaterial({color,roughness});
+const floor=new THREE.Mesh(new THREE.PlaneGeometry(N*S,N*S),mat(0x29292c));
+floor.rotation.x=-Math.PI/2;floor.position.y=-.08;scene.add(floor);
+const ceiling=new THREE.Mesh(new THREE.PlaneGeometry(N*S,N*S),mat(0x111216));
+ceiling.rotation.x=Math.PI/2;ceiling.position.y=H;scene.add(ceiling);
+
+for(let r=0;r<N;r++)for(let c=0;c<N;c++)if(maze[r][c]==="1"){
+ const m=new THREE.Mesh(new THREE.BoxGeometry(S,H,S),mat(0x414044));
+ m.position.set(center(c),H/2,center(r));scene.add(m);
+}
+for(const [x,z] of [[-20,-20],[20,-12],[-12,16],[16,20]]){
+ const l=new THREE.PointLight(0x9c1724,5,12);l.position.set(x,3,z);scene.add(l);
+}
+
+const flashlight=new THREE.SpotLight(0xffe9c9,35,32,Math.PI/7,.5,1.4);
+camera.add(flashlight);camera.add(flashlight.target);
+flashlight.position.set(0,0,0);flashlight.target.position.set(0,0,-1);scene.add(camera);
+
+const player={x:center(1),z:center(1),yaw:0,pitch:0};
+camera.position.set(player.x,1.7,player.z);
+const keys={};
+let active=false,flashOn=true,sprinting=false,last=0;
+let touchX=0,touchY=0;
+const enemy=new THREE.Group();
+const body=new THREE.Mesh(new THREE.CapsuleGeometry(.5,1,4,8),mat(0x151116));
+body.position.y=1.15;enemy.add(body);
+for(const x of [-.17,.17]){
+ const eye=new THREE.Mesh(new THREE.SphereGeometry(.075,8,8),new THREE.MeshBasicMaterial({color:0xff1025}));
+ eye.position.set(x,1.55,-.43);enemy.add(eye);
+}
+enemy.position.set(center(13),0,center(13));scene.add(enemy);
+
+const exit=new THREE.Group();
+const door=new THREE.Mesh(new THREE.BoxGeometry(2,3,.2),mat(0x3b3b3b));
+door.position.y=1.5;exit.add(door);
+const sign=new THREE.Mesh(new THREE.BoxGeometry(1,.2,.08),new THREE.MeshBasicMaterial({color:0x28d47b}));
+sign.position.set(0,2.4,-.15);exit.add(sign);
+exit.position.set(center(15),0,center(15));scene.add(exit);
+
+function canMove(x,z){
+ const q=.32;
+ return !([[x-q,z-q],[x+q,z-q],[x-q,z+q],[x+q,z+q]].some(([a,b])=>wall(a,b)));
+}
+function move(dt){
+ let f=(keys.KeyW||keys.ArrowUp?1:0)-(keys.KeyS||keys.ArrowDown?1:0)+touchY;
+ let s=(keys.KeyD||keys.ArrowRight?1:0)-(keys.KeyA||keys.ArrowLeft?1:0)+touchX;
+ const len=Math.hypot(f,s);if(len>1){f/=len;s/=len}
+ const speed=(sprinting||keys.ShiftLeft||keys.ShiftRight?6:3.7)*dt;
+ const dx=(-Math.sin(player.yaw)*f+Math.cos(player.yaw)*s)*speed;
+ const dz=(-Math.cos(player.yaw)*f-Math.sin(player.yaw)*s)*speed;
+ if(canMove(player.x+dx,player.z))player.x+=dx;
+ if(canMove(player.x,player.z+dz))player.z+=dz;
+ camera.position.set(player.x,1.7,player.z);
+ camera.rotation.set(player.pitch,player.yaw,0,"YXZ");
+}
+function updateEnemy(dt){
+ const dx=player.x-enemy.position.x,dz=player.z-enemy.position.z,d=Math.hypot(dx,dz);
+ if(d>1.3){
+  const step=1.45*dt;
+  const nx=enemy.position.x+dx/d*step,nz=enemy.position.z+dz/d*step;
+  if(canMove(nx,enemy.position.z))enemy.position.x=nx;
+  if(canMove(enemy.position.x,nz))enemy.position.z=nz;
+ }
+ enemy.lookAt(player.x,1.2,player.z);
+ if(d<1.4){$("status").textContent="TEHLİKE! Düşman çok yakın!";$("status").style.color="#ff3e50"}
+ else $("status").textContent="Çıkışı bul • Hayatta kal";
+}
+function frame(t){
+ requestAnimationFrame(frame);
+ const dt=Math.min((t-last)/1000||0,.05);last=t;
+ if(active){
+  move(dt);updateEnemy(dt);
+  if(Math.hypot(player.x-exit.position.x,player.z-exit.position.z)<1.8){
+   $("status").textContent="ÇIKIŞI BULDUN! Tebrikler!";
+   $("status").style.color="#46ef9c";
+  }
+ }
+ renderer.render(scene,camera);
+}
+requestAnimationFrame(frame);
+
+addEventListener("keydown",e=>{
+ keys[e.code]=true;
+ if(e.code==="KeyF"){flashOn=!flashOn;flashlight.visible=flashOn;$("flash").textContent=flashOn?"🔦":"🌑"}
+ if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight","Space"].includes(e.code))e.preventDefault();
+});
+addEventListener("keyup",e=>keys[e.code]=false);
+renderer.domElement.addEventListener("click",()=>{
+ if(active&&matchMedia("(pointer:fine)").matches)renderer.domElement.requestPointerLock?.();
+});
+document.addEventListener("mousemove",e=>{
+ if(document.pointerLockElement===renderer.domElement){
+  player.yaw-=e.movementX*.002;
+  player.pitch=THREE.MathUtils.clamp(player.pitch-e.movementY*.002,-1.35,1.35);
+ }
+});
+
+const area=$("stickArea"),stick=$("stick");
+let stickId=null;
+area.addEventListener("pointerdown",e=>{stickId=e.pointerId;area.setPointerCapture(e.pointerId);stickMove(e)});
+area.addEventListener("pointermove",e=>{if(e.pointerId===stickId)stickMove(e)});
+function stickMove(e){
+ const r=area.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2),max=r.width*.32,d=Math.hypot(dx,dy),k=d>max?max/d:1;
+ const x=dx*k,y=dy*k;touchX=x/max;touchY=-y/max;stick.style.transform=`translate(${x}px,${y}px)`;
+}
+function resetStick(){stickId=null;touchX=0;touchY=0;stick.style.transform="translate(0,0)"}
+area.addEventListener("pointerup",resetStick);area.addEventListener("pointercancel",resetStick);
+
+let lookId=null,px=0,py=0;
+$("look").addEventListener("pointerdown",e=>{lookId=e.pointerId;px=e.clientX;py=e.clientY;$("look").setPointerCapture(e.pointerId)});
+$("look").addEventListener("pointermove",e=>{
+ if(e.pointerId!==lookId)return;
+ player.yaw-=(e.clientX-px)*.006;
+ player.pitch=THREE.MathUtils.clamp(player.pitch-(e.clientY-py)*.005,-1.35,1.35);
+ px=e.clientX;py=e.clientY;
+});
+$("look").addEventListener("pointerup",()=>lookId=null);
+$("look").addEventListener("pointercancel",()=>lookId=null);
+$("flash").onclick=()=>{flashOn=!flashOn;flashlight.visible=flashOn;$("flash").textContent=flashOn?"🔦":"🌑"};
+$("sprint").addEventListener("pointerdown",()=>sprinting=true);
+["pointerup","pointercancel","pointerleave"].forEach(ev=>$("sprint").addEventListener(ev,()=>sprinting=false));
+addEventListener("resize",()=>{
+ camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
+ renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
+});
+
+$("start").onclick=()=>{
+ try{
+  active=true;$("menu").classList.add("hidden");
+  const name=$("player").value.trim()||"Oyuncu";
+  document.title="Labirent - "+name;
+  if(matchMedia("(pointer:fine)").matches)renderer.domElement.requestPointerLock?.();
+ }catch(e){$("err").textContent="Başlatma hatası: "+e.message}
+};
+</script>
 </body>
 </html>
