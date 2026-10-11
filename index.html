@@ -1,365 +1,81 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE MAZE RUNNER: REALISTIC GLADE</title>
-    <!-- Three.js ve PeerJS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            background: #000;
-            color: #fff;
-            font-family: 'Courier New', Courier, monospace;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        #lobby {
-            position: absolute;
-            z-index: 10;
-            background: rgba(15, 12, 10, 0.95);
-            border: 2px solid #8b5a2b;
-            padding: 30px;
-            border-radius: 8px;
-            text-align: center;
-            width: 380px;
-            box-shadow: 0 0 30px #8b5a2b;
-        }
-
-        h1 { color: #d2b48c; text-shadow: 0 0 10px #8b5a2b; margin-bottom: 5px; }
-        input {
-            width: 100%; padding: 10px; margin: 8px 0; background: #1a120c;
-            border: 1px solid #8b5a2b; color: #fff; font-family: inherit;
-        }
-        button {
-            width: 100%; padding: 12px; margin-top: 10px; background: #8b5a2b;
-            color: #fff; border: none; font-weight: bold; cursor: pointer; font-family: inherit;
-        }
-        button:hover { background: #d2b48c; color:#000; box-shadow: 0 0 15px #d2b48c; }
-
-        #hud {
-            display: none;
-            position: absolute;
-            top: 20px; left: 20px; z-index: 5;
-            background: rgba(0,0,0,0.85);
-            padding: 15px; border: 1px solid #8b5a2b;
-            color: #d2b48c; font-size: 13px;
-        }
-
-        #timer-box {
-            display: none;
-            position: absolute;
-            top: 20px; right: 20px; z-index: 5;
-            background: rgba(0,0,0,0.85);
-            padding: 15px; border: 1px solid #ff3333;
-            color: #fff; text-align: right; font-size: 13px;
-        }
-
-        #crosshair {
-            display: none;
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 6px; height: 6px;
-            background: #fff; border-radius: 50%;
-            z-index: 5; pointer-events: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#05090c">
+  <title>Labirent: Ölümcül Kalış</title>
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
+  <div id="game"></div>
+  <div id="vignette"></div>
 
-    <!-- LOBİ -->
-    <div id="lobby">
-        <h1>THE MAZE RUNNER</h1>
-        <p style="font-size:11px; color:#aaa;">Gerçekçi Kayran & Labirent Kaçışı</p>
-        <br>
-        <input type="text" id="nickname" value="Kayrançı" placeholder="İsminiz">
-        <button onclick="createRoom()">ODA KUR (HOST / GRIEVER)</button>
-        <br><br>
-        <input type="text" id="room-code" placeholder="Oda Kodu Gir">
-        <button onclick="joinRoom()" style="background:#3a2512;">ODAYA KATIL (KAYRANÇI)</button>
-        <p id="status" style="margin-top:15px; font-size:12px; color:#ffcc00;"></p>
+  <div id="hud">
+    <div id="top">
+      <div id="title">LABİRENT /// ÖLÜMCÜL KALIŞ</div>
+      <div id="status">Oyun hazırlanıyor...</div>
     </div>
 
-    <!-- HUD -->
-    <div id="hud">
-        ROL: <b id="role-text">...</b><br>
-        ŞİFRE KÜPLERİ: <b id="cube-count" style="color:#00ffff;">0 / 4</b><br>
-        ZAMAN DÖNGÜSÜ: <span id="day-count">1. GÜN</span>
-    </div>
-
-    <div id="timer-box">
-        TAŞ KAPI: <b id="door-status" style="color:#00ff00;">AÇIK (GÜNDÜZ)</b><br>
-        ASANSÖR (KUTU): <b id="elevator-status" style="color:#ffcc00;">4 Gün Kaldı</b>
+    <div id="players">
+      Oyuncular: <b id="playerCount">1</b>
+      <div id="playerNames"></div>
     </div>
 
     <div id="crosshair"></div>
 
-    <script>
-        let peer, conn, isHost = false, myId;
-        let myRole = "Runner";
-        let scene, camera, renderer, flashlight, dirLight, ambientLight;
-        let otherMesh, doorMesh, elevatorMesh;
-        let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
-        
-        let dayNumber = 1;
-        let isDayTime = true;
-        let keyCubes = [];
+    <div id="hint">
+      WASD: Hareket | Fare: Bakış | Shift: Koş | F: Fener
+    </div>
 
-        // Labirent Düzeni
-        const map = [
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1],
-            [1,0,1,0,1,0,1,1,1,1,1,0,1,0,1,0,1],
-            [1,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,1],
-            [1,0,1,1,1,0,1,0,0,0,1,0,1,1,1,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,1,1,0,1,1,1,0,0,0,1,1,1,0,1,1,1],
-            [1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1],
-            [1,0,1,1,1,0,0,0,0,0,0,0,1,1,1,0,1],
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-        ];
+    <div id="mobileControls">
+      <div id="stickArea">
+        <div id="stick"></div>
+      </div>
+      <div id="lookPad">KAMERAYI KONTROL ET</div>
+      <button id="flashButton">🔦</button>
+      <button id="runButton">KOŞ</button>
+    </div>
+  </div>
 
-        function createRoom() {
-            const code = Math.floor(1000 + Math.random() * 9000).toString();
-            peer = new Peer("mazerunner-" + code);
-            document.getElementById("status").innerText = "Kayran oluşturuluyor...";
+  <div id="overlay">
+    <section class="panel">
+      <div class="kicker">ÇEVRİM İÇİ HAYATTA KALMA</div>
+      <h1>LABİRENT:<br>
+        <span>ÖLÜMCÜL KALIŞ</span>
+      </h1>
 
-            peer.on('open', id => {
-                isHost = true; myId = id;
-                document.getElementById("status").innerHTML = `Oda Kodu: <b style="font-size:16px; color:#d2b48c;">${code}</b><br>Kayrançıların Katılması Bekleniyor...`;
-            });
+      <p class="desc">
+        Karanlık labirentte çıkışı bul.
+        Tehlikelerden kaç, el fenerini kullan
+        ve hayatta kal.
+      </p>
 
-            peer.on('connection', c => {
-                conn = c;
-                setupConnection();
-                setTimeout(() => {
-                    myRole = "Griever";
-                    conn.send({ type: 'init', role: 'Runner' });
-                    startGame();
-                }, 1000);
-            });
-        }
+      <label for="nickname">Oyuncu adın</label>
+      <input id="nickname" maxlength="18"
+             placeholder="Oyuncu adını yaz">
 
-        function joinRoom() {
-            const code = document.getElementById("room-code").value.trim();
-            if(!code) return alert("Oda kodu gir!");
-            peer = new Peer();
-            document.getElementById("status").innerText = "Kayrana giriliyor...";
+      <label for="serverUrl">Çok oyunculu sunucu adresi</label>
+      <input id="serverUrl"
+             placeholder="wss://sunucu-adresin">
 
-            peer.on('open', id => {
-                myId = id;
-                conn = peer.connect("mazerunner-" + code);
-                setupConnection();
-            });
-        }
+      <p class="small">
+        Sunucu adresi boşsa tek oyunculu deneme modu açılır.
+        İnternetten birlikte oynamak için WebSocket sunucusu gerekir.
+      </p>
 
-        function setupConnection() {
-            conn.on('open', () => {
-                conn.on('data', data => {
-                    if (data.type === 'init') {
-                        myRole = data.role;
-                        startGame();
-                    } else if (data.type === 'move') {
-                        if (otherMesh) otherMesh.position.set(data.x, data.y, data.z);
-                    } else if (data.type === 'win') {
-                        alert(data.msg);
-                        location.reload();
-                    }
-                });
-            });
-        }
+      <button id="startButton">LABİRENTE GİR</button>
+      <p id="error"></p>
 
-        function startGame() {
-            document.getElementById("lobby").style.display = "none";
-            document.getElementById("hud").style.display = "block";
-            document.getElementById("timer-box").style.display = "block";
-            document.getElementById("crosshair").style.display = "block";
+      <div class="controlsNote">
+        PC: WASD, fare, Shift, F<br>
+        Telefon: Joystick, dokunmatik kamera, koşma ve fener
+      </div>
+    </section>
+  </div>
 
-            document.getElementById("role-text").innerText = myRole === "Griever" ? "IZDIRAP VEREN (GRIEVER)" : "KAYRANÇI (RUNNER)";
-            document.getElementById("role-text").style.color = myRole === "Griever" ? "#ff3333" : "#00ffff";
-
-            scene = new THREE.Scene();
-            scene.fog = new THREE.FogExp2(0x1a120c, 0.04);
-
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            renderer = new THREE.WebGLRenderer({ antialias: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            document.body.appendChild(renderer.domElement);
-
-            // Güneş / Gündüz Işığı
-            dirLight = new THREE.DirectionalLight(0xfff5ea, 1.3);
-            dirLight.position.set(30, 50, 30);
-            scene.add(dirLight);
-
-            ambientLight = new THREE.AmbientLight(0x555555);
-            scene.add(ambientLight);
-
-            flashlight = new THREE.SpotLight(0xffffff, 0, 20, Math.PI / 5, 0.5);
-            scene.add(flashlight);
-            scene.add(flashlight.target);
-
-            // ZEMİN & YAŞAM ALANI (GLADE)
-            const floorGeo = new THREE.PlaneGeometry(60, 60);
-            const floorMat = new THREE.MeshBasicMaterial({ color: 0x3a4f28 }); // Yeşil Çim
-            const floor = new THREE.Mesh(floorGeo, floorMat);
-            floor.rotation.x = -Math.PI / 2;
-            scene.add(floor);
-
-            // KAYRAN EVLERİ (Agaların Yaşam Alanı)
-            createHut(-5, 0, 5);
-            createHut(5, 0, 5);
-
-            // LABİRENT DUVARLARI (Devasa Taş Yüzeyler)
-            const wallGeo = new THREE.BoxGeometry(2, 7, 2);
-            const wallMat = new THREE.MeshBasicMaterial({ color: 0x3d3a37 });
-
-            for (let r = 0; r < map.length; r++) {
-                for (let c = 0; c < map[r].length; c++) {
-                    if (map[r][c] === 1) {
-                        const wall = new THREE.Mesh(wallGeo, wallMat);
-                        wall.position.set(c * 2 - 16, 3.5, r * 2 - 9);
-                        scene.add(wall);
-                    }
-                }
-            }
-
-            // GERÇEKÇİ ASANSÖR (KUTU / THE BOX)
-            const elevGeo = new THREE.BoxGeometry(3, 0.2, 3);
-            const elevMat = new THREE.MeshBasicMaterial({ color: 0x111111 });
-            elevatorMesh = new THREE.Mesh(elevGeo, elevMat);
-            elevatorMesh.position.set(0, 0.1, 0);
-            scene.add(elevatorMesh);
-
-            // DEVASA MEKANİK TAŞ KAPI
-            const doorGeo = new THREE.BoxGeometry(4, 7, 0.6);
-            const doorMat = new THREE.MeshBasicMaterial({ color: 0x1c1a18 });
-            doorMesh = new THREE.Mesh(doorGeo, doorMat);
-            doorMesh.position.set(0, 3.5, -3);
-            scene.add(doorMesh);
-
-            // RAKİP MODELİ
-            const otherGeo = new THREE.SphereGeometry(0.6, 16, 16);
-            const otherMat = new THREE.MeshBasicMaterial({ color: myRole === "Griever" ? 0x00ffff : 0xff0000 });
-            otherMesh = new THREE.Mesh(otherGeo, otherMat);
-            scene.add(otherMesh);
-
-            camera.position.set(0, 1.2, 3); // Kayran'da başlarsın
-
-            document.body.addEventListener('click', () => document.body.requestPointerLock());
-            document.addEventListener('mousemove', e => {
-                if (document.pointerLockElement === document.body) {
-                    camera.rotation.y -= e.movementX * 0.002;
-                }
-            });
-
-            window.addEventListener('keydown', e => {
-                if (e.code === 'KeyW') moveForward = true;
-                if (e.code === 'KeyS') moveBackward = true;
-                if (e.code === 'KeyA') moveLeft = true;
-                if (e.code === 'KeyD') moveRight = true;
-            });
-
-            window.addEventListener('keyup', e => {
-                if (e.code === 'KeyW') moveForward = false;
-                if (e.code === 'KeyS') moveBackward = false;
-                if (e.code === 'KeyA') moveLeft = false;
-                if (e.code === 'KeyD') moveRight = false;
-            });
-
-            // Gece/Gündüz Döngüsü (15 saniyede bir)
-            setInterval(toggleDayNightCycle, 15000);
-
-            animate();
-        }
-
-        // Tahta Kulübe Oluşturucu (Yaşam Alanı İçin)
-        function createHut(x, y, z) {
-            const hutGeo = new THREE.BoxGeometry(2.5, 2, 2.5);
-            const hutMat = new THREE.MeshBasicMaterial({ color: 0x5c4033 });
-            const hut = new THREE.Mesh(hutGeo, hutMat);
-            hut.position.set(x, y + 1, z);
-            scene.add(hut);
-        }
-
-        function toggleDayNightCycle() {
-            isDayTime = !isDayTime;
-
-            if (isDayTime) {
-                dayNumber++;
-                document.getElementById("day-count").innerText = dayNumber + ". GÜN";
-                document.getElementById("door-status").innerText = "AÇIK (GÜNDÜZ)";
-                document.getElementById("door-status").style.color = "#00ff00";
-
-                dirLight.intensity = 1.3;
-                ambientLight.color.setHex(0x555555);
-                scene.fog.color.setHex(0x1a120c);
-                flashlight.intensity = 0;
-
-                // Kapı Yavaşça Açılır
-                doorMesh.position.y = 3.5;
-
-                // Her 5 Günde Bir Asansör Gelir
-                if (dayNumber % 5 === 0) {
-                    document.getElementById("elevator-status").innerText = "KUTU GELDİ! (MALZEME ALINDI)";
-                    document.getElementById("elevator-status").style.color = "#00ff00";
-                    elevatorMesh.position.y = 0.5;
-                } else {
-                    document.getElementById("elevator-status").innerText = (5 - (dayNumber % 5)) + " Gün Kaldı";
-                    document.getElementById("elevator-status").style.color = "#ffcc00";
-                    elevatorMesh.position.y = 0.1;
-                }
-
-            } else {
-                document.getElementById("door-status").innerText = "KAPALI (GECE - IZDIRAP VERENLER AÇ)";
-                document.getElementById("door-status").style.color = "#ff0000";
-
-                dirLight.intensity = 0.05;
-                ambientLight.color.setHex(0x050505);
-                scene.fog.color.setHex(0x000000);
-                flashlight.intensity = 2; // Fener Yanar
-
-                // Kapı Kapanır!
-                doorMesh.position.y = -3.5;
-            }
-        }
-
-        function animate() {
-            requestAnimationFrame(animate);
-
-            const speed = myRole === "Griever" ? 0.08 : 0.065;
-            const dir = new THREE.Vector3();
-            camera.getWorldDirection(dir);
-            dir.y = 0;
-
-            if (moveForward) camera.position.addScaledVector(dir, speed);
-            if (moveBackward) camera.position.addScaledVector(dir, -speed);
-
-            flashlight.position.copy(camera.position);
-            flashlight.target.position.copy(camera.position).add(dir);
-
-            if (conn) {
-                conn.send({
-                    type: 'move',
-                    x: camera.position.x, y: camera.position.y, z: camera.position.z
-                });
-            }
-
-            // Yakalanma
-            if (myRole === "Griever" && camera.position.distanceTo(otherMesh.position) < 1.2) {
-                alert("IZDIRAP VEREN KAYRANÇIYI AVLAYIP SANCAKLADI!");
-                conn.send({ type: 'win', msg: 'Izdırap Veren kurbanı yakaladı!' });
-                location.reload();
-            }
-
-            renderer.render(scene, camera);
-        }
-    </script>
+  <script type="module" src="./client.js"></script>
 </body>
 </html>
