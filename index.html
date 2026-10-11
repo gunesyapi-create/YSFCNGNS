@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHRONOS-PRIME: ONLINE LOBBY</title>
-    <!-- Ücretsiz Online Altyapı (PeerJS) -->
+    <title>NIGHTMARE CORRIDOR - KORKU OYUNU</title>
     <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
     <style>
         * { box-sizing: border-box; }
         body {
             margin: 0;
-            background: #090a10;
-            color: #00ffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #030305;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -20,266 +19,266 @@
             overflow: hidden;
         }
 
-        /* GİRİŞ VE LOBİ EKRANI */
         #lobby-screen {
-            background: rgba(18, 20, 32, 0.95);
-            border: 2px solid #00ffff;
-            box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+            background: rgba(10, 10, 15, 0.98);
+            border: 2px solid #550000;
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.2);
             padding: 30px;
-            border-radius: 12px;
+            border-radius: 10px;
             text-align: center;
             width: 380px;
         }
 
-        h1 {
-            margin-top: 0;
-            font-size: 24px;
-            color: #00ffff;
-            text-shadow: 0 0 10px #00ffff;
-            letter-spacing: 2px;
-        }
-
-        .input-group {
-            margin: 15px 0;
-            text-align: left;
-        }
-
-        label {
-            display: block;
-            font-size: 12px;
-            margin-bottom: 5px;
-            color: #ff00ff;
-        }
-
+        h1 { color: #ff2222; text-shadow: 0 0 10px #ff0000; letter-spacing: 3px; margin-top: 0; }
+        .input-group { margin: 15px 0; text-align: left; }
+        label { display: block; font-size: 11px; margin-bottom: 5px; color: #888; }
         input {
-            width: 100%;
-            padding: 10px;
-            background: #090a10;
-            border: 1px solid #00ffff;
-            color: #fff;
-            border-radius: 6px;
-            outline: none;
-            font-size: 14px;
+            width: 100%; padding: 10px; background: #050508; border: 1px solid #550000;
+            color: #fff; border-radius: 4px; outline: none; font-size: 14px;
         }
-
         button {
-            width: 100%;
-            padding: 12px;
-            margin-top: 10px;
-            background: #00ffff;
-            color: #000;
-            border: none;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 14px;
+            width: 100%; padding: 12px; margin-top: 10px; background: #880000; color: #fff;
+            border: none; font-weight: bold; border-radius: 4px; cursor: pointer; transition: 0.2s; font-size: 14px;
         }
+        button:hover { background: #cc0000; box-shadow: 0 0 15px #ff0000; }
+        #status { margin-top: 15px; font-size: 13px; color: #ffaa00; }
 
-        button:hover {
-            background: #ff00ff;
-            color: #fff;
-            box-shadow: 0 0 15px #ff00ff;
-        }
-
-        .divider {
-            margin: 20px 0;
-            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
-        }
-
-        #status {
-            margin-top: 15px;
-            font-size: 13px;
-            color: #ffcc00;
-        }
-
-        /* OYUN EKRANI */
-        #game-screen {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        canvas {
-            border: 2px solid #00ffff;
-            background: #10121d;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
-            border-radius: 8px;
-        }
-
-        .controls-info {
-            margin-top: 10px;
-            font-size: 13px;
-            color: #aaa;
+        #game-screen { display: none; flex-direction: column; align-items: center; position: relative; }
+        canvas { border: 2px solid #222; background: #000; box-shadow: 0 0 30px rgba(0,0,0,0.9); }
+        
+        #hud {
+            position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.85);
+            padding: 10px 15px; border-radius: 4px; border: 1px solid #440000; font-size: 13px; color: #ff4444;
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. GİRİŞ & ARAMA EKRANI -->
+    <!-- LOBİ -->
     <div id="lobby-screen">
-        <h1>CHRONOS-PRIME</h1>
-        <p style="font-size:12px; color:#aaa;">Ücretsiz Online 2D Arena</p>
+        <h1>NIGHTMARE</h1>
+        <p style="font-size:11px; color:#666;">Karanlıkta Hayatta Kalma Oyunu</p>
         
         <div class="input-group">
-            <label>NICKNAME (İSMİN)</label>
-            <input type="text" id="nickname" value="Oyuncu1" maxlength="10">
+            <label>OYUNCU ADI</label>
+            <input type="text" id="nickname" value="Kurban" maxlength="10">
         </div>
 
-        <button onclick="createRoom()">ODAKUR (HOST)</button>
-
-        <div class="divider"></div>
-
+        <button onclick="createRoom()">ODA KUR (HOST)</button>
+        <div style="margin: 15px 0; border-bottom: 1px solid #222;"></div>
         <div class="input-group">
-            <label>ODA KODU GİR</label>
-            <input type="text" id="room-code-input" placeholder="Örn: 4821">
+            <label>ODA KODU</label>
+            <input type="text" id="room-code-input" placeholder="Örn: 6666">
         </div>
-
-        <button onclick="joinRoom()">ODAYA KATIL</button>
-
-        <div id="status">Lobiye giriş yap bekleniyor...</div>
+        <button onclick="joinRoom()" style="background:#004444;">ODAYA KATIL</button>
+        <div id="status">Sistem hazır...</div>
     </div>
 
-    <!-- 2. OYUN EKRANI -->
+    <!-- OYUN -->
     <div id="game-screen">
-        <canvas id="gameCanvas" width="800" height="450"></canvas>
-        <div class="controls-info">Kontroller: <b>W, A, S, D</b> ile hareket et. Karşıdaki arkadaşını takip et!</div>
+        <div id="hud">
+            Rol: <b id="my-role" style="color:#fff;">Yükleniyor...</b><br>
+            Toplanan Sigortalar: <b id="sigorta-count">0</b> / 3
+        </div>
+        <canvas id="gameCanvas" width="800" height="500"></canvas>
     </div>
 
     <script>
-        let peer = null;
-        let conn = null;
-        let isHost = false;
-        let myNick = "Oyuncu";
-
-        // Oyuncu Bilgileri
-        let myPos = { x: 100, y: 200, color: "#00ffff" };
-        let otherPos = { x: 700, y: 200, color: "#ff00ff", nick: "Rakip" };
+        let peer = null, conn = null, isHost = false;
+        let myNick = "Kurban", myRole = "Survivor";
+        let players = {}, myId = null;
+        
+        // Sigortalar (Toplanacak Eşyalar)
+        let sigortalar = [
+            { x: 150, y: 100, collected: false },
+            { x: 650, y: 120, collected: false },
+            { x: 400, y: 400, collected: false }
+        ];
+        let collectedCount = 0;
 
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
         const keys = {};
 
-        window.addEventListener("keydown", e => keys[e.code] = true);
+        window.addEventListener("keydown", e => {
+            keys[e.code] = true;
+            if (e.code === 'KeyE') checkSigorta();
+        });
         window.addEventListener("keyup", e => keys[e.code] = false);
 
-        // 1. ODA KURMA (HOST)
         function createRoom() {
-            myNick = document.getElementById("nickname").value || "Oyuncu";
-            const randomCode = Math.floor(1000 + Math.random() * 9000).toString();
-            
-            document.getElementById("status").innerText = "Oda kuruluyor...";
+            myNick = document.getElementById("nickname").value || "Kurban";
+            const code = Math.floor(1000 + Math.random() * 9000).toString();
+            peer = new Peer("nightmare-" + code);
+            document.getElementById("status").innerText = "Oda açılıyor...";
 
-            peer = new Peer("chronos-" + randomCode);
-
-            peer.on('open', id => {
+            peer.on('open', () => {
                 isHost = true;
-                document.getElementById("status").innerHTML = `Oda Kuruldu!<br><b>ODA KODUN: <span style="color:#00ffff; font-size:18px;">${randomCode}</span></b><br>Arkadaşına bu kodu ver!`;
+                myId = peer.id;
+                document.getElementById("status").innerHTML = `Oda Kuruldu!<br><b>KOD: <span style="color:#ff2222; font-size:18px;">${code}</span></b><br>Arkadaşın bekleniyor...`;
             });
 
-            peer.on('connection', connection => {
-                conn = connection;
+            peer.on('connection', c => {
+                conn = c;
                 setupConnection();
+                setTimeout(() => startGameAsHost(), 1000);
             });
         }
 
-        // 2. ODAYA KATILMA (CLIENT)
         function joinRoom() {
-            myNick = document.getElementById("nickname").value || "Oyuncu";
+            myNick = document.getElementById("nickname").value || "Kurban";
             const code = document.getElementById("room-code-input").value.trim();
-
-            if (!code) {
-                alert("Lütfen oda kodunu gir!");
-                return;
-            }
-
-            document.getElementById("status").innerText = "Odaya bağlanılıyor...";
-
+            if (!code) { alert("Kod gir!"); return; }
+            
             peer = new Peer();
+            document.getElementById("status").innerText = "Bağlanılıyor...";
 
             peer.on('open', id => {
-                conn = peer.connect("chronos-" + code);
+                myId = id;
+                conn = peer.connect("nightmare-" + code);
                 setupConnection();
             });
         }
 
-        // 3. BAĞLANTI SAĞLANDIĞINDA OYUNU BAŞLAT
         function setupConnection() {
             conn.on('open', () => {
                 document.getElementById("lobby-screen").style.display = "none";
                 document.getElementById("game-screen").style.display = "flex";
-
-                // İlk isim bilgisini at
-                conn.send({ type: 'init', nick: myNick });
-
-                // Oyun Döngüsünü Başlat
+                
+                players[myId] = { x: 100, y: 250, color: isHost ? "#ff2222" : "#00ffcc", nick: myNick, role: "Survivor", isDead: false };
                 requestAnimationFrame(gameLoop);
             });
 
-            // Karşı taraftan veri geldiğinde
             conn.on('data', data => {
-                if (data.type === 'init') {
-                    otherPos.nick = data.nick;
+                if (data.type === 'start') {
+                    players = data.players;
+                    myRole = players[myId].role;
+                    document.getElementById("my-roleppermint" || "my-role").innerText = myRole === "Monster" ? "CANAVAR (KATİL)" : "KURBAN (KAÇIŞÇI)";
+                    document.getElementById("my-role").style.color = myRole === "Monster" ? "#ff2222" : "#00ffcc";
                 } else if (data.type === 'move') {
-                    otherPos.x = data.x;
-                    otherPos.y = data.y;
+                    if (players[data.id]) {
+                        players[data.id].x = data.x;
+                        players[data.id].y = data.y;
+                        players[data.id].isDead = data.isDead;
+                    } else {
+                        players[data.id] = data.player;
+                    }
+                } else if (data.type === 'sigortaUpdate') {
+                    sigortalar = data.sigortalar;
+                    collectedCount = data.count;
+                    document.getElementById("sigorta-count").innerText = collectedCount;
+                } else if (data.type === 'attack') {
+                    if (players[data.targetId]) players[data.targetId].isDead = true;
                 }
             });
         }
 
-        // 4. OYUN DÖNGÜSÜ & ÇİZİM
-        function gameLoop() {
-            // Hareket Kontrolü
-            let moved = false;
-            const speed = 4;
-
-            if (keys["KeyW"] || keys["ArrowUp"]) { myPos.y -= speed; moved = true; }
-            if (keys["KeyS"] || keys["ArrowDown"]) { myPos.y += speed; moved = true; }
-            if (keys["KeyA"] || keys["ArrowLeft"]) { myPos.x -= speed; moved = true; }
-            if (keys["KeyD"] || keys["ArrowRight"]) { myPos.x += speed; moved = true; }
-
-            // Ekran Sınırları
-            myPos.x = Math.max(20, Math.min(canvas.width - 20, myPos.x));
-            myPos.y = Math.max(20, Math.min(canvas.height - 20, myPos.y));
-
-            // Konumu arkadaşına canlı gönder
-            if (moved && conn) {
-                conn.send({ type: 'move', x: myPos.x, y: myPos.y });
+        function startGameAsHost() {
+            let keysArr = Object.keys(players);
+            // Rastgele birini canavar yap
+            let monsterKey = keysArr[Math.floor(Math.random() * keysArr.length)];
+            
+            for (let k in players) {
+                players[k].role = (k === monsterKey) ? "Monster" : "Survivor";
             }
 
-            // --- ÇİZİM ---
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            myRole = players[myId].role;
+            document.getElementById("my-role").innerText = myRole === "Monster" ? "CANAVAR (KATİL)" : "KURBAN (KAÇIŞÇI)";
+            document.getElementById("my-role").style.color = myRole === "Monster" ? "#ff2222" : "#00ffcc";
 
-            // Izgara Deseni Arka Plan
-            ctx.strokeStyle = "rgba(0, 255, 255, 0.05)";
-            for(let i=0; i<canvas.width; i+=40) { ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,canvas.height); ctx.stroke(); }
-            for(let i=0; i<canvas.height; i+=40) { ctx.beginPath(); ctx.moveTo(0,i); ctx.lineTo(canvas.width,i); ctx.stroke(); }
+            conn.send({ type: 'start', players: players });
+        }
 
-            // Kendi Karakterimiz
-            drawPlayer(myPos.x, myPos.y, isHost ? "#00ffff" : "#ff00ff", myNick + " (Sen)");
+        function gameLoop() {
+            let p = players[myId];
+            if (p && !p.isDead) {
+                let moved = false;
+                let speed = myRole === "Monster" ? 4 : 3.2; // Canavar biraz daha hızlı
 
-            // Rakip/Arkadaş Karakteri
-            drawPlayer(otherPos.x, otherPos.y, isHost ? "#ff00ff" : "#00ffff", otherPos.nick);
+                if (keys["KeyW"] || keys["ArrowUp"]) { p.y -= speed; moved = true; }
+                if (keys["KeyS"] || keys["ArrowDown"]) { p.y += speed; moved = true; }
+                if (keys["KeyA"] || keys["ArrowLeft"]) { p.x -= speed; moved = true; }
+                if (keys["KeyD"] || keys["ArrowRight"]) { p.x += speed; moved = true; }
+
+                p.x = Math.max(20, Math.min(canvas.width - 20, p.x));
+                p.y = Math.max(20, Math.min(canvas.height - 20, p.y));
+
+                // Canavarsa yakındaki kurbana saldır (Q tuşu ile)
+                if (myRole === "Monster" && keys["KeyQ"]) {
+                    for (let id in players) {
+                        if (id !== myId) {
+                            let target = players[id];
+                            if (Math.hypot(p.x - target.x, p.y - target.y) < 45 && !target.isDead) {
+                                target.isDead = true;
+                                if (conn) conn.send({ type: 'attack', targetId: id });
+                                alert("Bir kurbanı avladın!");
+                            }
+                        }
+                    }
+                }
+
+                if (moved && conn) {
+                    conn.send({ type: 'move', id: myId, x: p.x, y: p.y, isDead: p.isDead, player: p });
+                }
+            }
+
+            // --- ÇİZİM VE KARANLIK EFEKTİ ---
+            ctx.fillStyle = "#050508";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Labirent Duvarları / Engeller
+            ctx.fillStyle = "#1a1a24";
+            ctx.fillRect(300, 100, 40, 250);
+            ctx.fillRect(500, 200, 200, 40);
+
+            // Sigortaları Çiz
+            sigortalar.forEach(s => {
+                if (!s.collected) {
+                    ctx.fillStyle = "#ffcc00";
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = "#ffcc00";
+                    ctx.fillRect(s.x - 8, s.y - 8, 16, 16);
+                    ctx.shadowBlur = 0;
+                }
+            });
+
+            // Oyuncuları Çiz
+            for (let id in players) {
+                let pl = players[id];
+                ctx.fillStyle = pl.isDead ? "#333" : (pl.role === "Monster" ? "#ff0000" : "#00ffcc");
+                ctx.beginPath(); ctx.arc(pl.x, pl.y, 14, 0, Math.PI * 2); ctx.fill();
+
+                ctx.fillStyle = "#fff";
+                ctx.font = "11px sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText(pl.nick, pl.x, pl.y - 20);
+            }
+
+            // --- EL FENERİ / KARANLIK MASKESİ (FOG OF WAR) ---
+            if (p && !p.isDead) {
+                let gradient = ctx.createRadialGradient(p.x, p.y, 30, p.x, p.y, myRole === "Monster" ? 180 : 130);
+                gradient.addColorStop(0, "rgba(0,0,0,0)");
+                gradient.addColorStop(1, "rgba(0,0,0,0.95)");
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
 
             requestAnimationFrame(gameLoop);
         }
 
-        function drawPlayer(x, y, color, label) {
-            ctx.fillStyle = color;
-            ctx.shadowBlur = 15;
-            ctx.shadowColor = color;
-            
-            // Karakter Gövdesi
-            ctx.beginPath();
-            ctx.arc(x, y, 15, 0, Math.PI * 2);
-            ctx.fill();
+        function checkSigorta() {
+            let p = players[myId];
+            if (!p || myRole === "Monster" || p.isDead) return;
 
-            // İsim Etiketi
-            ctx.shadowBlur = 0;
-            ctx.fillStyle = "#ffffff";
-            ctx.font = "12px sans-serif";
-            ctx.textAlign = "center";
-            ctx.fillText(label, x, y - 22);
+            sigortalar.forEach(s => {
+                if (!s.collected && Math.hypot(p.x - s.x, p.y - s.y) < 35) {
+                    s.collected = true;
+                    collectedCount++;
+                    document.getElementById("sigorta-count").innerText = collectedCount;
+                    if (conn) conn.send({ type: 'sigortaUpdate', sigortalar: sigortalar, count: collectedCount });
+                    alert("Sigorta bulundu! (" + collectedCount + "/3)");
+                }
+            });
         }
     </script>
 </body>
