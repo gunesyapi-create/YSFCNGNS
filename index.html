@@ -86,7 +86,7 @@ section{padding:85px 0}
 .nav-links{display:flex;align-items:center;gap:24px}
 .nav-links a{font-size:12px;font-weight:700;color:#b9b9c9;transition:.2s}
 .nav-links a:hover{color:var(--gold)}
-.nav-actions{display:flex;align-items:center;gap:9px}
+.nav-actions{display:flex;align-items:center;gap:10px}
 .mobile-toggle{display:none;background:none;border:0;color:white;font-size:23px}
 
 /* ONLINE PLAYER BADGE */
@@ -108,9 +108,9 @@ section{padding:85px 0}
     border-bottom:1px solid var(--border);gap:20px;
   }
   .nav-links.open{display:flex}
-  .nav-actions .admin-nav{display:none}
   .mobile-toggle{display:block}
 }
+
 /* HERO */
 .hero{
   min-height:640px;display:flex;align-items:center;position:relative;
@@ -176,6 +176,7 @@ section{padding:85px 0}
  .hero-visual{min-height:350px}
  .hero{padding-top:60px}
 }
+
 /* SERVER STATUS */
 .status-wrap{margin-top:-28px;position:relative;z-index:5}
 .status-bar{
@@ -194,6 +195,7 @@ section{padding:85px 0}
   width:38px;height:38px;border-radius:10px;background:#ffb52e15;
   border:1px solid #ffb52e35;color:var(--gold);
 }
+
 /* WORLDS */
 .world-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .world-card{
@@ -212,6 +214,7 @@ section{padding:85px 0}
 .world-content p{font-size:12px;line-height:1.7;color:var(--muted);margin-bottom:14px}
 .world-action{font-size:11px;color:var(--gold);font-weight:800}
 @media(max-width:750px){.world-grid{grid-template-columns:1fr}}
+
 /* STORE */
 .store-toolbar{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;margin-bottom:26px}
 .category-list{display:flex;gap:8px;flex-wrap:wrap}
@@ -232,15 +235,15 @@ section{padding:85px 0}
 }
 .product-card:hover{transform:translateY(-5px);border-color:#ffb52e55;box-shadow:0 15px 40px #0003}
 .product-art{
-  height:170px;display:grid;place-items:center;position:relative;overflow:hidden;
+  height:160px;display:grid;place-items:center;position:relative;overflow:hidden;
   background:radial-gradient(ellipse at 50% 60%,#ffb52e18,transparent 65%),#ffffff03;
-  border-bottom:1px solid var(--border);
+  border-bottom:1px solid var(--border);padding:15px;
 }
-.product-art img{
-  width:96px;height:96px;object-fit:contain;image-rendering:pixelated;
-  filter:drop-shadow(0 12px 16px #0007);transition:.3s;
+.product-art img, .product-art svg{
+  width:90px;height:90px;object-fit:contain;image-rendering:pixelated;
+  filter:drop-shadow(0 10px 14px #0008);transition:.3s;
 }
-.product-card:hover .product-art img{transform:scale(1.12) rotate(-3deg)}
+.product-card:hover .product-art img, .product-card:hover .product-art svg{transform:scale(1.12) rotate(-3deg)}
 .product-label{position:absolute;top:12px;left:12px}
 .product-info{padding:16px}
 .product-info h3{font-size:14px;margin-bottom:6px}
@@ -253,8 +256,9 @@ section{padding:85px 0}
 }
 .buy-btn:hover{background:var(--gold);color:#17110a}
 @media(max-width:1000px){.product-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:650px){.product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.product-art{height:135px}.product-info{padding:12px}.product-art img{width:75px;height:75px}.product-info h3{font-size:12px}.price{font-size:14px}.buy-btn{padding:9px 8px}}
+@media(max-width:650px){.product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.product-art{height:130px}.product-info{padding:12px}.product-art img,.product-art svg{width:70px;height:70px}.product-info h3{font-size:12px}.price{font-size:14px}.buy-btn{padding:9px 8px}}
 @media(max-width:380px){.product-grid{grid-template-columns:1fr}}
+
 /* FEATURES */
 .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .feature{
@@ -268,6 +272,7 @@ section{padding:85px 0}
 .feature h3{font-size:15px;margin-bottom:9px}
 .feature p{font-size:12px;color:var(--muted);line-height:1.8}
 @media(max-width:750px){.feature-grid{grid-template-columns:1fr}}
+
 /* NEWS */
 .news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .news-card{border:1px solid var(--border);border-radius:16px;background:#151520;overflow:hidden}
@@ -277,6 +282,7 @@ section{padding:85px 0}
 .news-body p{font-size:12px;color:var(--muted);line-height:1.8}
 .news-date{font-size:10px;color:var(--gold)}
 @media(max-width:750px){.news-grid{grid-template-columns:1fr}}
+
 /* CTA / FOOTER */
 .cta{
   padding:48px 30px;border:1px solid #ffb52e33;border-radius:22px;text-align:center;
@@ -290,6 +296,7 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:80px}
 .socials{display:flex;gap:10px}
 .socials a{width:38px;height:38px;display:grid;place-items:center;background:#ffffff08;border:1px solid var(--border);border-radius:11px;color:#bdbdce}
 .socials a:hover{color:var(--gold);border-color:#ffb52e55}
+
 /* MODALS */
 .modal-backdrop{
   position:fixed;inset:0;z-index:2000;background:#000b;backdrop-filter:blur(8px);
@@ -315,7 +322,7 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:80px}
 .modal-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 .modal-actions .btn{flex:1}
 .modal-product{text-align:center;padding:15px 0}
-.modal-product img{width:110px;height:110px;margin-bottom:15px;object-fit:contain}
+.modal-product img, .modal-product svg{width:110px;height:110px;margin-bottom:15px;object-fit:contain}
 .modal-product h3{font-size:18px;margin:12px 0 6px}
 .modal-product p{font-size:12px;line-height:1.8;color:var(--muted)}
 .modal-product .price{font-size:24px;margin:14px}
@@ -334,10 +341,12 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:80px}
 .admin-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
 .admin-tab{background:#ffffff08;border:1px solid var(--border);color:#aaaabd;padding:9px 12px;border-radius:9px;font-size:11px;font-weight:800}
 .admin-tab.active{color:var(--gold);border-color:#ffb52e66}
+.admin-divider{margin:25px 0 15px;border:0;border-top:1px solid var(--border)}
 @media(max-width:650px){.admin-grid{grid-template-columns:1fr}.status-bar{padding:17px}.server-ip code{font-size:11px}.hero-stats{gap:18px}}
 </style>
 </head>
 <body>
+
 <header class="navbar">
   <div class="container nav-inner">
     <a href="#anasayfa" class="logo">
@@ -358,12 +367,13 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:80px}
         <span>Aktif: <strong id="headerOnline" class="gold">48</strong>/100</span>
       </div>
 
-      <a class="btn btn-primary" href="#magaza"><i class="fa-solid fa-cart-shopping"></i> Mağaza</a>
-      <button class="btn btn-secondary admin-nav" onclick="openLogin()" aria-label="Admin Paneli"><i class="fa-solid fa-shield-halved"></i></button>
+      <!-- İstediğin Kayıt / Giriş Yap Butonu -->
+      <button class="btn btn-primary" onclick="openLogin()"><i class="fa-solid fa-user-plus"></i> Kayıt / Giriş Yap</button>
       <button class="mobile-toggle" onclick="toggleMenu()" aria-label="Menüyü aç"><i class="fa-solid fa-bars"></i></button>
     </div>
   </div>
 </header>
+
 <main>
 <section class="hero" id="anasayfa">
   <div class="container hero-grid">
@@ -392,6 +402,7 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:80px}
     </div>
   </div>
 </section>
+
 <div class="container status-wrap">
   <div class="status-bar">
     <div class="status-left">
@@ -407,6 +418,7 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:80px}
     </div>
   </div>
 </div>
+
 <section id="dunyalar">
   <div class="container">
     <div class="section-head">
@@ -445,6 +457,7 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:80px}
     </div>
   </div>
 </section>
+
 <section id="magaza" style="background:linear-gradient(180deg,transparent,#15152050,transparent)">
   <div class="container">
     <div class="section-head">
@@ -468,6 +481,7 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:80px}
     </div>
   </div>
 </section>
+
 <section id="ozellikler">
   <div class="container">
     <div class="section-head">
@@ -509,6 +523,7 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:80px}
     </div>
   </div>
 </section>
+
 <section id="duyurular">
   <div class="container">
     <div class="section-head">
@@ -519,6 +534,7 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:80px}
     <div class="news-grid" id="newsGrid"></div>
   </div>
 </section>
+
 <section>
   <div class="container">
     <div class="cta">
@@ -530,6 +546,7 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:80px}
   </div>
 </section>
 </main>
+
 <footer>
   <div class="container footer-inner">
     <a href="#anasayfa" class="logo">
@@ -544,7 +561,8 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:80px}
     </div>
   </div>
 </footer>
-<!-- ÜRÜN DETAYI -->
+
+<!-- ÜRÜN DETAY MODALI -->
 <div class="modal-backdrop" id="productModal" onclick="backdropClose(event,'productModal')">
   <div class="modal">
     <div class="modal-header">
@@ -554,32 +572,43 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:80px}
     <div id="productModalContent"></div>
   </div>
 </div>
-<!-- YÖNETİCİ GİRİŞİ -->
+
+<!-- KAYIT / OYUNCU GİRİŞİ & YÖNETİCİ GİRİŞİ MODALI -->
 <div class="modal-backdrop" id="loginModal" onclick="backdropClose(event,'loginModal')">
   <div class="modal">
     <div class="modal-header">
-      <h2><i class="fa-solid fa-shield-halved gold"></i> YÖNETİCİ GİRİŞİ</h2>
+      <h2><i class="fa-solid fa-user gold"></i> HESAP / YÖNETİCİ GİRİŞİ</h2>
       <button class="close-modal" onclick="closeModal('loginModal')">&times;</button>
     </div>
+    
+    <!-- Oyuncu Hızlı Kayıt/Katılım Bilgisi -->
+    <div style="background:#ffffff05;padding:15px;border-radius:12px;border:1px solid var(--border);margin-bottom:20px;">
+      <h3 style="font-size:13px;color:var(--gold);margin-bottom:6px"><i class="fa-solid fa-gamepad"></i> Oyuna Doğrudan Katılın!</h3>
+      <p class="muted" style="font-size:11px;line-height:1.6">Minecraft sunucumuza katılmak için ek bir site kaydı gerekmez. Oyunda <code>/register [şifre] [şifre]</code> yazarak kolayca kayıt olabilirsiniz!</p>
+    </div>
+
+    <!-- Yönetici Giriş Formu (Alt Tarafta) -->
+    <hr class="admin-divider">
+    <h3 style="font-size:13px;margin-bottom:12px;color:white"><i class="fa-solid fa-shield-halved gold"></i> Yönetici (Admin) Girişi</h3>
     <form onsubmit="adminLogin(event)">
       <div class="form-group">
-        <label for="adminUser">Kullanıcı adı</label>
-        <input class="form-control" id="adminUser" autocomplete="username" required>
+        <label for="adminUser">Yönetici Kullanıcı Adı</label>
+        <input class="form-control" id="adminUser" placeholder="Admin" autocomplete="username" required>
       </div>
       <div class="form-group">
         <label for="adminPass">Şifre</label>
-        <input class="form-control" id="adminPass" type="password" autocomplete="current-password" required>
+        <input class="form-control" id="adminPass" type="password" placeholder="••••••" autocomplete="current-password" required>
       </div>
-      <button class="btn btn-primary" style="width:100%">Giriş Yap <i class="fa-solid fa-arrow-right"></i></button>
-      <p class="muted" style="font-size:10px;line-height:1.7;margin-top:15px">Not: Bu örnek yönetici girişi tarayıcı tarafında çalışır.</p>
+      <button class="btn btn-primary" style="width:100%"><i class="fa-solid fa-lock-open"></i> Yönetici Olarak Giriş Yap</button>
     </form>
   </div>
 </div>
-<!-- YÖNETİCİ PANELİ -->
+
+<!-- YÖNETİCİ PANELİ MODALI -->
 <div class="modal-backdrop" id="adminModal" onclick="backdropClose(event,'adminModal')">
   <div class="modal admin-panel">
     <div class="modal-header">
-      <div><div class="eyebrow" style="margin-bottom:5px">GÜNEŞCRAFT</div><h2>YÖNETİCİ PANELİ</h2></div>
+      <div><div class="eyebrow" style="margin-bottom:5px">GÜNEŞCRAFT NETWORK</div><h2>YÖNETİCİ PANELİ</h2></div>
       <button class="close-modal" onclick="closeModal('adminModal')">&times;</button>
     </div>
     <div class="admin-tabs">
@@ -588,65 +617,99 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:80px}
       <button class="admin-tab" onclick="adminTab('settings',this)">Site Ayarları</button>
     </div>
     <div id="adminProducts">
-      <h3 style="font-size:14px;margin-bottom:15px">Yeni ürün ekle</h3>
+      <h3 style="font-size:14px;margin-bottom:15px">Yeni Ürün Ekle</h3>
       <form onsubmit="addProduct(event)">
         <div class="admin-grid">
-          <div class="form-group"><label for="newName">Ürün adı</label><input class="form-control" id="newName" required></div>
-          <div class="form-group"><label for="newPrice">Fiyat (₺)</label><input class="form-control" id="newPrice" type="number" min="0" step="0.01" required></div>
-          <div class="form-group"><label for="newCategory">Kategori</label>
+          <div class="form-group"><label for="newName">Ürün Adı</label><input class="form-control" id="newName" placeholder="Örn: VIP Paketi" required></div>
+          <div class="form-group"><label for="newPrice">Fiyat (₺)</label><input class="form-control" id="newPrice" type="number" min="0" step="0.01" placeholder="99" required></div>
+          <div class="form-group">
+            <label for="newCategory">Kategori</label>
             <select class="form-control" id="newCategory">
-              <option value="spawner">Spawner</option><option value="vip">VIP</option><option value="item">Eşya</option>
+              <option value="spawner">Spawner</option>
+              <option value="vip">VIP</option>
+              <option value="item">Eşya</option>
             </select>
           </div>
-          <div class="form-group"><label for="newImage">Görsel URL'si</label><input class="form-control" id="newImage" placeholder="https://..." required></div>
-          <div class="form-group" style="grid-column: 1 / -1;"><label for="newDescription">Açıklama</label><input class="form-control" id="newDescription" value="GüneşCraft mağaza ürünü."></div>
+          <!-- Kutu Görsel Tipi Seçimi -->
+          <div class="form-group">
+            <label for="newBoxType">Kutu / Görsel Tipi Seçin</label>
+            <select class="form-control" id="newBoxType">
+              <option value="spawner">🧱 Spawner Kutusu</option>
+              <option value="chest">📦 Hazine Kasası</option>
+              <option value="vip_gold">👑 VIP Altın Kask</option>
+              <option value="vip_diamond">💎 VIP Elmas Kask</option>
+              <option value="diamond">💎 Elmas Paketi</option>
+              <option value="key">🗝️ Kasa Anahtarı</option>
+              <option value="custom">🌐 Özel URL Kullan</option>
+            </select>
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label for="newImage">Özel Görsel URL'si (Opsiyonel - Kutu tipini 'Özel URL' seçtiyseniz)</label>
+            <input class="form-control" id="newImage" placeholder="https://...">
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label for="newDescription">Açıklama</label>
+            <input class="form-control" id="newDescription" value="GüneşCraft mağaza ürünü.">
+          </div>
         </div>
-        <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> Ürün Ekle</button>
+        <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> Ürünü Ekle</button>
       </form>
       <div class="admin-list" id="adminProductList"></div>
     </div>
+    
     <div id="adminNews" class="hidden">
-      <h3 style="font-size:14px;margin-bottom:15px">Yeni duyuru ekle</h3>
+      <h3 style="font-size:14px;margin-bottom:15px">Yeni Duyuru Ekle</h3>
       <form onsubmit="addNews(event)">
-        <div class="form-group"><label for="newsTitle">Duyuru başlığı</label><input class="form-control" id="newsTitle" required></div>
+        <div class="form-group"><label for="newsTitle">Duyuru Başlığı</label><input class="form-control" id="newsTitle" required></div>
         <div class="form-group"><label for="newsText">Açıklama</label><textarea class="form-control" id="newsText" rows="3" required></textarea></div>
         <div class="form-group"><label for="newsEmoji">Emoji / İkon</label><input class="form-control" id="newsEmoji" value="📢"></div>
         <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> Duyuru Ekle</button>
       </form>
       <div class="admin-list" id="adminNewsList"></div>
     </div>
+    
     <div id="adminSettings" class="hidden">
-      <h3 style="font-size:14px;margin-bottom:15px">Site ayarları</h3>
+      <h3 style="font-size:14px;margin-bottom:15px">Site Ayarları</h3>
       <form onsubmit="saveSettings(event)">
-        <div class="form-group"><label for="settingIP">Sunucu IP'si</label><input class="form-control" id="settingIP" value="gunescraft.xyz" required></div>
-        <div class="form-group"><label for="settingTitle">Site başlığı</label><input class="form-control" id="settingTitle" value="GüneşCraft Network" required></div>
+        <div class="form-group"><label for="settingIP">Sunucu IP Adresi</label><input class="form-control" id="settingIP" value="gunescraft.xyz" required></div>
+        <div class="form-group"><label for="settingTitle">Site Başlığı</label><input class="form-control" id="settingTitle" value="GüneşCraft Network" required></div>
         <button class="btn btn-primary">Ayarları Kaydet</button>
       </form>
     </div>
   </div>
 </div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-// GERÇEK MINECRAFT ITEM RESIMLERI
+// DAHİLİ MİNECRAFT KUTU VE ITEM SVG DÜZENİ
+const BOX_ASSETS = {
+  spawner: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="15" y="15" width="70" height="70" rx="8" fill="#1e222d" stroke="#ffb52e" stroke-width="4"/><path d="M15 38H85M15 62H85M38 15V85M62 15V85" stroke="#ffb52e" stroke-width="2" stroke-dasharray="4 4"/><circle cx="50" cy="50" r="14" fill="#ff762b" opacity="0.8"/></svg>`,
+  chest: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="15" y="25" width="70" height="55" rx="6" fill="#8b5a2b" stroke="#4a2e16" stroke-width="4"/><rect x="15" y="42" width="70" height="6" fill="#322010"/><rect x="44" y="38" width="12" height="14" rx="2" fill="#ffb52e" stroke="#000" stroke-width="2"/></svg>`,
+  vip_gold: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 75L15 30L35 50L50 20L65 50L85 30L80 75H20Z" fill="#ffb52e" stroke="#d48806" stroke-width="4"/><rect x="25" y="75" width="50" height="10" fill="#d48806"/></svg>`,
+  vip_diamond: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 75L15 30L35 50L50 20L65 50L85 30L80 75H20Z" fill="#5bffab" stroke="#13c2c2" stroke-width="4"/><rect x="25" y="75" width="50" height="10" fill="#13c2c2"/></svg>`,
+  diamond: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="50,15 80,40 50,85 20,40" fill="#5bffab" stroke="#13c2c2" stroke-width="4"/></svg>`,
+  key: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="35" cy="35" r="15" stroke="#ffb52e" stroke-width="6"/><path d="M46 46L75 75M65 65L75 55M72 72L82 62" stroke="#ffb52e" stroke-width="6" stroke-linecap="round"/></svg>`
+};
+
 const DEFAULT_PRODUCTS = [
-  {id:1,name:"Zombi Spawner",category:"spawner",price:149,description:"Otomatik zombi ve XP kasma spawnerı.",image:"https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/master/data/1.20.1/items/spawner.png"},
-  {id:2,name:"İskelet Spawner",category:"spawner",price:179,description:"Kemik ve ok stoklamak için harika spawner.",image:"https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/master/data/1.20.1/items/spawner.png"},
-  {id:3,name:"Örümcek Spawner",category:"spawner",price:169,description:"İp ve örümcek gözü üretimi için birebir.",image:"https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/master/data/1.20.1/items/spawner.png"},
-  {id:4,name:"İnek Spawner",category:"spawner",price:129,description:"Sınırsız deri ve biftek üretimi sağlar.",image:"https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/master/data/1.20.1/items/spawner.png"},
-  {id:5,name:"Creeper Spawner",category:"spawner",price:199,description:"TNT ve barut farmı kurmak için ideal.",image:"https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/master/data/1.20.1/items/spawner.png"},
-  {id:6,name:"Blaze Spawner",category:"spawner",price:229,description:"İksir yapımı ve yakıt için blaze çubuğu kasın.",image:"https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/master/data/1.20.1/items/spawner.png"},
-  {id:7,name:"VIP Paketi",category:"vip",price:99,description:"Özel komutlar, uçuş yetkisi ve ekstra ev hakkı.",image:"https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/master/data/1.20.1/items/golden_helmet.png"},
-  {id:8,name:"VIP+ Paketi",category:"vip",price:199,description:"Gelişmiş kitler, renkli sohbet ve sunucu ayrıcalıkları.",image:"https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/master/data/1.20.1/items/diamond_helmet.png"},
-  {id:9,name:"MVP Paketi",category:"vip",price:299,description:"En üst düzey yetkiler ve sınırsız özellik erişimi.",image:"https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/master/data/1.20.1/items/netherite_helmet.png"},
-  {id:10,name:"Özel Kasa",category:"item",price:49,description:"İçerisinden nadir Minecraft eşyaları çıkar.",image:"https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/master/data/1.20.1/blocks/chest.png"},
-  {id:11,name:"Anahtar Paketi",category:"item",price:39,description:"Sunucudaki gizli kasaları açmak için 5 adet anahtar.",image:"https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/master/data/1.20.1/items/tripwire_hook.png"},
-  {id:12,name:"Elmas Paketi",category:"item",price:79,description:"Oyun içi ekonomide hızlı yükselmek için 64x Elmas.",image:"https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/master/data/1.20.1/items/diamond.png"}
+  {id:1, name:"Zombi Spawner", category:"spawner", price:149, description:"Otomatik zombi ve XP kasma spawnerı.", boxType:"spawner"},
+  {id:2, name:"İskelet Spawner", category:"spawner", price:179, description:"Kemik ve ok stoklamak için harika spawner.", boxType:"spawner"},
+  {id:3, name:"Örümcek Spawner", category:"spawner", price:169, description:"İp ve örümcek gözü üretimi için birebir.", boxType:"spawner"},
+  {id:4, name:"İnek Spawner", category:"spawner", price:129, description:"Sınırsız deri ve biftek üretimi sağlar.", boxType:"spawner"},
+  {id:5, name:"Creeper Spawner", category:"spawner", price:199, description:"TNT ve barut farmı kurmak için ideal.", boxType:"spawner"},
+  {id:6, name:"Blaze Spawner", category:"spawner", price:229, description:"İksir yapımı için blaze çubuğu kasın.", boxType:"spawner"},
+  {id:7, name:"VIP Paketi", category:"vip", price:99, description:"Özel komutlar, uçuş yetkisi ve ekstra ev hakkı.", boxType:"vip_gold"},
+  {id:8, name:"VIP+ Paketi", category:"vip", price:199, description:"Gelişmiş kitler ve renkli sohbet ayrıcalığı.", boxType:"vip_diamond"},
+  {id:9, name:"MVP Paketi", category:"vip", price:299, description:"En üst düzey yetkiler ve sınırsız özellikler.", boxType:"vip_diamond"},
+  {id:10, name:"Özel Kasa", category:"item", price:49, description:"İçerisinden nadir Minecraft eşyaları çıkar.", boxType:"chest"},
+  {id:11, name:"Anahtar Paketi", category:"item", price:39, description:"Sunucudaki gizli kasaları açmak için 5x Anahtar.", boxType:"key"},
+  {id:12, name:"Elmas Paketi", category:"item", price:79, description:"Oyun içi ekonomide yükselmek için 64x Elmas.", boxType:"diamond"}
 ];
 
 const DEFAULT_NEWS = [
-  {id:1,title:"1. Sezon Açıldı!",text:"GüneşCraft Sezon 1 kapılarını oyunculara açtı. Hemen katıl!",emoji:"🎉",date:"Bugün"},
-  {id:2,title:"Yeni Spawner Sistemi",text:"Marketimize yeni nesil spawner çeşitleri ve VIP kitleri eklendi.",emoji:"⚡",date:"Dün"}
+  {id:1, title:"1. Sezon Açıldı!", text:"GüneşCraft Sezon 1 kapılarını oyunculara açtı. Hemen katıl!", emoji:"🎉", date:"Bugün"},
+  {id:2, title:"Yeni Spawner Sistemi", text:"Marketimize yeni nesil spawner çeşitleri ve VIP kitleri eklendi.", emoji:"⚡", date:"Dün"}
 ];
 
 let products = JSON.parse(localStorage.getItem('gc_products')) || DEFAULT_PRODUCTS;
@@ -655,7 +718,7 @@ let currentCategory = 'all';
 
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Canlı Aktif Oyuncu Sayacı Simülasyonu
+// Dynamic Player Counter
 setInterval(() => {
   const headerCount = document.getElementById('headerOnline');
   const statusCount = document.getElementById('statusOnline');
@@ -690,6 +753,13 @@ function filterCategory(cat, btn){
   renderProducts();
 }
 
+function getProductArt(p){
+  if(p.image && p.image.trim() !== '') {
+    return `<img src="${p.image}" alt="${p.name}">`;
+  }
+  return BOX_ASSETS[p.boxType] || BOX_ASSETS.chest;
+}
+
 function renderProducts(){
   const searchInput = document.getElementById('storeSearch');
   const search = searchInput ? searchInput.value.toLowerCase() : '';
@@ -712,7 +782,7 @@ function renderProducts(){
   grid.innerHTML = filtered.map(p => `
     <div class="product-card">
       <div class="product-art">
-        <img src="${p.image}" alt="${p.name}">
+        ${getProductArt(p)}
         <span class="badge product-label">${p.category.toUpperCase()}</span>
       </div>
       <div class="product-info">
@@ -747,7 +817,7 @@ function openProduct(id){
   const content = document.getElementById('productModalContent');
   content.innerHTML = `
     <div class="modal-product">
-      <img src="${p.image}" alt="${p.name}">
+      ${getProductArt(p)}
       <h3>${p.name}</h3>
       <p>${p.description}</p>
       <div class="price">${p.price} ₺</div>
@@ -758,7 +828,7 @@ function openProduct(id){
 }
 
 function buyAction(name){
-  showToast(`${name} için satın alma kanalı açılıyor... Sunucuda /kurucular yazabilirsiniz.`);
+  showToast(`${name} için satın alma talebi alındı. Oyun içi yetkiliye başvurabilirsiniz.`);
   closeModal('productModal');
 }
 
@@ -766,7 +836,7 @@ function openLogin(){
   document.getElementById('loginModal').classList.add('show');
 }
 
-// GÜNCELLENEN ADMİN GİRİŞİ (Kullanıcı adı: Admin, Şifre: 269826)
+// YÖNETİCİ GİRİŞİ (Kullanıcı Adı: Admin, Şifre: 269826)
 function adminLogin(e){
   e.preventDefault();
   const u = document.getElementById('adminUser').value;
@@ -775,7 +845,7 @@ function adminLogin(e){
     closeModal('loginModal');
     document.getElementById('adminModal').classList.add('show');
     renderAdminLists();
-    showToast("Yönetici paneline giriş yapıldı.");
+    showToast("Yönetici paneline başarıyla giriş yapıldı.");
   } else {
     showToast("Hatalı Kullanıcı Adı veya Şifre!");
   }
@@ -802,19 +872,21 @@ function adminTab(tab, btn){
 
 function addProduct(e){
   e.preventDefault();
+  const boxTypeVal = document.getElementById('newBoxType').value;
   const newP = {
     id: Date.now(),
     name: document.getElementById('newName').value,
     price: parseFloat(document.getElementById('newPrice').value),
     category: document.getElementById('newCategory').value,
-    image: document.getElementById('newImage').value || 'https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/master/data/1.20.1/blocks/chest.png',
+    boxType: boxTypeVal,
+    image: boxTypeVal === 'custom' ? document.getElementById('newImage').value : '',
     description: document.getElementById('newDescription').value
   };
   products.push(newP);
   localStorage.setItem('gc_products', JSON.stringify(products));
   renderProducts();
   renderAdminLists();
-  showToast("Ürün başarıyla eklendi.");
+  showToast("Yeni ürün eklendi.");
 }
 
 function deleteProduct(id){
@@ -852,7 +924,7 @@ function deleteNews(id){
 function renderAdminLists(){
   document.getElementById('adminProductList').innerHTML = products.map(p => `
     <div class="admin-item">
-      <span><img src="${p.image}" style="width:20px;height:20px;vertical-align:middle;margin-right:6px"> <strong>${p.name}</strong> (${p.price} ₺)</span>
+      <span><strong>${p.name}</strong> (${p.price} ₺) - <small class="gold">${p.category}</small></span>
       <button class="btn btn-danger" onclick="deleteProduct(${p.id})">Sil</button>
     </div>
   `).join('');
