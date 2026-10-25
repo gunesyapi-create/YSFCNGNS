@@ -383,7 +383,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
       </div>
       <div class="hero-stats">
         <div class="stat"><strong class="gradient">7/24</strong><span>TOWNY</span></div>
-        <div class="stat"><strong>1.21+</strong><span>MINECRAFT</span></div>
+        <div class="stat"><strong>1.16+</strong><span>MINECRAFT</span></div>
         <div class="stat"><strong class="gradient">∞</strong><span>ŞEHİR & ARAZİ</span></div>
       </div>
     </div>
@@ -402,7 +402,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
       <span class="status-dot"></span>
       <div>
         <strong>GüneşCraft Towny</strong>
-        <small>Sunucu Durumu — Anlık Oyuncu: <span id="statusOnline" style="color:var(--green);font-weight:bold">...</span></small>
+        <small>Sunucu Durumu — Anlık Oyuncu: <span id="statusOnline" style="color:var(--green);font-weight:bold">...</span> | Ping: <span id="statusPing" class="gold" style="font-weight:bold">...</span></small>
       </div>
     </div>
     <div class="server-ip">
@@ -426,7 +426,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
           <span class="badge">CANLI HARİTA</span>
           <h3 style="margin-top:8px">GüneşCraft Towny Haritası</h3>
           <p>Şehirlerin sınırlarını görmek ve haritada keşfe çıkmak için tıkla.</p>
-          <!-- TARAYICI ENGELİNİ AŞAN DOĞRUDAN TAM HARİTA SEKMESİ -->
+          <!-- TARAYICI GÜVENLİK ENGELİNİ AŞAN DOĞRUDAN TAM HARİTA SEKMESİ -->
           <a class="world-action" href="http://157.90.133.100:25749/?world=world&renderer=vintage_story&zoom=-2&x=2651&z=-3147" target="_blank">TAM HARİTAYI AÇ <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
         </div>
       </article>
@@ -726,7 +726,7 @@ let currentCategory = 'all';
 
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// GERÇEK ANLIK OYUNCU VE MS (PING) ÖLÇEN FONKSİYON
+// GERÇEK ANLIK OYUNCU VE MS (PİNG) ÖLÇEN FONKSİYON
 function fetchServerStatus() {
   const startTime = performance.now();
   
@@ -734,13 +734,15 @@ function fetchServerStatus() {
     .then(response => response.json())
     .then(data => {
       const endTime = performance.now();
-      const pingMs = Math.round(endTime - startTime); // Gerçek ağ gecikmesi (ms)
+      const pingMs = Math.round(endTime - startTime);
       
       const headerCount = document.getElementById('headerOnline');
       const headerPing = document.getElementById('headerPing');
       const statusCount = document.getElementById('statusOnline');
+      const statusPing = document.getElementById('statusPing');
       
       if(headerPing) headerPing.textContent = pingMs + "ms";
+      if(statusPing) statusPing.textContent = pingMs + "ms";
 
       if (data.online) {
         let players = data.players.online;
@@ -757,8 +759,10 @@ function fetchServerStatus() {
       console.log("Sunucu durumu alınamadı:", err);
       const headerCount = document.getElementById('headerOnline');
       const headerPing = document.getElementById('headerPing');
-      if(headerCount) headerCount.textContent = "48";
-      if(headerPing) headerPing.textContent = "25ms";
+      const statusPing = document.getElementById('statusPing');
+      if(headerCount) headerCount.textContent = "3";
+      if(headerPing) headerPing.textContent = "18ms";
+      if(statusPing) statusPing.textContent = "18ms";
     });
 }
 
@@ -942,7 +946,7 @@ function adminLogin(e){
     renderAdminLists();
     showToast("Admin paneline giriş yapıldı.");
   } else {
-    showToast("Hatalı Admin Bilgileri Koordinatları!");
+    showToast("Hatalı Admin Bilgileri!");
   }
 }
 
