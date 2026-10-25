@@ -78,15 +78,12 @@ section{padding:60px 0}
 }
 .nav-inner{min-height:65px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .logo{display:flex;align-items:center;gap:9px;font-family:Orbitron,sans-serif;font-weight:900;font-size:14px}
-
-/* SOL TARAFTAKİ LOGO KUTUSU */
 .logo-icon{
   width:38px;height:38px;display:grid;place-items:center;border-radius:10px;
   background:linear-gradient(140deg,#ffd36a,#ff762b);color:#211305;
   font-size:16px;box-shadow:0 4px 18px #ff9d2733;overflow:hidden;border:1px solid #ffe7a677;
 }
 .logo-icon img{width:100%;height:100%;object-fit:cover}
-
 .logo small{display:block;color:var(--muted);font:700 8px Poppins,sans-serif;letter-spacing:2px;margin-top:1px}
 .nav-links{display:flex;align-items:center;gap:18px}
 .nav-links a{font-size:11px;font-weight:700;color:#b9b9c9;transition:.2s}
@@ -554,19 +551,16 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
   </div>
 </div>
 
-<!-- CANLI HARİTA MODALI -->
+<!-- CANLI HARİTA MODALI (CANLI LİNKE BAĞLANDI) -->
 <div class="modal-backdrop" id="mapModal" onclick="backdropClose(event,'mapModal')">
-  <div class="modal" style="width:min(880px, 95%); max-height:92vh;">
+  <div class="modal" style="width:min(940px, 96%); max-height:94vh;">
     <div class="modal-header">
       <h2 id="mapModalTitle"><i class="fa-solid fa-city gold"></i> TOWNY CANLI HARİTASI</h2>
       <button class="close-modal" onclick="closeModal('mapModal')">&times;</button>
     </div>
-    <div style="position:relative; width:100%; height:420px; background:#0d0d15; border-radius:10px; overflow:hidden; border:1px solid var(--border);">
-      <iframe id="mapIframe" src="about:blank" style="width:100%; height:100%; border:0;"></iframe>
+    <div style="position:relative; width:100%; height:500px; background:#0d0d15; border-radius:10px; overflow:hidden; border:1px solid var(--border);">
+      <iframe id="mapIframe" src="" style="width:100%; height:100%; border:0;"></iframe>
     </div>
-    <p class="muted" style="font-size:10px; margin-top:10px; text-align:center;">
-      <i class="fa-solid fa-circle-info gold"></i> Sunucunuzda Dynmap aktif olduğunda harita doğrudan burada yüklenecektir.
-    </p>
   </div>
 </div>
 
@@ -773,10 +767,11 @@ function fetchServerStatus() {
 fetchServerStatus();
 setInterval(fetchServerStatus, 10000);
 
-// HARİTA MODALI AÇMA FONKSİYONU
+// GERÇEK CANLI HARİTA MODALI AÇMA FONKSİYONU
 function openMapModal(title){
   document.getElementById('mapModalTitle').innerHTML = `<i class="fa-solid fa-city gold"></i> ${title}`;
-  document.getElementById('mapIframe').src = "about:blank"; 
+  // Doğrudan verdiğin canlı harita linki bağlandı
+  document.getElementById('mapIframe').src = "http://157.90.133.100:25749/?world=world&renderer=vintage_story&zoom=-2&x=2651&z=-3147"; 
   document.getElementById('mapModal').classList.add('show');
 }
 
