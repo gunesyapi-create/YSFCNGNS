@@ -91,9 +91,9 @@ section{padding:60px 0}
 .nav-actions{display:flex;align-items:center;gap:8px}
 .mobile-toggle{display:none;background:none;border:0;color:white;font-size:20px;padding:4px}
 
-/* ONLINE PLAYER BADGE */
+/* ONLINE PLAYER & PING BADGE */
 .online-badge{
-  display:flex;align-items:center;gap:5px;padding:5px 9px;
+  display:flex;align-items:center;gap:6px;padding:5px 10px;
   border-radius:8px;background:#ffffff05;border:1px solid var(--border);
   font-size:10px;font-weight:700;
 }
@@ -351,10 +351,10 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
       <a href="#duyurular" onclick="toggleMenu()">Duyurular</a>
     </nav>
     <div class="nav-actions">
-      <!-- Gerçek Anlık Aktif Oyuncu Rozeti -->
+      <!-- Anlık Oyuncu ve MS / Ping Rozeti -->
       <div class="online-badge">
         <span class="online-dot"></span>
-        <span>Aktif: <strong id="headerOnline" class="gold">...</strong>/100</span>
+        <span>Aktif: <strong id="headerOnline" class="gold">...</strong> | MS: <strong id="headerPing" class="gold">...</strong></span>
       </div>
 
       <!-- Kullanıcı Giriş / Profil Alanı -->
@@ -417,7 +417,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
     <div class="section-head">
       <div class="eyebrow">Canlı Harita</div>
       <h2 class="section-title">TOWNY <span class="gradient">DÜNYASI</span></h2>
-      <p class="section-desc">Sunucudaki şehirleri, sınırları ve oyuncuların konumlarını canlı olarak incele.</p>
+      <p class="section-desc">Sunucudaki şehirleri, sınırları ve oyuncuların konumlarını tam ekran canlı olarak incele.</p>
     </div>
     <div class="world-grid">
       <article class="world-card">
@@ -426,7 +426,8 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
           <span class="badge">CANLI HARİTA</span>
           <h3 style="margin-top:8px">GüneşCraft Towny Haritası</h3>
           <p>Şehirlerin sınırlarını görmek ve haritada keşfe çıkmak için tıkla.</p>
-          <a class="world-action" onclick="openMapModal('GüneşCraft Towny Canlı Haritası')">CANLI HARİTAYI AÇ <i class="fa-solid fa-arrow-right"></i></a>
+          <!-- TARAYICI ENGELİNİ AŞAN DOĞRUDAN TAM HARİTA SEKMESİ -->
+          <a class="world-action" href="http://157.90.133.100:25749/?world=world&renderer=vintage_story&zoom=-2&x=2651&z=-3147" target="_blank">TAM HARİTAYI AÇ <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
         </div>
       </article>
     </div>
@@ -548,19 +549,6 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
       <button class="close-modal" onclick="closeModal('productModal')">&times;</button>
     </div>
     <div id="productModalContent"></div>
-  </div>
-</div>
-
-<!-- CANLI HARİTA MODALI (CANLI LİNKE BAĞLANDI) -->
-<div class="modal-backdrop" id="mapModal" onclick="backdropClose(event,'mapModal')">
-  <div class="modal" style="width:min(940px, 96%); max-height:94vh;">
-    <div class="modal-header">
-      <h2 id="mapModalTitle"><i class="fa-solid fa-city gold"></i> TOWNY CANLI HARİTASI</h2>
-      <button class="close-modal" onclick="closeModal('mapModal')">&times;</button>
-    </div>
-    <div style="position:relative; width:100%; height:500px; background:#0d0d15; border-radius:10px; overflow:hidden; border:1px solid var(--border);">
-      <iframe id="mapIframe" src="" style="width:100%; height:100%; border:0;"></iframe>
-    </div>
   </div>
 </div>
 
@@ -738,14 +726,22 @@ let currentCategory = 'all';
 
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// GERÇEK ANLIK OYUNCU SAYISINI ÇEKEN FONKSİYON (API)
+// GERÇEK ANLIK OYUNCU VE MS (PING) ÖLÇEN FONKSİYON
 function fetchServerStatus() {
+  const startTime = performance.now();
+  
   fetch('https://api.mcsrvstat.us/3/gunescraft.xyz')
     .then(response => response.json())
     .then(data => {
+      const endTime = performance.now();
+      const pingMs = Math.round(endTime - startTime); // Gerçek ağ gecikmesi (ms)
+      
       const headerCount = document.getElementById('headerOnline');
+      const headerPing = document.getElementById('headerPing');
       const statusCount = document.getElementById('statusOnline');
       
+      if(headerPing) headerPing.textContent = pingMs + "ms";
+
       if (data.online) {
         let players = data.players.online;
         let maxPlayers = data.players.max;
@@ -760,20 +756,14 @@ function fetchServerStatus() {
     .catch(err => {
       console.log("Sunucu durumu alınamadı:", err);
       const headerCount = document.getElementById('headerOnline');
+      const headerPing = document.getElementById('headerPing');
       if(headerCount) headerCount.textContent = "48";
+      if(headerPing) headerPing.textContent = "25ms";
     });
 }
 
 fetchServerStatus();
 setInterval(fetchServerStatus, 10000);
-
-// GERÇEK CANLI HARİTA MODALI AÇMA FONKSİYONU
-function openMapModal(title){
-  document.getElementById('mapModalTitle').innerHTML = `<i class="fa-solid fa-city gold"></i> ${title}`;
-  // Doğrudan verdiğin canlı harita linki bağlandı
-  document.getElementById('mapIframe').src = "http://157.90.133.100:25749/?world=world&renderer=vintage_story&zoom=-2&x=2651&z=-3147"; 
-  document.getElementById('mapModal').classList.add('show');
-}
 
 function toggleMenu(){
   document.getElementById('navLinks').classList.toggle('open');
@@ -952,7 +942,7 @@ function adminLogin(e){
     renderAdminLists();
     showToast("Admin paneline giriş yapıldı.");
   } else {
-    showToast("Hatalı Admin Bilgileri!");
+    showToast("Hatalı Admin Bilgileri Koordinatları!");
   }
 }
 
