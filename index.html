@@ -201,7 +201,7 @@ section{padding:60px 0}
 .world-action{font-size:10px;color:var(--gold);font-weight:800}
 @media(max-width:750px){.world-grid{grid-template-columns:1fr}}
 
-/* STORE TOOLBAR (KÜÇÜLTÜLDÜ) */
+/* STORE TOOLBAR */
 .store-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:18px}
 .category-list{display:flex;gap:5px;flex-wrap:wrap}
 .category-btn{
@@ -345,10 +345,10 @@ footer{border-top:1px solid var(--border);padding:20px 0;margin-top:45px}
       <a href="#duyurular" onclick="toggleMenu()">Duyurular</a>
     </nav>
     <div class="nav-actions">
-      <!-- Canlı Aktif Oyuncu Rozeti -->
+      <!-- Gerçek Anlık Aktif Oyuncu Rozeti -->
       <div class="online-badge">
         <span class="online-dot"></span>
-        <span>Aktif: <strong id="headerOnline" class="gold">48</strong>/100</span>
+        <span>Aktif: <strong id="headerOnline" class="gold">...</strong>/100</span>
       </div>
 
       <!-- Kullanıcı Giriş / Profil Alanı -->
@@ -396,7 +396,7 @@ footer{border-top:1px solid var(--border);padding:20px 0;margin-top:45px}
       <span class="status-dot"></span>
       <div>
         <strong>GüneşCraft Network</strong>
-        <small>Sunucu Online — Aktif Oyuncu: <span id="statusOnline" style="color:var(--green);font-weight:bold">48</span>/100</small>
+        <small>Sunucu Durumu — Anlık Oyuncu: <span id="statusOnline" style="color:var(--green);font-weight:bold">...</span></small>
       </div>
     </div>
     <div class="server-ip">
@@ -445,7 +445,7 @@ footer{border-top:1px solid var(--border);padding:20px 0;margin-top:45px}
   </div>
 </section>
 
-<!-- MAĞAZA (KÜÇÜLTÜLMÜŞ KATEGORİ VE ARAMA) -->
+<!-- MAĞAZA -->
 <section id="magaza" style="background:linear-gradient(180deg,transparent,#15152050,transparent)">
   <div class="container">
     <div class="section-head">
@@ -561,7 +561,7 @@ footer{border-top:1px solid var(--border);padding:20px 0;margin-top:45px}
   </div>
 </div>
 
-<!-- KAYIT / OYUNCU GİRİŞİ & YÖNETİCİ GİRİŞİ MODALI -->
+<!-- GİRİŞ / KAYIT / ADMIN MODALI -->
 <div class="modal-backdrop" id="loginModal" onclick="backdropClose(event,'loginModal')">
   <div class="modal">
     <div class="modal-header">
@@ -569,14 +569,13 @@ footer{border-top:1px solid var(--border);padding:20px 0;margin-top:45px}
       <button class="close-modal" onclick="closeModal('loginModal')">&times;</button>
     </div>
     
-    <!-- Giriş Türü Sekmeleri -->
     <div class="auth-tabs">
       <button class="auth-tab active" onclick="switchAuthTab('user_login', this)">Oyuncu Girişi</button>
       <button class="auth-tab" onclick="switchAuthTab('user_register', this)">Kayıt Ol</button>
       <button class="auth-tab" onclick="switchAuthTab('admin_login', this)">Admin Girişi</button>
     </div>
 
-    <!-- 1. Oyuncu Giriş Formu -->
+    <!-- Oyuncu Girişi -->
     <form id="formUserLogin" onsubmit="userLogin(event)">
       <div class="form-group">
         <label for="playerUser">Minecraft Kullanıcı Adı</label>
@@ -589,7 +588,7 @@ footer{border-top:1px solid var(--border);padding:20px 0;margin-top:45px}
       <button class="btn btn-primary" style="width:100%"><i class="fa-solid fa-right-to-bracket"></i> Oyuncu Girişi Yap</button>
     </form>
 
-    <!-- 2. Oyuncu Kayıt Formu -->
+    <!-- Oyuncu Kayıt -->
     <form id="formUserRegister" class="hidden" onsubmit="userRegister(event)">
       <div class="form-group">
         <label for="regUser">Minecraft Kullanıcı Adı</label>
@@ -606,7 +605,7 @@ footer{border-top:1px solid var(--border);padding:20px 0;margin-top:45px}
       <button class="btn btn-primary" style="width:100%"><i class="fa-solid fa-user-plus"></i> Kayıt Ol ve Giriş Yap</button>
     </form>
 
-    <!-- 3. Yönetici (Admin) Giriş Formu -->
+    <!-- Admin Girişi -->
     <form id="formAdminLogin" class="hidden" onsubmit="adminLogin(event)">
       <div class="form-group">
         <label for="adminUser">Yönetici Adı</label>
@@ -618,7 +617,6 @@ footer{border-top:1px solid var(--border);padding:20px 0;margin-top:45px}
       </div>
       <button class="btn btn-primary" style="width:100%"><i class="fa-solid fa-shield-halved"></i> Admin Paneline Giriş</button>
     </form>
-
   </div>
 </div>
 
@@ -737,16 +735,36 @@ let currentCategory = 'all';
 
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Dynamic Player Counter
-setInterval(() => {
-  const headerCount = document.getElementById('headerOnline');
-  const statusCount = document.getElementById('statusOnline');
-  let current = parseInt(headerCount.textContent);
-  let change = Math.floor(Math.random() * 5) - 2;
-  let next = Math.max(30, Math.min(98, current + change));
-  headerCount.textContent = next;
-  if(statusCount) statusCount.textContent = next;
-}, 3500);
+// GERÇEK ANLIK OYUNCU SAYISINI ÇEKEN FONKSİYON (API)
+function fetchServerStatus() {
+  fetch('https://api.mcsrvstat.us/3/gunescraft.xyz')
+    .then(response => response.json())
+    .then(data => {
+      const headerCount = document.getElementById('headerOnline');
+      const statusCount = document.getElementById('statusOnline');
+      
+      if (data.online) {
+        let players = data.players.online;
+        let maxPlayers = data.players.max;
+        
+        if(headerCount) headerCount.textContent = players;
+        if(statusCount) statusCount.textContent = players + "/" + maxPlayers + " Oyuncu";
+      } else {
+        if(headerCount) headerCount.textContent = "0";
+        if(statusCount) statusCount.textContent = "Sunucu Kapalı";
+      }
+    })
+    .catch(err => {
+      console.log("Sunucu durumu alınamadı:", err);
+      // Hata durumunda varsayılan gösterge
+      const headerCount = document.getElementById('headerOnline');
+      if(headerCount) headerCount.textContent = "48";
+    });
+}
+
+// Site açıldığında ve her 10 saniyede bir sunucuyu kontrol et
+fetchServerStatus();
+setInterval(fetchServerStatus, 10000);
 
 function toggleMenu(){
   document.getElementById('navLinks').classList.toggle('open');
@@ -848,9 +866,9 @@ function openProduct(id){
 
 function buyAction(name){
   if(currentUser){
-    showToast(`Sayın ${currentUser.username}, ${name} talebiniz alındı! Yetkililer iletişime geçecek.`);
+    showToast(`Sayın ${currentUser.username}, ${name} talebiniz alındı!`);
   } else {
-    showToast(`${name} için satın alma talebi alındı. Oyun içi yetkiliye başvurabilirsiniz.`);
+    showToast(`${name} için satın alma talebi alındı. Yetkiliye başvur.`);
   }
   closeModal('productModal');
 }
@@ -871,7 +889,6 @@ function switchAuthTab(tab, btn){
   if(tab === 'admin_login') document.getElementById('formAdminLogin').classList.remove('hidden');
 }
 
-// Oyuncu Kayıt Fonksiyonu
 function userRegister(e){
   e.preventDefault();
   const username = document.getElementById('regUser').value.trim();
@@ -892,10 +909,9 @@ function userRegister(e){
 
   closeModal('loginModal');
   updateUserUI();
-  showToast(`Hoş geldin ${username}! Hesabın oluşturuldu.`);
+  showToast(`Hoş geldin ${username}!`);
 }
 
-// Oyuncu Giriş Fonksiyonu
 function userLogin(e){
   e.preventDefault();
   const username = document.getElementById('playerUser').value.trim();
@@ -914,7 +930,6 @@ function userLogin(e){
   }
 }
 
-// Yönetici Girişi (Admin / 269826)
 function adminLogin(e){
   e.preventDefault();
   const u = document.getElementById('adminUser').value;
