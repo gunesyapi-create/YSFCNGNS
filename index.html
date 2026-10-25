@@ -3,872 +3,652 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101019">
-<meta name="description" content="GüneşCraft Network Minecraft sunucusu. Mağazayı keşfet, VIP paketlerini incele ve maceraya katıl!">
-<title>GüneşCraft Network | Minecraft</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<meta name="theme-color" content="#0a0a0a">
+<title>GüneşCraft | Minecraft Sunucusu</title>
+
 <style>
 :root{
-  --bg:#0b0b12;
-  --panel:#13131e;
-  --panel2:#191927;
-  --gold:#ffb52e;
-  --orange:#ff762b;
-  --text:#f5f5fa;
-  --muted:#9292a8;
-  --border:rgba(255,255,255,.09);
-  --green:#5bffab;
-  --radius:18px;
+  --bg:#0a0a0b;
+  --panel:#151515;
+  --orange:#ff8c00;
+  --gold:#ffc247;
+  --white:#fff;
+  --muted:#aaa;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:90px}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{scroll-behavior:smooth}
+
 body{
-  background:var(--bg);color:var(--text);
-  font-family:Poppins,Arial,sans-serif;overflow-x:hidden;
+  background:var(--bg);
+  color:var(--white);
+  font-family:Arial,sans-serif;
+  overflow-x:hidden;
 }
-button,input,textarea,select{font:inherit}
-button{cursor:pointer}
-a{color:inherit;text-decoration:none}
-img{max-width:100%}
-.container{width:min(1180px,92%);margin:auto}
-section{padding:85px 0}
-.hidden{display:none!important}
-.muted{color:var(--muted)}
-.gold{color:var(--gold)}
-.gradient{
-  background:linear-gradient(110deg,#ffd46b,#ff9d27,#ff642d);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
+
+a{
+  color:inherit;
+  text-decoration:none;
 }
-.eyebrow{
-  color:var(--gold);font-size:12px;font-weight:800;
-  letter-spacing:3px;text-transform:uppercase;margin-bottom:13px;
+
+button{
+  font:inherit;
+  cursor:pointer;
 }
-.section-title{
-  font-family:Orbitron,sans-serif;font-size:clamp(25px,4vw,38px);
-  font-weight:900;margin-bottom:13px;
+
+header{
+  height:76px;
+  padding:0 7%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#0b0b0bee;
+  border-bottom:1px solid #ffffff12;
+  position:sticky;
+  top:0;
+  z-index:100;
+  backdrop-filter:blur(15px);
 }
-.section-desc{color:var(--muted);line-height:1.8;font-size:14px}
-.section-head{text-align:center;max-width:650px;margin:0 auto 42px}
+
+.logo{
+  font-size:23px;
+  font-weight:1000;
+  letter-spacing:-1px;
+}
+
+.logo span{color:var(--orange)}
+
+nav{
+  display:flex;
+  gap:25px;
+  align-items:center;
+}
+
+nav a{
+  font-size:14px;
+  color:#ccc;
+  transition:.2s;
+}
+
+nav a:hover{color:var(--orange)}
+
 .btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:9px;
-  padding:13px 21px;border:1px solid transparent;border-radius:12px;
-  font-weight:800;font-size:13px;transition:.25s;
+  border:0;
+  padding:14px 20px;
+  border-radius:8px;
+  background:linear-gradient(135deg,#ffc247,#ff7900);
+  color:#17100a;
+  font-weight:900;
+  transition:.25s;
 }
-.btn:hover{transform:translateY(-3px)}
-.btn-primary{
-  color:#17110a;background:linear-gradient(120deg,#ffd16b,#ff8d2d);
-  box-shadow:0 8px 30px rgba(255,154,39,.17);
+
+.btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 0 25px #ff8c0050;
 }
-.btn-secondary{background:#ffffff08;border-color:var(--border)}
-.btn-secondary:hover{border-color:#ffb52e77}
-.btn-danger{background:#ff45451b;color:#ff7b7b;border-color:#ff45453d}
-.badge{
-  display:inline-flex;align-items:center;gap:6px;padding:6px 10px;
-  border-radius:8px;background:#ffb52e16;color:var(--gold);
-  font-size:10px;font-weight:800;letter-spacing:.5px;
+
+.btn-outline{
+  padding:13px 20px;
+  background:#ffffff08;
+  border:1px solid #ffffff25;
+  color:white;
+  border-radius:8px;
+  font-weight:bold;
+  transition:.2s;
 }
-/* NAVIGATION */
-.navbar{
-  position:sticky;top:0;z-index:1000;
-  background:rgba(11,11,18,.86);backdrop-filter:blur(18px);
-  border-bottom:1px solid var(--border);
+
+.btn-outline:hover{
+  border-color:var(--orange);
+  color:var(--gold);
 }
-.nav-inner{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.logo{display:flex;align-items:center;gap:11px;font-family:Orbitron,sans-serif;font-weight:900;font-size:16px}
-.logo-icon{
-  width:43px;height:43px;display:grid;place-items:center;border-radius:14px;
-  background:linear-gradient(140deg,#ffd36a,#ff762b);color:#211305;
-  font-size:21px;box-shadow:0 5px 24px #ff9d2733;
-}
-.logo small{display:block;color:var(--muted);font:700 9px Poppins,sans-serif;letter-spacing:3px;margin-top:3px}
-.nav-links{display:flex;align-items:center;gap:24px}
-.nav-links a{font-size:12px;font-weight:700;color:#b9b9c9;transition:.2s}
-.nav-links a:hover{color:var(--gold)}
-.nav-actions{display:flex;align-items:center;gap:9px}
-.mobile-toggle{display:none;background:none;border:0;color:white;font-size:23px}
-@media(max-width:850px){
-  .nav-links{
-    display:none;position:absolute;top:76px;left:0;right:0;padding:23px 5%;
-    flex-direction:column;align-items:stretch;background:#11111b;
-    border-bottom:1px solid var(--border);gap:20px;
-  }
-  .nav-links.open{display:flex}
-  .nav-actions .admin-nav{display:none}
-  .mobile-toggle{display:block}
-}
-/* HERO */
+
 .hero{
-  min-height:640px;display:flex;align-items:center;position:relative;
-  overflow:hidden;padding:85px 0 75px;
+  min-height:680px;
+  padding:100px 8%;
+  display:flex;
+  align-items:center;
+  position:relative;
+  overflow:hidden;
   background:
-    radial-gradient(ellipse at 78% 35%,#ff8d2d17,transparent 35%),
-    radial-gradient(ellipse at 10% 80%,#5932ff12,transparent 35%);
+    radial-gradient(ellipse at 80% 45%,#ff79001c,transparent 35%),
+    linear-gradient(120deg,#090909,#19110a,#090909);
 }
-.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:45px;align-items:center}
+
+.hero::before{
+  content:"";
+  width:390px;
+  height:390px;
+  border-radius:50%;
+  position:absolute;
+  right:10%;
+  top:100px;
+  background:radial-gradient(circle,#ffe0a0 0%,#ffad24 20%,#ff6500 50%,#7c2500 70%,transparent 74%);
+  filter:drop-shadow(0 0 55px #ff790040);
+  animation:sun 5s ease-in-out infinite;
+}
+
+@keyframes sun{
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-15px) scale(1.04)}
+}
+
+.hero-content{
+  max-width:680px;
+  position:relative;
+  z-index:2;
+}
+
+.badge{
+  display:inline-block;
+  padding:10px 15px;
+  border-radius:30px;
+  border:1px solid #ff8c0040;
+  background:#ff8c0010;
+  color:var(--gold);
+  font-size:12px;
+  font-weight:bold;
+  margin-bottom:25px;
+}
+
 .hero h1{
-  font-family:Orbitron,sans-serif;font-size:clamp(36px,5.6vw,68px);
-  line-height:1.12;font-weight:900;letter-spacing:-2px;margin-bottom:22px;
+  font-size:clamp(48px,8vw,88px);
+  font-weight:1000;
+  line-height:.98;
+  letter-spacing:-4px;
 }
-.hero p{color:#aaaabd;line-height:1.9;font-size:14px;max-width:520px;margin-bottom:26px}
-.hero-buttons{display:flex;gap:12px;flex-wrap:wrap}
-.hero-stats{display:flex;gap:30px;flex-wrap:wrap;margin-top:35px}
-.stat strong{display:block;font-family:Orbitron,sans-serif;font-size:23px}
-.stat span{font-size:10px;color:var(--muted);letter-spacing:1px}
-.hero-visual{position:relative;min-height:420px;display:grid;place-items:center}
-.planet{
-  width:min(350px,78vw);aspect-ratio:1;border-radius:50%;position:relative;
-  background:
-    radial-gradient(circle at 30% 25%,#ffe49c 0%,#ffb52e 12%,#e87921 37%,#9c3e22 65%,#3b1b2b 85%);
-  box-shadow:inset -28px -24px 50px #1c112eaa,
-    inset 12px 12px 35px #fff3b055,0 0 65px #ff9d2730;
-  animation:float 6s ease-in-out infinite;
+
+.hero h1 span{
+  color:var(--orange);
+  text-shadow:0 0 35px #ff8c0040;
 }
-.planet:before{
-  content:"";position:absolute;inset:9%;border-radius:50%;
-  background:
-   radial-gradient(ellipse at 25% 30%,#fff2b122 0 7%,transparent 8%),
-   radial-gradient(ellipse at 60% 55%,#77332666 0 13%,transparent 14%),
-   radial-gradient(ellipse at 30% 70%,#77332655 0 11%,transparent 12%);
+
+.hero p{
+  max-width:520px;
+  color:#bbb;
+  line-height:1.8;
+  margin:25px 0;
+  font-size:16px;
 }
-.planet-ring{
-  position:absolute;width:135%;height:35%;border:15px solid #ffcb6570;
-  border-left-color:#ffe7a6aa;border-right-color:#e7793180;
-  border-radius:50%;transform:rotate(-22deg);filter:drop-shadow(0 0 12px #ffb52e44);
+
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
 }
-.planet-ring:after{
-  content:"";position:absolute;inset:7px;border:3px solid #fff0bc42;border-radius:50%;
+
+.ip-box{
+  display:inline-flex;
+  align-items:center;
+  gap:16px;
+  padding:14px;
+  margin-top:30px;
+  border:1px solid #ffffff1a;
+  background:#ffffff08;
+  border-radius:10px;
 }
-.orbit{
-  position:absolute;width:115%;height:115%;border:1px solid #ffb52e20;
-  border-radius:50%;transform:rotate(30deg);
+
+.ip-box small{
+  display:block;
+  color:#999;
+  margin-bottom:5px;
 }
-.orbit:after{
-  content:"";position:absolute;top:17%;right:5%;width:11px;height:11px;
-  background:#ffd36a;border-radius:50%;box-shadow:0 0 22px #ffb52e;
+
+.ip-box strong{letter-spacing:1px}
+
+.copy{
+  padding:10px 13px;
+  border-radius:7px;
+  color:var(--gold);
+  background:#ff8c001c;
+  border:1px solid #ff8c0040;
 }
-.floating-card{
-  position:absolute;background:#151521eF;border:1px solid var(--border);
-  padding:13px 16px;border-radius:14px;backdrop-filter:blur(12px);
-  box-shadow:0 15px 40px #0005;font-size:11px;
+
+section{padding:85px 8%}
+
+.heading{
+  text-align:center;
+  margin-bottom:45px;
 }
-.floating-card i{color:var(--gold);font-size:18px;margin-right:9px}
-.fc-one{left:0;top:20%}.fc-two{right:0;bottom:19%}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-13px)}}
+
+.heading .mini{
+  color:var(--orange);
+  font-weight:900;
+  font-size:12px;
+  letter-spacing:3px;
+}
+
+.heading h2{
+  font-size:clamp(30px,5vw,44px);
+  margin:13px 0;
+}
+
+.heading p{
+  color:var(--muted);
+  line-height:1.7;
+}
+
+.features{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.card{
+  padding:30px;
+  background:linear-gradient(145deg,#191919,#101010);
+  border:1px solid #ffffff12;
+  border-radius:15px;
+  transition:.3s;
+}
+
+.card:hover{
+  transform:translateY(-7px);
+  border-color:#ff8c0066;
+}
+
+.icon{
+  font-size:38px;
+  margin-bottom:20px;
+}
+
+.card h3{margin-bottom:12px}
+
+.card p{
+  color:#aaa;
+  font-size:14px;
+  line-height:1.8;
+}
+
+#store{background:#101010}
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.product{
+  padding:30px;
+  text-align:center;
+  background:#181818;
+  border:1px solid #ffffff15;
+  border-radius:15px;
+  transition:.3s;
+}
+
+.product:hover{
+  transform:translateY(-7px);
+  border-color:var(--orange);
+}
+
+.product.popular{
+  border-color:#ff8c0080;
+  box-shadow:0 0 30px #ff8c000c;
+}
+
+.tag{
+  display:inline-block;
+  padding:8px 12px;
+  margin-bottom:20px;
+  border-radius:30px;
+  background:#ff8c001a;
+  color:var(--gold);
+  font-size:11px;
+  font-weight:bold;
+}
+
+.item-icon{
+  font-size:55px;
+  margin-bottom:18px;
+}
+
+.product h3{font-size:24px}
+
+.product p{
+  margin:14px 0 20px;
+  color:#aaa;
+  font-size:14px;
+  line-height:1.7;
+}
+
+.price{
+  color:var(--gold);
+  font-size:25px;
+  font-weight:900;
+  margin-bottom:20px;
+}
+
+.product button{width:100%}
+
+.news-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+
+.news{
+  padding:28px;
+  background:#151515;
+  border:1px solid #ffffff12;
+  border-radius:13px;
+  transition:.25s;
+}
+
+.news:hover{border-color:#ff8c0050}
+
+.news small{
+  color:var(--orange);
+  font-weight:bold;
+}
+
+.news h3{margin:14px 0}
+
+.news p{
+  color:#aaa;
+  line-height:1.8;
+  font-size:14px;
+}
+
+.join{
+  margin:0 8% 80px;
+  padding:60px 25px;
+  border:1px solid #ff8c0035;
+  border-radius:18px;
+  text-align:center;
+  background:radial-gradient(ellipse at center,#ff8c001c,transparent 75%),#15120e;
+}
+
+.join h2{
+  font-size:clamp(28px,5vw,43px);
+  margin-bottom:15px;
+}
+
+.join p{
+  color:#aaa;
+  line-height:1.8;
+  margin-bottom:25px;
+}
+
+footer{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:15px;
+  padding:30px 8%;
+  border-top:1px solid #ffffff12;
+  color:#888;
+  font-size:13px;
+}
+
+footer strong{color:var(--orange)}
+
+#toast{
+  position:fixed;
+  bottom:25px;
+  left:50%;
+  transform:translate(-50%,100px);
+  z-index:500;
+  width:max-content;
+  max-width:90%;
+  padding:15px 22px;
+  border:1px solid #ff8c0066;
+  border-radius:10px;
+  background:#202020;
+  color:white;
+  text-align:center;
+  transition:.3s;
+}
+
+#toast.show{transform:translate(-50%,0)}
+
 @media(max-width:800px){
- .hero-grid{grid-template-columns:1fr;text-align:center}
- .hero p{margin-left:auto;margin-right:auto}
- .hero-buttons,.hero-stats{justify-content:center}
- .hero-visual{min-height:350px}
- .hero{padding-top:60px}
+  header{padding:0 5%}
+  nav{gap:13px}
+  nav a{font-size:12px}
+  header>.btn{display:none}
+
+  .hero{
+    min-height:650px;
+    padding:90px 6%;
+  }
+
+  .hero::before{
+    width:260px;
+    height:260px;
+    right:-100px;
+    top:80px;
+    opacity:.35;
+  }
+
+  .hero h1{letter-spacing:-2px}
+
+  section{padding:65px 6%}
+
+  .features,.products{grid-template-columns:1fr}
+  .news-grid{grid-template-columns:1fr}
+
+  .join{margin:0 6% 60px}
+  footer{padding:25px 6%}
 }
-/* SERVER STATUS */
-.status-wrap{margin-top:-28px;position:relative;z-index:5}
-.status-bar{
-  padding:20px 24px;border-radius:17px;border:1px solid var(--border);
-  background:linear-gradient(110deg,#171722,#11111b);
-  display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
-  box-shadow:0 20px 50px #0003;
+
+@media(max-width:430px){
+  .logo{font-size:18px}
+  nav{gap:9px}
+  nav a{font-size:11px}
+  .hero h1{font-size:48px}
+  .ip-box{gap:9px;padding:11px}
 }
-.status-left{display:flex;align-items:center;gap:13px}
-.status-dot{width:11px;height:11px;background:var(--green);border-radius:50%;box-shadow:0 0 16px #5bffab66}
-.status-left strong{font-size:13px;display:block}
-.status-left small{font-size:11px;color:var(--muted)}
-.server-ip{display:flex;align-items:center;gap:10px}
-.server-ip code{font-family:Orbitron,sans-serif;color:var(--gold);font-size:14px}
-.copy-btn{
-  width:38px;height:38px;border-radius:10px;background:#ffb52e15;
-  border:1px solid #ffb52e35;color:var(--gold);
-}
-/* WORLDS */
-.world-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.world-card{
-  position:relative;overflow:hidden;min-height:270px;border:1px solid var(--border);
-  border-radius:var(--radius);background:#151520;transition:.3s;
-}
-.world-card:hover{transform:translateY(-7px);border-color:#ffb52e66}
-.world-art{height:145px;display:grid;place-items:center;position:relative;overflow:hidden}
-.world-art i{font-size:65px;filter:drop-shadow(0 10px 20px #0005);z-index:1}
-.world-art:after{content:"";position:absolute;width:190px;height:190px;border-radius:50%;border:1px solid #ffffff22}
-.art-earth{background:radial-gradient(circle at 50% 60%,#278a63,#123e47 55%,#101522)}
-.art-towny{background:radial-gradient(circle at 50% 60%,#c09b58,#644525 55%,#17121b)}
-.art-mining{background:radial-gradient(circle at 50% 60%,#7166bc,#2a214c 55%,#11121b)}
-.world-content{padding:19px}
-.world-content h3{font-family:Orbitron,sans-serif;font-size:16px;margin-bottom:7px}
-.world-content p{font-size:12px;line-height:1.7;color:var(--muted);margin-bottom:14px}
-.world-action{font-size:11px;color:var(--gold);font-weight:800}
-@media(max-width:750px){.world-grid{grid-template-columns:1fr}}
-/* STORE */
-.store-toolbar{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;margin-bottom:26px}
-.category-list{display:flex;gap:8px;flex-wrap:wrap}
-.category-btn{
-  padding:10px 14px;border-radius:10px;background:#ffffff05;border:1px solid var(--border);
-  color:#aaaabd;font-size:11px;font-weight:800;transition:.2s;
-}
-.category-btn.active,.category-btn:hover{color:var(--gold);border-color:#ffb52e66;background:#ffb52e12}
-.store-search{
-  padding:11px 14px;border-radius:10px;background:#14141f;border:1px solid var(--border);
-  color:white;outline:none;width:210px;font-size:12px;
-}
-.store-search:focus{border-color:#ffb52e66}
-.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.product-card{
-  border:1px solid var(--border);background:linear-gradient(150deg,#171722,#101019);
-  border-radius:16px;overflow:hidden;transition:.25s;position:relative;
-}
-.product-card:hover{transform:translateY(-5px);border-color:#ffb52e55;box-shadow:0 15px 40px #0003}
-.product-art{
-  height:170px;display:grid;place-items:center;position:relative;overflow:hidden;
-  background:radial-gradient(ellipse at 50% 60%,#ffb52e18,transparent 65%),#ffffff03;
-  border-bottom:1px solid var(--border);
-}
-.product-art img{
-  width:100px;height:100px;object-fit:contain;image-rendering:pixelated;
-  filter:drop-shadow(0 12px 16px #0007);transition:.3s;
-}
-.product-card:hover .product-art img{transform:scale(1.12) rotate(-3deg)}
-.product-art .product-emoji{font-size:65px;filter:drop-shadow(0 12px 14px #0006)}
-.product-label{position:absolute;top:12px;left:12px}
-.product-info{padding:16px}
-.product-info h3{font-size:14px;margin-bottom:6px}
-.product-info p{font-size:11px;color:var(--muted);line-height:1.6;min-height:35px}
-.product-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:16px}
-.price{font-family:Orbitron,sans-serif;color:var(--gold);font-size:17px;font-weight:900}
-.buy-btn{
-  border:0;border-radius:9px;padding:10px 11px;background:#ffb52e18;color:var(--gold);
-  font-size:11px;font-weight:900;transition:.2s;
-}
-.buy-btn:hover{background:var(--gold);color:#17110a}
-.old-price{font-size:10px;color:#777;text-decoration:line-through;margin-right:5px}
-@media(max-width:1000px){.product-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:650px){.product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.product-art{height:135px}.product-info{padding:12px}.product-art img{width:80px;height:80px}.product-art .product-emoji{font-size:52px}.product-info h3{font-size:12px}.price{font-size:14px}.buy-btn{padding:9px 8px}}
-@media(max-width:380px){.product-grid{grid-template-columns:1fr}}
-/* FEATURES */
-.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.feature{
-  padding:26px;border:1px solid var(--border);border-radius:16px;
-  background:linear-gradient(145deg,#171722,#11111a);
-}
-.feature-icon{
-  width:49px;height:49px;border-radius:14px;display:grid;place-items:center;
-  background:#ffb52e15;color:var(--gold);font-size:20px;margin-bottom:19px;
-}
-.feature h3{font-size:15px;margin-bottom:9px}
-.feature p{font-size:12px;color:var(--muted);line-height:1.8}
-@media(max-width:750px){.feature-grid{grid-template-columns:1fr}}
-/* NEWS */
-.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.news-card{border:1px solid var(--border);border-radius:16px;background:#151520;overflow:hidden}
-.news-cover{height:130px;display:grid;place-items:center;font-size:44px;background:radial-gradient(circle,#ffb52e22,#171722)}
-.news-body{padding:20px}
-.news-body h3{font-size:15px;margin:12px 0 8px}
-.news-body p{font-size:12px;color:var(--muted);line-height:1.8}
-.news-date{font-size:10px;color:var(--gold)}
-@media(max-width:750px){.news-grid{grid-template-columns:1fr}}
-/* CTA / FOOTER */
-.cta{
-  padding:48px 30px;border:1px solid #ffb52e33;border-radius:22px;text-align:center;
-  background:radial-gradient(ellipse at 50% 0%,#ffb52e1d,transparent 65%),#14141e;
-}
-.cta h2{font-family:Orbitron,sans-serif;font-size:clamp(23px,4vw,35px);margin-bottom:14px}
-.cta p{font-size:13px;color:var(--muted);margin-bottom:23px}
-footer{border-top:1px solid var(--border);padding:30px 0;margin-top:80px}
-.footer-inner{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
-.footer-inner p{font-size:11px;color:var(--muted)}
-.socials{display:flex;gap:10px}
-.socials a{width:38px;height:38px;display:grid;place-items:center;background:#ffffff08;border:1px solid var(--border);border-radius:11px;color:#bdbdce}
-.socials a:hover{color:var(--gold);border-color:#ffb52e55}
-/* MODALS */
-.modal-backdrop{
-  position:fixed;inset:0;z-index:2000;background:#000b;backdrop-filter:blur(8px);
-  display:none;align-items:center;justify-content:center;padding:18px;
-}
-.modal-backdrop.show{display:flex}
-.modal{
-  width:min(510px,100%);max-height:90vh;overflow:auto;
-  background:#151520;border:1px solid var(--border);border-radius:20px;padding:25px;
-  box-shadow:0 25px 90px #0009;
-}
-.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:10px}
-.modal-header h2{font-family:Orbitron,sans-serif;font-size:18px}
-.close-modal{border:0;background:#ffffff0b;color:white;width:35px;height:35px;border-radius:10px;font-size:20px}
-.form-group{margin-bottom:15px}
-.form-group label{display:block;color:#aaaabd;font-size:11px;font-weight:700;margin-bottom:7px}
-.form-control{
-  width:100%;padding:12px 13px;border:1px solid var(--border);border-radius:10px;
-  background:#0d0d15;color:white;outline:none;font-size:12px;
-}
-.form-control:focus{border-color:#ffb52e66}
-.form-control option{background:#151520}
-.modal-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-.modal-actions .btn{flex:1}
-.modal-product{text-align:center;padding:15px 0}
-.modal-product .product-emoji{font-size:62px}
-.modal-product h3{font-size:18px;margin:12px 0 6px}
-.modal-product p{font-size:12px;line-height:1.8;color:var(--muted)}
-.modal-product .price{font-size:24px;margin:14px}
-.toast{
-  position:fixed;z-index:4000;bottom:22px;left:50%;transform:translate(-50%,20px);
-  background:#1b1b29;border:1px solid #ffffff1a;padding:13px 18px;border-radius:12px;
-  font-size:12px;box-shadow:0 12px 40px #0007;opacity:0;pointer-events:none;transition:.25s;
-  width:max-content;max-width:90%;
-}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-.admin-panel{width:min(900px,100%)}
-.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.admin-list{margin-top:20px;display:grid;gap:10px}
-.admin-item{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#ffffff06;padding:12px;border-radius:10px;border:1px solid var(--border);font-size:12px}
-.admin-item button{font-size:10px;padding:7px 9px}
-.admin-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
-.admin-tab{background:#ffffff08;border:1px solid var(--border);color:#aaaabd;padding:9px 12px;border-radius:9px;font-size:11px;font-weight:800}
-.admin-tab.active{color:var(--gold);border-color:#ffb52e66}
-@media(max-width:650px){.admin-grid{grid-template-columns:1fr}.status-bar{padding:17px}.server-ip code{font-size:11px}.hero-stats{gap:18px}}
 </style>
 </head>
+
 <body>
-<header class="navbar">
-  <div class="container nav-inner">
-    <a href="#anasayfa" class="logo">
-      <span class="logo-icon"><i class="fa-solid fa-sun"></i></span>
-      <span>GÜNEŞCRAFT<small>NETWORK</small></span>
-    </a>
-    <nav class="nav-links" id="navLinks">
-      <a href="#anasayfa">Ana Sayfa</a>
-      <a href="#dunyalar">Dünyalar</a>
-      <a href="#magaza">Mağaza</a>
-      <a href="#ozellikler">Özellikler</a>
-      <a href="#duyurular">Duyurular</a>
-    </nav>
-    <div class="nav-actions">
-      <a class="btn btn-primary" href="#magaza"><i class="fa-solid fa-cart-shopping"></i> Mağaza</a>
-      <button class="btn btn-secondary admin-nav" onclick="openLogin()"><i class="fa-solid fa-shield-halved"></i></button>
-      <button class="mobile-toggle" onclick="toggleMenu()" aria-label="Menüyü aç"><i class="fa-solid fa-bars"></i></button>
-    </div>
-  </div>
+
+<header>
+  <a href="#" class="logo">☀ GÜNEŞ<span>CRAFT</span></a>
+
+  <nav>
+    <a href="#features">Özellikler</a>
+    <a href="#store">Mağaza</a>
+    <a href="#news">Duyurular</a>
+  </nav>
+
+  <button class="btn" onclick="copyIP()">SUNUCUYA KATIL ↗</button>
 </header>
+
 <main>
-<section class="hero" id="anasayfa">
-  <div class="container hero-grid">
-    <div>
-      <div class="eyebrow"><i class="fa-solid fa-bolt"></i> Yeni macera seni bekliyor</div>
-      <h1>OYUNA<br><span class="gradient">GÜNEŞ GİBİ</span><br>DOĞ!</h1>
-      <p>
-        GüneşCraft Network dünyasına katıl! Yeni maceralar keşfet,
-        ekonomini geliştir, arkadaşlarınla oyna ve kendi efsaneni yaz.
-      </p>
-      <div class="hero-buttons">
-        <button class="btn btn-primary" onclick="copyIP()"><i class="fa-solid fa-gamepad"></i> Sunucuya Katıl</button>
-        <a href="#magaza" class="btn btn-secondary"><i class="fa-solid fa-store"></i> Mağazayı Keşfet</a>
-      </div>
-      <div class="hero-stats">
-        <div class="stat"><strong class="gradient">7/24</strong><span>MACERA</span></div>
-        <div class="stat"><strong>1.21+</strong><span>MINECRAFT</span></div>
-        <div class="stat"><strong class="gradient">∞</strong><span>KEŞFEDİLECEK DÜNYA</span></div>
-      </div>
+
+<section class="hero">
+  <div class="hero-content">
+
+    <div class="badge">☀ GÜNEŞCRAFT EVRENİNE HOŞ GELDİN</div>
+
+    <h1>GÜCÜNÜ<br><span>GÖSTER.</span></h1>
+
+    <p>
+      Maceraya hazır mısın? Kendi hikâyeni yaz,
+      arkadaşlarınla eğlen ve GüneşCraft'ta
+      unutulmaz anılar biriktir!
+    </p>
+
+    <div class="actions">
+      <button class="btn" onclick="copyIP()">⚡ SUNUCUYA KATIL</button>
+      <a class="btn-outline" href="#features">KEŞFET ↓</a>
     </div>
-    <div class="hero-visual">
-      <div class="orbit"></div>
-      <div class="planet"><div class="planet-ring"></div></div>
-      <div class="floating-card fc-one"><i class="fa-solid fa-fire"></i><b>GüneşCraft</b><br><span class="muted">Kendi efsaneni yaz.</span></div>
-      <div class="floating-card fc-two"><i class="fa-solid fa-cube"></i><b>Maceraya hazır mısın?</b></div>
+
+    <div class="ip-box">
+      <div>
+        <small>MINECRAFT SUNUCU IP</small>
+        <strong>gunescraft.xyz</strong>
+      </div>
+      <button class="copy" onclick="copyIP()">KOPYALA</button>
     </div>
+
   </div>
 </section>
-<div class="container status-wrap">
-  <div class="status-bar">
-    <div class="status-left">
-      <span class="status-dot"></span>
-      <div><strong>GüneşCraft Network</strong><small>Sunucu adresimiz</small></div>
-    </div>
-    <div class="server-ip">
-      <code id="serverIP">gunescraft.xyz</code>
-      <button class="copy-btn" onclick="copyIP()" title="IP adresini kopyala"><i class="fa-regular fa-copy"></i></button>
-    </div>
+
+<section id="features">
+  <div class="heading">
+    <div class="mini">NEDEN GÜNEŞCRAFT?</div>
+    <h2>Maceran Burada Başlıyor</h2>
+    <p>Sunucuya katıl, arkadaşlarınla oyna ve kendi hikâyeni oluştur.</p>
   </div>
+
+  <div class="features">
+
+    <article class="card">
+      <div class="icon">⚔️</div>
+      <h3>Heyecan Dolu Macera</h3>
+      <p>Yeni hedefler belirle, geliş ve Minecraft deneyimini kendi tarzında yaşa.</p>
+    </article>
+
+    <article class="card">
+      <div class="icon">🏰</div>
+      <h3>Kendi Eserini Oluştur</h3>
+      <p>Hayalindeki yapıları inşa et, emeğini göster ve kendi izini bırak.</p>
+    </article>
+
+    <article class="card">
+      <div class="icon">🤝</div>
+      <h3>Güçlü Topluluk</h3>
+      <p>Arkadaşlarınla birlikte oyna, takım kur ve yeni maceralara atıl.</p>
+    </article>
+
+  </div>
+</section>
+
+<section id="store">
+  <div class="heading">
+    <div class="mini">GÜNEŞCRAFT MAĞAZA</div>
+    <h2>Mağazayı Keşfet</h2>
+    <p>VIP paketleri ve oyun içi ürünler için mağaza alanı.</p>
+  </div>
+
+  <div class="products">
+
+    <article class="product">
+      <div class="tag">BAŞLANGIÇ</div>
+      <div class="item-icon">🥉</div>
+      <h3>VIP</h3>
+      <p>VIP paketinin avantajlarını keşfet.</p>
+      <div class="price">Yakında</div>
+      <button class="btn" onclick="showToast('VIP mağazası henüz bağlanmadı!')">
+        DETAYLAR
+      </button>
+    </article>
+
+    <article class="product popular">
+      <div class="tag">⭐ POPÜLER</div>
+      <div class="item-icon">👑</div>
+      <h3>PREMIUM</h3>
+      <p>Daha fazlasını isteyen oyuncular için.</p>
+      <div class="price">Yakında</div>
+      <button class="btn" onclick="showToast('Premium mağazası henüz bağlanmadı!')">
+        DETAYLAR
+      </button>
+    </article>
+
+    <article class="product">
+      <div class="tag">OYUN İÇİ</div>
+      <div class="item-icon">🧱</div>
+      <h3>SPAWNER</h3>
+      <p>Spawner seçeneklerini mağazada keşfet.</p>
+      <div class="price">Yakında</div>
+      <button class="btn" onclick="showToast('Spawner mağazası henüz bağlanmadı!')">
+        DETAYLAR
+      </button>
+    </article>
+
+  </div>
+</section>
+
+<section id="news">
+  <div class="heading">
+    <div class="mini">SON GELİŞMELER</div>
+    <h2>Sunucudan Haberler</h2>
+    <p>GüneşCraft ile ilgili duyurular burada yer alacak.</p>
+  </div>
+
+  <div class="news-grid">
+
+    <article class="news">
+      <small>☀ GÜNEŞCRAFT</small>
+      <h3>Yeni Web Sitemiz!</h3>
+      <p>GüneşCraft'ın yeni web sitesine hoş geldin! Tasarımı keşfet ve sunucu IP adresini kopyala.</p>
+    </article>
+
+    <article class="news">
+      <small>📢 DUYURU</small>
+      <h3>Yeni Gelişmeler Yolda</h3>
+      <p>Sunucuyla ilgili yeni özellikler ve duyurular geldikçe bu alanda paylaşılabilir.</p>
+    </article>
+
+  </div>
+</section>
+
+<div class="join">
+  <h2>☀ GüneşCraft'a Hazır Mısın?</h2>
+  <p>IP adresini kopyala ve Minecraft'ta sunucuya katıl!</p>
+  <button class="btn" onclick="copyIP()">IP ADRESİNİ KOPYALA</button>
 </div>
-<section id="dunyalar">
-  <div class="container">
-    <div class="section-head">
-      <div class="eyebrow">Keşfetmeye başla</div>
-      <h2 class="section-title">SENİ BEKLEYEN <span class="gradient">DÜNYALAR</span></h2>
-      <p class="section-desc">Her dünyada farklı bir macera, farklı bir hedef seni bekliyor.</p>
-    </div>
-    <div class="world-grid">
-      <article class="world-card">
-        <div class="world-art art-earth"><i class="fa-solid fa-earth-europe" style="color:#8de7a8"></i></div>
-        <div class="world-content">
-          <span class="badge">ANA DÜNYA</span>
-          <h3 style="margin-top:12px">Dünya</h3>
-          <p>Yeni yerler keşfet, kaynaklarını topla ve kendi maceranı oluştur.</p>
-          <a href="#magaza" class="world-action">MACERAYA HAZIRLAN <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-      </article>
-      <article class="world-card">
-        <div class="world-art art-towny"><i class="fa-solid fa-city" style="color:#f6d28b"></i></div>
-        <div class="world-content">
-          <span class="badge">ŞEHİR KUR</span>
-          <h3 style="margin-top:12px">Towny</h3>
-          <p>Kendi şehrini kur, arazini geliştir ve arkadaşlarınla büyü.</p>
-          <a href="#ozellikler" class="world-action">DAHA FAZLASI <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-      </article>
-      <article class="world-card">
-        <div class="world-art art-mining"><i class="fa-solid fa-gem" style="color:#c4b5fd"></i></div>
-        <div class="world-content">
-          <span class="badge">KAYNAK AVCISI</span>
-          <h3 style="margin-top:12px">Madenler</h3>
-          <p>Değerli kaynakları bul, ekipmanlarını geliştir ve hazineleri keşfet.</p>
-          <a href="#magaza" class="world-action">EKİPMANLARI GÖR <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-<section id="magaza" style="background:linear-gradient(180deg,transparent,#15152050,transparent)">
-  <div class="container">
-    <div class="section-head">
-      <div class="eyebrow">Gücünü yükselt</div>
-      <h2 class="section-title">GÜNEŞCRAFT <span class="gradient">MAĞAZA</span></h2>
-      <p class="section-desc">Spawnerlar, VIP paketleri ve daha fazlası burada.</p>
-    </div>
-    <div class="store-toolbar">
-      <div class="category-list" id="categoryList">
-        <button class="category-btn active" data-category="all">Tümü</button>
-        <button class="category-btn" data-category="spawner">Spawnerlar</button>
-        <button class="category-btn" data-category="vip">VIP Paketleri</button>
-        <button class="category-btn" data-category="item">Eşyalar</button>
-      </div>
-      <input class="store-search" id="storeSearch" placeholder="Ürün ara..." oninput="renderProducts()">
-    </div>
-    <div class="product-grid" id="productGrid"></div>
-    <p id="emptyProducts" class="muted hidden" style="text-align:center;padding:30px">Bu kategoride ürün bulunamadı.</p>
-    <div style="text-align:center;margin-top:30px">
-      <span class="muted" style="font-size:11px"><i class="fa-solid fa-circle-info gold"></i> Satın alma ve ödeme işlemleri için sunucu yönetimiyle iletişime geç.</span>
-    </div>
-  </div>
-</section>
-<section id="ozellikler">
-  <div class="container">
-    <div class="section-head">
-      <div class="eyebrow">Neden GüneşCraft?</div>
-      <h2 class="section-title">OYUNUNU <span class="gradient">YAŞA</span></h2>
-      <p class="section-desc">Sadece oynamak değil, kendi hikâyeni yazmak için.</p>
-    </div>
-    <div class="feature-grid">
-      <div class="feature">
-        <div class="feature-icon"><i class="fa-solid fa-earth-americas"></i></div>
-        <h3>Geniş Oyun Dünyası</h3>
-        <p>Keşfet, kaynak topla, inşa et ve kendi oyun tarzını oluştur.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon"><i class="fa-solid fa-users"></i></div>
-        <h3>Topluluk</h3>
-        <p>Arkadaşlarınla oyna, yeni oyuncularla tanış ve birlikte geliş.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon"><i class="fa-solid fa-coins"></i></div>
-        <h3>Ekonomi</h3>
-        <p>Kaynaklarını değerlendir, ticaret yap ve hedeflerine ulaş.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon"><i class="fa-solid fa-cubes-stacked"></i></div>
-        <h3>Spawner Sistemi</h3>
-        <p>Mağazadaki spawner ürünlerini incele ve oyun stratejini geliştir.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon"><i class="fa-solid fa-crown"></i></div>
-        <h3>VIP Paketleri</h3>
-        <p>Sunucu için hazırlanan VIP seçeneklerini mağazadan keşfet.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon"><i class="fa-solid fa-bullhorn"></i></div>
-        <h3>Güncel Duyurular</h3>
-        <p>Etkinlikleri ve sunucuyla ilgili yenilikleri duyurular bölümünden takip et.</p>
-      </div>
-    </div>
-  </div>
-</section>
-<section id="duyurular">
-  <div class="container">
-    <div class="section-head">
-      <div class="eyebrow">Gelişmeleri takip et</div>
-      <h2 class="section-title">SON <span class="gradient">DUYURULAR</span></h2>
-      <p class="section-desc">GüneşCraft dünyasındaki gelişmeler.</p>
-    </div>
-    <div class="news-grid" id="newsGrid"></div>
-  </div>
-</section>
-<section>
-  <div class="container">
-    <div class="cta">
-      <div class="eyebrow">Maceraya katıl</div>
-      <h2>GÜNEŞCRAFT'TA <span class="gradient">YERİNİ AL!</span></h2>
-      <p>Sunucu adresini kopyala ve Minecraft'ta maceraya hazırlan.</p>
-      <button class="btn btn-primary" onclick="copyIP()"><i class="fa-solid fa-copy"></i> gunescraft.xyz</button>
-    </div>
-  </div>
-</section>
+
 </main>
+
 <footer>
-  <div class="container footer-inner">
-    <a href="#anasayfa" class="logo">
-      <span class="logo-icon"><i class="fa-solid fa-sun"></i></span>
-      <span>GÜNEŞCRAFT<small>NETWORK</small></span>
-    </a>
-    <p>© <span id="year"></span> GüneşCraft Network. Tüm hakları saklıdır.</p>
-    <div class="socials">
-      <a href="#duyurular" title="Duyurular"><i class="fa-solid fa-bullhorn"></i></a>
-      <a href="#magaza" title="Mağaza"><i class="fa-solid fa-store"></i></a>
-      <a href="#anasayfa" title="Yukarı çık"><i class="fa-solid fa-arrow-up"></i></a>
-    </div>
-  </div>
+  <div>☀ <strong>GÜNEŞCRAFT</strong> — Maceranın merkezi.</div>
+  <div>IP: gunescraft.xyz</div>
+  <div>© 2026 GüneşCraft</div>
 </footer>
-<!-- ÜRÜN DETAYI -->
-<div class="modal-backdrop" id="productModal" onclick="backdropClose(event,'productModal')">
-  <div class="modal">
-    <div class="modal-header">
-      <h2>ÜRÜN DETAYI</h2>
-      <button class="close-modal" onclick="closeModal('productModal')">&times;</button>
-    </div>
-    <div id="productModalContent"></div>
-  </div>
-</div>
-<!-- YÖNETİCİ GİRİŞİ -->
-<div class="modal-backdrop" id="loginModal" onclick="backdropClose(event,'loginModal')">
-  <div class="modal">
-    <div class="modal-header">
-      <h2><i class="fa-solid fa-shield-halved gold"></i> YÖNETİCİ GİRİŞİ</h2>
-      <button class="close-modal" onclick="closeModal('loginModal')">&times;</button>
-    </div>
-    <form onsubmit="adminLogin(event)">
-      <div class="form-group">
-        <label>Kullanıcı adı</label>
-        <input class="form-control" id="adminUser" autocomplete="username" required>
-      </div>
-      <div class="form-group">
-        <label>Şifre</label>
-        <input class="form-control" id="adminPass" type="password" autocomplete="current-password" required>
-      </div>
-      <button class="btn btn-primary" style="width:100%">Giriş Yap <i class="fa-solid fa-arrow-right"></i></button>
-      <p class="muted" style="font-size:10px;line-height:1.7;margin-top:15px">Not: Bu örnek yönetici girişi tarayıcı tarafında çalışır. Gerçek güvenlik için sunucu tarafında kimlik doğrulama gerekir.</p>
-    </form>
-  </div>
-</div>
-<!-- YÖNETİCİ PANELİ -->
-<div class="modal-backdrop" id="adminModal" onclick="backdropClose(event,'adminModal')">
-  <div class="modal admin-panel">
-    <div class="modal-header">
-      <div><div class="eyebrow" style="margin-bottom:5px">GÜNEŞCRAFT</div><h2>YÖNETİCİ PANELİ</h2></div>
-      <button class="close-modal" onclick="closeModal('adminModal')">&times;</button>
-    </div>
-    <div class="admin-tabs">
-      <button class="admin-tab active" onclick="adminTab('products',this)">Ürünler</button>
-      <button class="admin-tab" onclick="adminTab('news',this)">Duyurular</button>
-      <button class="admin-tab" onclick="adminTab('settings',this)">Site Ayarları</button>
-    </div>
-    <div id="adminProducts">
-      <h3 style="font-size:14px;margin-bottom:15px">Yeni ürün ekle</h3>
-      <form onsubmit="addProduct(event)">
-        <div class="admin-grid">
-          <div class="form-group"><label>Ürün adı</label><input class="form-control" id="newName" required></div>
-          <div class="form-group"><label>Fiyat (₺)</label><input class="form-control" id="newPrice" type="number" min="0" step="0.01" required></div>
-          <div class="form-group"><label>Kategori</label>
-            <select class="form-control" id="newCategory">
-              <option value="spawner">Spawner</option><option value="vip">VIP</option><option value="item">Eşya</option>
-            </select>
-          </div>
-          <div class="form-group"><label>Emoji / ikon</label><input class="form-control" id="newEmoji" value="📦"></div>
-          <div class="form-group"><label>Görsel URL'si (isteğe bağlı)</label><input class="form-control" id="newImage" placeholder="https://..."></div>
-          <div class="form-group"><label>Açıklama</label><input class="form-control" id="newDescription" value="GüneşCraft mağaza ürünü."></div>
-        </div>
-        <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> Ürün Ekle</button>
-      </form>
-      <div class="admin-list" id="adminProductList"></div>
-    </div>
-    <div id="adminNews" class="hidden">
-      <h3 style="font-size:14px;margin-bottom:15px">Yeni duyuru ekle</h3>
-      <form onsubmit="addNews(event)">
-        <div class="form-group"><label>Duyuru başlığı</label><input class="form-control" id="newsTitle" required></div>
-        <div class="form-group"><label>Açıklama</label><textarea class="form-control" id="newsText" rows="3" required></textarea></div>
-        <div class="form-group"><label>Emoji</label><input class="form-control" id="newsEmoji" value="📢"></div>
-        <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> Duyuru Ekle</button>
-      </form>
-      <div class="admin-list" id="adminNewsList"></div>
-    </div>
-    <div id="adminSettings" class="hidden">
-      <h3 style="font-size:14px;margin-bottom:15px">Site ayarları</h3>
-      <form onsubmit="saveSettings(event)">
-        <div class="form-group"><label>Sunucu IP'si</label><input class="form-control" id="settingIP" required></div>
-        <div class="form-group"><label>Site başlığı</label><input class="form-control" id="settingTitle" required></div>
-        <button class="btn btn-primary">Ayarları Kaydet</button>
-      </form>
-      <p class="muted" style="font-size:11px;line-height:1.7;margin-top:18px">Bu panelde yapılan değişiklikler bu tarayıcının yerel depolamasına kaydedilir. Diğer ziyaretçilere yansıması için bir sunucu ve veritabanı entegrasyonu gerekir.</p>
-    </div>
-  </div>
-</div>
-<div class="toast" id="toast"></div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
 <script>
-const DEFAULT_PRODUCTS = [
-  {id:1,name:"Zombi Spawner",category:"spawner",price:149,emoji:"🧟",description:"Zombi spawner ürünü. Satın alma detayları için sunucu yönetimine ulaş.",image:""},
-  {id:2,name:"İskelet Spawner",category:"spawner",price:179,emoji:"💀",description:"İskelet spawner ürünü. Satın alma detayları için sunucu yönetimine ulaş.",image:""},
-  {id:3,name:"Örümcek Spawner",category:"spawner",price:169,emoji:"🕷️",description:"Örümcek spawner ürünü. Satın alma detayları için sunucu yönetimine ulaş.",image:""},
-  {id:4,name:"İnek Spawner",category:"spawner",price:129,emoji:"🐄",description:"İnek spawner ürünü. Satın alma detayları için sunucu yönetimine ulaş.",image:""},
-  {id:5,name:"Creeper Spawner",category:"spawner",price:199,emoji:"💚",description:"Creeper spawner ürünü. Satın alma detayları için sunucu yönetimine ulaş.",image:""},
-  {id:6,name:"Blaze Spawner",category:"spawner",price:229,emoji:"🔥",description:"Blaze spawner ürünü. Satın alma detayları için sunucu yönetimine ulaş.",image:""},
-  {id:7,name:"VIP",category:"vip",price:99,emoji:"👑",description:"VIP paketi. Paketin güncel avantajlarını sunucu yönetiminden öğren.",image:""},
-  {id:8,name:"VIP+",category:"vip",price:199,emoji:"💎",description:"VIP+ paketi. Paketin güncel avantajlarını sunucu yönetiminden öğren.",image:""},
-  {id:9,name:"MVP",category:"vip",price:299,emoji:"⚡",description:"MVP paketi. Paketin güncel avantajlarını sunucu yönetiminden öğren.",image:""},
-  {id:10,name:"Özel Kasa",category:"item",price:49,emoji:"🎁",description:"Özel kasa ürünü. İçerik ve kullanım koşulları sunucuya göre değişebilir.",image:""},
-  {id:11,name:"Anahtar Paketi",category:"item",price:39,emoji:"🗝️",description:"Anahtar paketi. Ayrıntılar için sunucu yönetimiyle iletişime geç.",image:""},
-  {id:12,name:"Elmas Paketi",category:"item",price:59,emoji:"💎",description:"Elmas temalı mağaza ürünü. Ayrıntılar için sunucu yönetimiyle iletişime geç.",image:""}
-];
-const DEFAULT_NEWS = [
-  {id:101,title:"GüneşCraft'a Hoş Geldin!",text:"Minecraft macerana GüneşCraft Network ile başla. Sunucu adresimiz gunescraft.xyz.",emoji:"☀️",date:"Sunucu duyurusu"},
-  {id:102,title:"Mağazayı Keşfet",text:"Spawnerları, VIP paketlerini ve diğer mağaza ürünlerini incele.",emoji:"🛒",date:"Mağaza"},
-  {id:103,title:"Yeni Maceralar",text:"Dünyaları keşfet, arkadaşlarınla oyna ve kendi hikâyeni yaz.",emoji:"🌍",date:"GüneşCraft Network"}
-];
-function loadData(key,fallback){
-  try{
-    const value=localStorage.getItem(key);
-    return value ? JSON.parse(value) : structuredClone(fallback);
-  }catch(e){return structuredClone(fallback)}
-}
-function saveData(key,value){
-  try{localStorage.setItem(key,JSON.stringify(value))}
-  catch(e){showToast("Tarayıcı depolamasına kaydedilemedi.")}
-}
-let products=loadData("gc_products",DEFAULT_PRODUCTS);
-let news=loadData("gc_news",DEFAULT_NEWS);
-let settings=loadData("gc_settings",{ip:"gunescraft.xyz",title:"GüneşCraft Network"});
-let currentCategory="all";
-let activeProductId=null;
-function safeText(value){
-  return String(value??"").replace(/[&<>"']/g,char=>({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  }[char]));
-}
-function safeImageURL(value){
-  try{
-    const url=new URL(value,location.href);
-    if(url.protocol==="https:" || url.protocol==="http:") return url.href;
-  }catch(e){}
-  return "";
-}
-function productImage(product){
-  const url=safeImageURL(product.image);
-  if(url){
-    return `<img src="${safeText(url)}" alt="${safeText(product.name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-      <span class="product-emoji" style="display:none">${safeText(product.emoji||"📦")}</span>`;
-  }
-  return `<span class="product-emoji">${safeText(product.emoji||"📦")}</span>`;
-}
-function categoryName(category){
-  return ({spawner:"SPAWNER",vip:"VIP PAKETİ",item:"EŞYA"})[category]||"ÜRÜN";
-}
-function renderProducts(){
-  const query=(document.getElementById("storeSearch").value||"").trim().toLocaleLowerCase("tr");
-  const filtered=products.filter(p=>
-    (currentCategory==="all"||p.category===currentCategory) &&
-    (p.name.toLocaleLowerCase("tr").includes(query)||p.description.toLocaleLowerCase("tr").includes(query))
-  );
-  const grid=document.getElementById("productGrid");
-  document.getElementById("emptyProducts").classList.toggle("hidden",filtered.length>0);
-  grid.innerHTML=filtered.map(p=>`
-    <article class="product-card">
-      <div class="product-art">
-        <span class="badge product-label">${categoryName(p.category)}</span>
-        ${productImage(p)}
-      </div>
-      <div class="product-info">
-        <h3>${safeText(p.name)}</h3>
-        <p>${safeText(p.description)}</p>
-        <div class="product-bottom">
-          <span class="price">${Number(p.price).toLocaleString("tr-TR")} ₺</span>
-          <button class="buy-btn" onclick="showProduct(${Number(p.id)})">İNCELE <i class="fa-solid fa-arrow-right"></i></button>
-        </div>
-      </div>
-    </article>
-  `).join("");
-}
-function showProduct(id){
-  const p=products.find(item=>Number(item.id)===Number(id));
-  if(!p)return;
-  activeProductId=p.id;
-  document.getElementById("productModalContent").innerHTML=`
-    <div class="modal-product">
-      <div class="product-emoji">${safeText(p.emoji||"📦")}</div>
-      <span class="badge">${categoryName(p.category)}</span>
-      <h3>${safeText(p.name)}</h3>
-      <p>${safeText(p.description)}</p>
-      <div class="price">${Number(p.price).toLocaleString("tr-TR")} ₺</div>
-      <p>Bu sayfa ürün bilgilerini gösterir. Gerçek ödeme sistemi bağlı değildir.</p>
-      <div class="modal-actions">
-        <button class="btn btn-secondary" onclick="closeModal('productModal')">Kapat</button>
-        <button class="btn btn-primary" onclick="contactAboutProduct()">Satın Alma Bilgisi</button>
-      </div>
-    </div>`;
-  openModal("productModal");
-}
-function contactAboutProduct(){
-  const p=products.find(item=>Number(item.id)===Number(activeProductId));
-  if(!p)return;
-  closeModal("productModal");
-  showToast(p.name+" için sunucu yönetimiyle iletişime geç.");
-}
-document.querySelectorAll(".category-btn").forEach(button=>{
-  button.addEventListener("click",()=>{
-    document.querySelectorAll(".category-btn").forEach(b=>b.classList.remove("active"));
-    button.classList.add("active");
-    currentCategory=button.dataset.category;
-    renderProducts();
-  });
-});
-function renderNews(){
-  document.getElementById("newsGrid").innerHTML=news.map(n=>`
-    <article class="news-card">
-      <div class="news-cover">${safeText(n.emoji||"📢")}</div>
-      <div class="news-body">
-        <span class="news-date">${safeText(n.date||"Duyuru")}</span>
-        <h3>${safeText(n.title)}</h3>
-        <p>${safeText(n.text)}</p>
-      </div>
-    </article>
-  `).join("");
-}
-function copyIP(){
-  const ip=settings.ip||"gunescraft.xyz";
-  if(navigator.clipboard && window.isSecureContext){
-    navigator.clipboard.writeText(ip).then(()=>showToast("Sunucu IP'si kopyalandı: "+ip))
-      .catch(()=>fallbackCopy(ip));
-  }else fallbackCopy(ip);
-}
-function fallbackCopy(text){
-  const area=document.createElement("textarea");
-  area.value=text;area.style.position="fixed";area.style.opacity="0";
-  document.body.appendChild(area);area.select();
-  try{document.execCommand("copy");showToast("Sunucu IP'si kopyalandı: "+text)}
-  catch(e){showToast("Sunucu IP'si: "+text)}
-  area.remove();
-}
 let toastTimer;
+
 function showToast(message){
-  const toast=document.getElementById("toast");
-  toast.textContent=message;toast.classList.add("show");
+  const toast = document.getElementById("toast");
+
+  toast.textContent = message;
+  toast.classList.add("show");
+
   clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>toast.classList.remove("show"),2800);
+
+  toastTimer = setTimeout(()=>{
+    toast.classList.remove("show");
+  },2800);
 }
-function openModal(id){document.getElementById(id).classList.add("show")}
-function closeModal(id){document.getElementById(id).classList.remove("show")}
-function backdropClose(event,id){if(event.target.id===id)closeModal(id)}
-function toggleMenu(){document.getElementById("navLinks").classList.toggle("open")}
-document.querySelectorAll(".nav-links a").forEach(a=>a.addEventListener("click",()=>{
-  document.getElementById("navLinks").classList.remove("open");
-}));
-function openLogin(){openModal("loginModal")}
-function adminLogin(event){
-  event.preventDefault();
-  const username=document.getElementById("adminUser").value;
-  const password=document.getElementById("adminPass").value;
-  // DEMO GİRİŞİ: Gerçek sitende bunu sunucu tarafında doğrulamalısın.
-  if(username==="Admin"&&password==="269826"){
-    closeModal("loginModal");
-    openAdmin();
-    event.target.reset();
-  }else{
-    showToast("Kullanıcı adı veya şifre yanlış.");
+
+async function copyIP(){
+  const ip = "gunescraft.xyz";
+
+  try{
+    await navigator.clipboard.writeText(ip);
+    showToast("☀ IP adresi kopyalandı: " + ip);
+  }catch(error){
+    const input = document.createElement("textarea");
+
+    input.value = ip;
+    input.style.position = "fixed";
+    input.style.opacity = "0";
+
+    document.body.appendChild(input);
+    input.select();
+
+    const copied = document.execCommand("copy");
+    input.remove();
+
+    showToast(
+      copied
+        ? "☀ IP adresi kopyalandı: " + ip
+        : "Sunucu IP adresi: " + ip
+    );
   }
 }
-function openAdmin(){
-  renderAdminProducts();renderAdminNews();
-  document.getElementById("settingIP").value=settings.ip||"gunescraft.xyz";
-  document.getElementById("settingTitle").value=settings.title||"GüneşCraft Network";
-  openModal("adminModal");
-}
-function adminTab(tab,button){
-  document.querySelectorAll(".admin-tab").forEach(b=>b.classList.remove("active"));
-  button.classList.add("active");
-  ["Products","News","Settings"].forEach(name=>{
-    document.getElementById("admin"+name).classList.toggle("hidden",name.toLowerCase()!==tab);
-  });
-}
-function renderAdminProducts(){
-  document.getElementById("adminProductList").innerHTML=`
-    <h3 style="font-size:13px;margin:15px 0 5px">Mevcut ürünler (${products.length})</h3>
-    ${products.map(p=>`
-      <div class="admin-item">
-        <span>${safeText(p.emoji||"📦")} <b>${safeText(p.name)}</b> — ${Number(p.price).toLocaleString("tr-TR")} ₺</span>
-        <button class="btn btn-danger" onclick="deleteProduct(${Number(p.id)})">Sil</button>
-      </div>
-    `).join("")}`;
-}
-function addProduct(event){
-  event.preventDefault();
-  const name=document.getElementById("newName").value.trim();
-  const price=Number(document.getElementById("newPrice").value);
-  if(!name||!Number.isFinite(price)||price<0){showToast("Ürün adı ve fiyatı kontrol et.");return}
-  products.push({
-    id:Date.now(),name,price,
-    category:document.getElementById("newCategory").value,
-    emoji:document.getElementById("newEmoji").value.trim()||"📦",
-    image:document.getElementById("newImage").value.trim(),
-    description:document.getElementById("newDescription").value.trim()||"GüneşCraft mağaza ürünü."
-  });
-  saveData("gc_products",products);
-  renderProducts();renderAdminProducts();event.target.reset();
-  document.getElementById("newEmoji").value="📦";
-  document.getElementById("newDescription").value="GüneşCraft mağaza ürünü.";
-  showToast("Ürün eklendi.");
-}
-function deleteProduct(id){
-  if(!confirm("Bu ürünü silmek istiyor musun?"))return;
-  products=products.filter(p=>Number(p.id)!==Number(id));
-  saveData("gc_products",products);renderProducts();renderAdminProducts();
-  showToast("Ürün silindi.");
-}
-function renderAdminNews(){
-  document.getElementById("adminNewsList").innerHTML=`
-    <h3 style="font-size:13px;margin:15px 0 5px">Mevcut duyurular (${news.length})</h3>
-    ${news.map(n=>`
-      <div class="admin-item">
-        <span>${safeText(n.emoji||"📢")} <b>${safeText(n.title)}</b></span>
-        <button class="btn btn-danger" onclick="deleteNews(${Number(n.id)})">Sil</button>
-      </div>
-    `).join("")}`;
-}
-function addNews(event){
-  event.preventDefault();
-  const title=document.getElementById("newsTitle").value.trim();
-  const textValue=document.getElementById("newsText").value.trim();
-  if(!title||!textValue)return;
-  news.unshift({id:Date.now(),title,text:textValue,emoji:document.getElementById("newsEmoji").value.trim()||"📢",date:new Date().toLocaleDateString("tr-TR")});
-  saveData("gc_news",news);renderNews();renderAdminNews();event.target.reset();
-  document.getElementById("newsEmoji").value="📢";
-  showToast("Duyuru yayınlandı.");
-}
-function deleteNews(id){
-  if(!confirm("Bu duyuruyu silmek istiyor musun?"))return;
-  news=news.filter(n=>Number(n.id)!==Number(id));
-  saveData("gc_news",news);renderNews();renderAdminNews();
-  showToast("Duyuru silindi.");
-}
-function saveSettings(event){
-  event.preventDefault();
-  settings.ip=document.getElementById("settingIP").value.trim();
-  settings.title=document.getElementById("settingTitle").value.trim();
-  if(!settings.ip||!settings.title){showToast("Alanları doldur.");return}
-  saveData("gc_settings",settings);
-  document.getElementById("serverIP").textContent=settings.ip;
-  document.title=settings.title+" | Minecraft";
-  showToast("Site ayarları kaydedildi.");
-}
-function init(){
-  document.getElementById("year").textContent=new Date().getFullYear();
-  document.getElementById("serverIP").textContent=settings.ip||"gunescraft.xyz";
-  document.title=(settings.title||"GüneşCraft Network")+" | Minecraft";
-  renderProducts();renderNews();
-}
-init();
 </script>
+
 </body>
 </html>
