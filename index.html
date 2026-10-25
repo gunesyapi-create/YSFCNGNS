@@ -78,26 +78,21 @@ section{padding:60px 0}
 }
 .nav-inner{min-height:65px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .logo{display:flex;align-items:center;gap:9px;font-family:Orbitron,sans-serif;font-weight:900;font-size:14px}
+
+/* SOL TARAFTAKİ LOGO KUTUSU */
 .logo-icon{
-  width:35px;height:35px;display:grid;place-items:center;border-radius:10px;
+  width:38px;height:38px;display:grid;place-items:center;border-radius:10px;
   background:linear-gradient(140deg,#ffd36a,#ff762b);color:#211305;
-  font-size:16px;box-shadow:0 4px 18px #ff9d2733;
+  font-size:16px;box-shadow:0 4px 18px #ff9d2733;overflow:hidden;border:1px solid #ffe7a677;
 }
+.logo-icon img{width:100%;height:100%;object-fit:cover}
+
 .logo small{display:block;color:var(--muted);font:700 8px Poppins,sans-serif;letter-spacing:2px;margin-top:1px}
 .nav-links{display:flex;align-items:center;gap:18px}
 .nav-links a{font-size:11px;font-weight:700;color:#b9b9c9;transition:.2s}
 .nav-links a:hover{color:var(--gold)}
 .nav-actions{display:flex;align-items:center;gap:8px}
 .mobile-toggle{display:none;background:none;border:0;color:white;font-size:20px;padding:4px}
-
-/* SAĞ ÜST YUVARLAK LOGO */
-.top-round-logo{
-  width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
-  background:linear-gradient(135deg,#ffb52e,#ff642d);color:#17110a;
-  font-size:14px;box-shadow:0 0 12px #ff9d2744;border:1px solid #ffe7a677;
-  overflow:hidden;
-}
-.top-round-logo img{width:100%;height:100%;object-fit:cover}
 
 /* ONLINE PLAYER BADGE */
 .online-badge{
@@ -346,7 +341,9 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 <header class="navbar">
   <div class="container nav-inner">
     <a href="#anasayfa" class="logo">
-      <span class="logo-icon"><i class="fa-solid fa-sun"></i></span>
+      <span class="logo-icon">
+        <img src="logo.png" alt="Logo" onerror="this.replaceWith(document.createElement('i'));this.className='fa-solid fa-sun'">
+      </span>
       <span>GÜNEŞCRAFT<small>NETWORK</small></span>
     </a>
     <nav class="nav-links" id="navLinks">
@@ -366,11 +363,6 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
       <!-- Kullanıcı Giriş / Profil Alanı -->
       <div id="userProfileArea" style="display:flex;align-items:center;gap:6px">
         <button class="btn btn-primary" onclick="openLogin()"><i class="fa-solid fa-user"></i> Giriş Yap</button>
-      </div>
-
-      <!-- Sağ Üst Yuvarlak Logo (logo.png) -->
-      <div class="top-round-logo" title="GüneşCraft Network">
-        <img src="logo.png" alt="Logo" onerror="this.replaceWith(document.createElement('i'));this.className='fa-solid fa-sun'">
       </div>
 
       <button class="mobile-toggle" onclick="toggleMenu()" aria-label="Menüyü aç"><i class="fa-solid fa-bars"></i></button>
@@ -537,7 +529,9 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 <footer>
   <div class="container footer-inner">
     <a href="#anasayfa" class="logo">
-      <span class="logo-icon"><i class="fa-solid fa-sun"></i></span>
+      <span class="logo-icon" style="width:28px;height:28px;border-radius:8px;">
+        <img src="logo.png" alt="Logo" onerror="this.replaceWith(document.createElement('i'));this.className='fa-solid fa-sun'">
+      </span>
       <span>GÜNEŞCRAFT<small>NETWORK</small></span>
     </a>
     <p>© <span id="year"></span> GüneşCraft Network. Tüm hakları saklıdır.</p>
