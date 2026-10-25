@@ -91,7 +91,7 @@ section{padding:60px 0}
 .nav-actions{display:flex;align-items:center;gap:8px}
 .mobile-toggle{display:none;background:none;border:0;color:white;font-size:20px;padding:4px}
 
-/* ONLINE PLAYER & PING BADGE */
+/* SADECE AKTİF OYUNCU SAYISI (MS KALDIRILDI) */
 .online-badge{
   display:flex;align-items:center;gap:6px;padding:5px 10px;
   border-radius:8px;background:#ffffff05;border:1px solid var(--border);
@@ -351,10 +351,10 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
       <a href="#duyurular" onclick="toggleMenu()">Duyurular</a>
     </nav>
     <div class="nav-actions">
-      <!-- Anlık Oyuncu ve MS / Ping Rozeti -->
+      <!-- Sadece Aktif Oyuncu Sayısı -->
       <div class="online-badge">
         <span class="online-dot"></span>
-        <span>Aktif: <strong id="headerOnline" class="gold">...</strong> | MS: <strong id="headerPing" class="gold">...</strong></span>
+        <span>Aktif: <strong id="headerOnline" class="gold">...</strong></span>
       </div>
 
       <!-- Kullanıcı Giriş / Profil Alanı -->
@@ -426,7 +426,6 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
           <span class="badge">CANLI HARİTA</span>
           <h3 style="margin-top:8px">GüneşCraft Towny Haritası</h3>
           <p>Şehirlerin sınırlarını görmek ve haritada keşfe çıkmak için tıkla.</p>
-          <!-- TARAYICI GÜVENLİK ENGELİNİ AŞAN DOĞRUDAN TAM HARİTA SEKMESİ -->
           <a class="world-action" href="http://157.90.133.100:25749/?world=world&renderer=vintage_story&zoom=-2&x=2651&z=-3147" target="_blank">TAM HARİTAYI AÇ <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
         </div>
       </article>
@@ -737,11 +736,9 @@ function fetchServerStatus() {
       const pingMs = Math.round(endTime - startTime);
       
       const headerCount = document.getElementById('headerOnline');
-      const headerPing = document.getElementById('headerPing');
       const statusCount = document.getElementById('statusOnline');
       const statusPing = document.getElementById('statusPing');
       
-      if(headerPing) headerPing.textContent = pingMs + "ms";
       if(statusPing) statusPing.textContent = pingMs + "ms";
 
       if (data.online) {
@@ -758,10 +755,8 @@ function fetchServerStatus() {
     .catch(err => {
       console.log("Sunucu durumu alınamadı:", err);
       const headerCount = document.getElementById('headerOnline');
-      const headerPing = document.getElementById('headerPing');
       const statusPing = document.getElementById('statusPing');
       if(headerCount) headerCount.textContent = "3";
-      if(headerPing) headerPing.textContent = "18ms";
       if(statusPing) statusPing.textContent = "18ms";
     });
 }
