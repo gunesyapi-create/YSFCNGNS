@@ -91,7 +91,6 @@ section{padding:60px 0}
 .nav-actions{display:flex;align-items:center;gap:8px}
 .mobile-toggle{display:none;background:none;border:0;color:white;font-size:20px;padding:4px}
 
-/* SADECE AKTİF OYUNCU SAYISI (MS KALDIRILDI) */
 .online-badge{
   display:flex;align-items:center;gap:6px;padding:5px 10px;
   border-radius:8px;background:#ffffff05;border:1px solid var(--border);
@@ -269,6 +268,14 @@ section{padding:60px 0}
 .news-date{font-size:8px;color:var(--gold)}
 @media(max-width:750px){.news-grid{grid-template-columns:1fr}}
 
+/* DESTEK / ŞİKAYET BÖLÜMÜ */
+.ticket-container{background:#13131e;border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+.ticket-list{margin-top:20px;display:grid;gap:12px}
+.ticket-card{background:#181824;border:1px solid var(--border);border-radius:10px;padding:14px}
+.ticket-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:11px}
+.ticket-body{font-size:11px;color:var(--muted);line-height:1.5;margin-bottom:10px}
+.ticket-reply{background:#111118;border-left:3px solid var(--gold);padding:8px 12px;border-radius:6px;font-size:11px;margin-top:8px}
+
 /* CTA / FOOTER */
 .cta{
   padding:30px 18px;border:1px solid #ffb52e33;border-radius:16px;text-align:center;
@@ -311,7 +318,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 .modal-product img, .modal-product svg{width:80px;height:80px;margin-bottom:10px;object-fit:contain}
 .modal-product h3{font-size:15px;margin:6px 0 4px}
 .modal-product p{font-size:11px;line-height:1.6;color:var(--muted)}
-.modal-product .price{font-size:18px;margin:8px}
+.modal-product .price{font-size:18px;margin-bytes:8px}
 .toast{
   position:fixed;z-index:4000;bottom:16px;left:50%;transform:translate(-50%,20px);
   background:#1b1b29;border:1px solid #ffffff1a;padding:10px 14px;border-radius:9px;
@@ -327,7 +334,6 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 .admin-tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
 .admin-tab{background:#ffffff08;border:1px solid var(--border);color:#aaaabd;padding:6px 9px;border-radius:7px;font-size:10px;font-weight:700}
 .admin-tab.active{color:var(--gold);border-color:#ffb52e66}
-.admin-divider{margin:15px 0 10px;border:0;border-top:1px solid var(--border)}
 .auth-tabs{display:flex;gap:5px;margin-bottom:12px;background:#ffffff05;padding:3px;border-radius:8px;border:1px solid var(--border)}
 .auth-tab{flex:1;padding:6px;text-align:center;border-radius:6px;border:0;background:transparent;color:var(--muted);font-size:10px;font-weight:700}
 .auth-tab.active{background:#ffb52e18;color:var(--gold)}
@@ -347,21 +353,17 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
       <a href="#anasayfa" onclick="toggleMenu()">Ana Sayfa</a>
       <a href="#towny" onclick="toggleMenu()">Towny Harita</a>
       <a href="#magaza" onclick="toggleMenu()">Mağaza</a>
-      <a href="#ozellikler" onclick="toggleMenu()">Özellikler</a>
+      <a href="#destek" onclick="toggleMenu()">Destek</a>
       <a href="#duyurular" onclick="toggleMenu()">Duyurular</a>
     </nav>
     <div class="nav-actions">
-      <!-- Sadece Aktif Oyuncu Sayısı -->
       <div class="online-badge">
         <span class="online-dot"></span>
         <span>Aktif: <strong id="headerOnline" class="gold">...</strong></span>
       </div>
-
-      <!-- Kullanıcı Giriş / Profil Alanı -->
       <div id="userProfileArea" style="display:flex;align-items:center;gap:6px">
         <button class="btn btn-primary" onclick="openLogin()"><i class="fa-solid fa-user"></i> Giriş Yap</button>
       </div>
-
       <button class="mobile-toggle" onclick="toggleMenu()" aria-label="Menüyü aç"><i class="fa-solid fa-bars"></i></button>
     </div>
   </div>
@@ -406,7 +408,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
       </div>
     </div>
     <div class="server-ip">
-      <code id="serverIP">gunescraft.xyz</code>
+      <code id="serverIP">play.gunescraft.xyz</code>
       <button class="copy-btn" onclick="copyIP()" title="IP adresini kopyala" aria-label="IP Kopyala"><i class="fa-regular fa-copy"></i></button>
     </div>
   </div>
@@ -452,49 +454,47 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
     </div>
     <div class="product-grid" id="productGrid"></div>
     <p id="emptyProducts" class="muted hidden" style="text-align:center;padding:25px">Bu kategoride ürün bulunamadı.</p>
-    <div style="text-align:center;margin-top:20px">
-      <span class="muted" style="font-size:10px"><i class="fa-solid fa-circle-info gold"></i> Satın alma ve ödeme işlemleri için sunucu yönetimiyle iletişime geç.</span>
-    </div>
   </div>
 </section>
 
-<section id="ozellikler">
+<!-- DESTEK / ŞİKAYET BÖLÜMÜ -->
+<section id="destek">
   <div class="container">
     <div class="section-head">
-      <div class="eyebrow">Neden GüneşCraft?</div>
-      <h2 class="section-title">OYUNUNU <span class="gradient">YAŞA</span></h2>
-      <p class="section-desc">Sadece oynamak değil, kendi hikâyeni yazmak için.</p>
+      <div class="eyebrow">Yardım ve Bildirim</div>
+      <h2 class="section-title">DESTEK VE <span class="gradient">ŞİKAYET MERKEZİ</span></h2>
+      <p class="section-desc">Sorun bildirmek, şikayette bulunmak veya destek almak için talep oluştur.</p>
     </div>
-    <div class="feature-grid">
-      <div class="feature">
-        <div class="feature-icon"><i class="fa-solid fa-city"></i></div>
-        <h3>Towny & Şehirler</h3>
-        <p>Kendi şehrini kur, arsa yönet, belediye başkanı ol ve müttefikler bul.</p>
+    <div class="ticket-container">
+      <div id="ticketFormArea">
+        <h3 style="font-size:14px;margin-bottom:12px"><i class="fa-solid fa-headset gold"></i> Yeni Destek Talebi Oluştur</h3>
+        <form onsubmit="createTicket(event)">
+          <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+            <div class="form-group">
+              <label for="ticketCategory">Kategori</label>
+              <select class="form-control" id="ticketCategory">
+                <option value="Destek / Soru">❓ Destek / Soru</option>
+                <option value="Oyuncu Şikayeti">⚠️ Oyuncu Şikayeti</option>
+                <option value="Hata / Bug Bildirimi">🐛 Hata / Bug Bildirimi</option>
+                <option value="Mağaza / Ödeme">💳 Mağaza / Ödeme</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="ticketSubject">Konu Başlığı</label>
+              <input class="form-control" id="ticketSubject" placeholder="Örn: Haksız ban yedim" required>
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom:10px">
+            <label for="ticketMessage">Mesajınız / Detay</label>
+            <textarea class="form-control" id="ticketMessage" rows="3" placeholder="Yaşadığınız sorunu detaylıca anlatın..." required></textarea>
+          </div>
+          <button class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Talebi Gönder</button>
+        </form>
       </div>
-      <div class="feature">
-        <div class="feature-icon"><i class="fa-solid fa-users"></i></div>
-        <h3>Topluluk</h3>
-        <p>Arkadaşlarınla oyna, yeni oyuncularla tanış ve birlikte geliş.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon"><i class="fa-solid fa-coins"></i></div>
-        <h3>Gelişmiş Ekonomi</h3>
-        <p>Kaynaklarını değerlendir, pazar kur ve sunucu zengini ol.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon"><i class="fa-solid fa-cubes-stacked"></i></div>
-        <h3>Spawner Sistemi</h3>
-        <p>Mağazadaki spawner ürünlerini incele ve kasılma hızını artır.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon"><i class="fa-solid fa-crown"></i></div>
-        <h3>VIP Paketleri</h3>
-        <p>Şehrinde ve sunucuda ayrıcalık sağlayan VIP seçeneklerini incele.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon"><i class="fa-solid fa-bullhorn"></i></div>
-        <h3>Güncel Duyurular</h3>
-        <p>Etkinlikleri ve sunucuyla ilgili yenilikleri duyurular bölümünden takip et.</p>
+
+      <div style="margin-top:25px">
+        <h3 style="font-size:13px;margin-bottom:10px"><i class="fa-solid fa-list gold"></i> Destek Taleplerim</h3>
+        <div class="ticket-list" id="ticketList"></div>
       </div>
     </div>
   </div>
@@ -517,7 +517,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
       <div class="eyebrow">Maceraya katıl</div>
       <h2>GÜNEŞCRAFT'TA <span class="gradient">YERİNİ AL!</span></h2>
       <p>Sunucu adresini kopyala ve Minecraft Towny macerasına başla.</p>
-      <button class="btn btn-primary" onclick="copyIP()"><i class="fa-solid fa-copy"></i> gunescraft.xyz</button>
+      <button class="btn btn-primary" onclick="copyIP()"><i class="fa-solid fa-copy"></i> play.gunescraft.xyz</button>
     </div>
   </div>
 </section>
@@ -619,9 +619,11 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
     </div>
     <div class="admin-tabs">
       <button class="admin-tab active" onclick="adminTab('products',this)">Ürünler</button>
+      <button class="admin-tab" onclick="adminTab('tickets',this)">Destek Talepleri</button>
       <button class="admin-tab" onclick="adminTab('news',this)">Duyurular</button>
       <button class="admin-tab" onclick="adminTab('settings',this)">Site Ayarları</button>
     </div>
+    
     <div id="adminProducts">
       <h3 style="font-size:12px;margin-bottom:10px">Yeni Ürün Ekle</h3>
       <form onsubmit="addProduct(event)">
@@ -661,6 +663,12 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
       </form>
       <div class="admin-list" id="adminProductList"></div>
     </div>
+
+    <!-- Admin Destek Paneli -->
+    <div id="adminTickets" class="hidden">
+      <h3 style="font-size:12px;margin-bottom:10px">Oyuncu Destek ve Şikayetleri</h3>
+      <div class="admin-list" id="adminTicketList"></div>
+    </div>
     
     <div id="adminNews" class="hidden">
       <h3 style="font-size:12px;margin-bottom:10px">Yeni Duyuru Ekle</h3>
@@ -676,7 +684,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
     <div id="adminSettings" class="hidden">
       <h3 style="font-size:12px;margin-bottom:10px">Site Ayarları</h3>
       <form onsubmit="saveSettings(event)">
-        <div class="form-group"><label for="settingIP">Sunucu IP Adresi</label><input class="form-control" id="settingIP" value="gunescraft.xyz" required></div>
+        <div class="form-group"><label for="settingIP">Sunucu IP Adresi</label><input class="form-control" id="settingIP" value="play.gunescraft.xyz" required></div>
         <div class="form-group"><label for="settingTitle">Site Başlığı</label><input class="form-control" id="settingTitle" value="GüneşCraft Towny" required></div>
         <button class="btn btn-primary">Ayarları Kaydet</button>
       </form>
@@ -687,7 +695,6 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 <div class="toast" id="toast"></div>
 
 <script>
-// DAHİLİ MİNECRAFT KUTU VE ITEM SVG DÜZENİ
 const BOX_ASSETS = {
   spawner: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="15" y="15" width="70" height="70" rx="8" fill="#1e222d" stroke="#ffb52e" stroke-width="4"/><path d="M15 38H85M15 62H85M38 15V85M62 15V85" stroke="#ffb52e" stroke-width="2" stroke-dasharray="4 4"/><circle cx="50" cy="50" r="14" fill="#ff762b" opacity="0.8"/></svg>`,
   chest: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="15" y="25" width="70" height="55" rx="6" fill="#8b5a2b" stroke="#4a2e16" stroke-width="4"/><rect x="15" y="42" width="70" height="6" fill="#322010"/><rect x="44" y="38" width="12" height="14" rx="2" fill="#ffb52e" stroke="#000" stroke-width="2"/></svg>`,
@@ -719,6 +726,7 @@ const DEFAULT_NEWS = [
 
 let products = JSON.parse(localStorage.getItem('gc_products')) || DEFAULT_PRODUCTS;
 let newsList = JSON.parse(localStorage.getItem('gc_news')) || DEFAULT_NEWS;
+let tickets = JSON.parse(localStorage.getItem('gc_tickets')) || [];
 let registeredUsers = JSON.parse(localStorage.getItem('gc_users')) || [];
 let currentUser = JSON.parse(localStorage.getItem('gc_current_user')) || null;
 let currentCategory = 'all';
@@ -729,7 +737,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
 function fetchServerStatus() {
   const startTime = performance.now();
   
-  fetch('https://api.mcsrvstat.us/3/gunescraft.xyz')
+  fetch('https://api.mcsrvstat.us/3/play.gunescraft.xyz')
     .then(response => response.json())
     .then(data => {
       const endTime = performance.now();
@@ -846,6 +854,108 @@ function renderNews(){
   `).join('');
 }
 
+// DESTEK / ŞİKAYET FONKSİYONLARI
+function createTicket(e){
+  e.preventDefault();
+  if(!currentUser){
+    showToast("Destek talebi oluşturmak için giriş yapmalısın!");
+    openLogin();
+    return;
+  }
+  const category = document.getElementById('ticketCategory').value;
+  const subject = document.getElementById('ticketSubject').value.trim();
+  const message = document.getElementById('ticketMessage').value.trim();
+
+  const newTicket = {
+    id: Date.now(),
+    username: currentUser.username,
+    category,
+    subject,
+    message,
+    reply: '',
+    status: 'Bekliyor',
+    date: 'Bugün'
+  };
+
+  tickets.unshift(newTicket);
+  localStorage.setItem('gc_tickets', JSON.stringify(tickets));
+  document.getElementById('ticketSubject').value = '';
+  document.getElementById('ticketMessage').value = '';
+  renderTickets();
+  showToast("Destek talebin başarıyla gönderildi!");
+}
+
+function renderTickets(){
+  const list = document.getElementById('ticketList');
+  if(!currentUser){
+    list.innerHTML = `<p class="muted" style="font-size:11px">Destek taleplerini görmek ve oluşturmak için giriş yapmalısın.</p>`;
+    return;
+  }
+
+  // Oyuncu sadece kendi taleplerini görür, Admin hepsini görür
+  const userTickets = currentUser.isAdmin ? tickets : tickets.filter(t => t.username === currentUser.username);
+
+  if(userTickets.length === 0){
+    list.innerHTML = `<p class="muted" style="font-size:11px">Henüz bir destek talebin bulunmuyor.</p>`;
+    return;
+  }
+
+  list.innerHTML = userTickets.map(t => `
+    <div class="ticket-card">
+      <div class="ticket-header">
+        <span><strong>[${t.category}]</strong> ${t.subject} ${currentUser.isAdmin ? `(<span class="gold">${t.username}</span>)` : ''}</span>
+        <span class="badge" style="background:${t.reply ? '#5bffab22' : '#ffb52e22'}; color:${t.reply ? 'var(--green)' : 'var(--gold)'}">${t.reply ? 'Cevaplandı' : 'Bekliyor'}</span>
+      </div>
+      <div class="ticket-body">${t.message}</div>
+      ${t.reply ? `<div class="ticket-reply"><i class="fa-solid fa-shield-halved gold"></i> <strong>Admin Cevabı:</strong> ${t.reply}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+function renderAdminTickets(){
+  const list = document.getElementById('adminTicketList');
+  if(tickets.length === 0){
+    list.innerHTML = `<p class="muted" style="font-size:11px">Henüz hiç destek talebi yok.</p>`;
+    return;
+  }
+  list.innerHTML = tickets.map(t => `
+    <div class="admin-item" style="flex-direction:column;align-items:stretch;gap:6px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span><strong>${t.username}</strong> - <span class="gold">${t.category}</span>: ${t.subject}</span>
+        <button class="btn btn-danger" onclick="deleteTicket(${t.id})">Sil</button>
+      </div>
+      <div style="font-size:10px;color:var(--muted);background:#101017;padding:6px;border-radius:4px">${t.message}</div>
+      ${t.reply ? `<div style="font-size:10px;color:var(--green);background:#101017;padding:6px;border-radius:4px"><strong>Cevabın:</strong> ${t.reply}</div>` : ''}
+      <div style="display:flex;gap:6px;margin-top:4px">
+        <input class="form-control" id="replyInput_${t.id}" placeholder="Admin cevabını yaz..." value="${t.reply}">
+        <button class="btn btn-primary" onclick="replyTicket(${t.id})">Cevapla</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function replyTicket(id){
+  const replyText = document.getElementById(`replyInput_${id}`).value.trim();
+  if(!replyText) return;
+  const t = tickets.find(x => x.id === id);
+  if(t){
+    t.reply = replyText;
+    t.status = 'Cevaplandı';
+    localStorage.setItem('gc_tickets', JSON.stringify(tickets));
+    renderAdminTickets();
+    renderTickets();
+    showToast("Destek talebi yanıtlandı!");
+  }
+}
+
+function deleteTicket(id){
+  tickets = tickets.filter(t => t.id !== id);
+  localStorage.setItem('gc_tickets', JSON.stringify(tickets));
+  renderAdminTickets();
+  renderTickets();
+  showToast("Destek talebi silindi.");
+}
+
 function openProduct(id){
   const p = products.find(x => x.id === id);
   if(!p) return;
@@ -907,6 +1017,7 @@ function userRegister(e){
 
   closeModal('loginModal');
   updateUserUI();
+  renderTickets();
   showToast(`Hoş geldin ${username}!`);
 }
 
@@ -922,6 +1033,7 @@ function userLogin(e){
     localStorage.setItem('gc_current_user', JSON.stringify(currentUser));
     closeModal('loginModal');
     updateUserUI();
+    renderTickets();
     showToast(`Tekrar hoş geldin, ${username}!`);
   } else {
     showToast("Kullanıcı adı veya şifre hatalı!");
@@ -937,8 +1049,10 @@ function adminLogin(e){
     localStorage.setItem('gc_current_user', JSON.stringify(currentUser));
     closeModal('loginModal');
     updateUserUI();
+    renderTickets();
     document.getElementById('adminModal').classList.add('show');
     renderAdminLists();
+    renderAdminTickets();
     showToast("Admin paneline giriş yapıldı.");
   } else {
     showToast("Hatalı Admin Bilgileri!");
@@ -949,6 +1063,7 @@ function userLogout(){
   currentUser = null;
   localStorage.removeItem('gc_current_user');
   updateUserUI();
+  renderTickets();
   showToast("Çıkış yapıldı.");
 }
 
@@ -974,6 +1089,7 @@ function updateUserUI(){
 function openAdminPanel(){
   document.getElementById('adminModal').classList.add('show');
   renderAdminLists();
+  renderAdminTickets();
 }
 
 function closeModal(id){
@@ -988,9 +1104,12 @@ function adminTab(tab, btn){
   document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('adminProducts').classList.add('hidden');
+  document.getElementById('adminTickets').classList.add('hidden');
   document.getElementById('adminNews').classList.add('hidden');
   document.getElementById('adminSettings').classList.add('hidden');
+  
   if(tab === 'products') document.getElementById('adminProducts').classList.remove('hidden');
+  if(tab === 'tickets') { document.getElementById('adminTickets').classList.remove('hidden'); renderAdminTickets(); }
   if(tab === 'news') document.getElementById('adminNews').classList.remove('hidden');
   if(tab === 'settings') document.getElementById('adminSettings').classList.remove('hidden');
 }
@@ -1073,6 +1192,7 @@ function saveSettings(e){
 // Initial Render
 renderProducts();
 renderNews();
+renderTickets();
 updateUserUI();
 </script>
 </body>
