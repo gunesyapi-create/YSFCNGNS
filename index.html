@@ -20,7 +20,7 @@
   --muted:#9292a8;
   --border:rgba(255,255,255,.09);
   --green:#5bffab;
-  --radius:18px;
+  --radius:16px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:80px}
@@ -52,21 +52,21 @@ section{padding:60px 0}
 .section-desc{color:var(--muted);line-height:1.7;font-size:13px}
 .section-head{text-align:center;max-width:650px;margin:0 auto 35px}
 .btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  padding:12px 18px;border:1px solid transparent;border-radius:12px;
-  font-weight:800;font-size:12px;transition:.25s;white-space:nowrap;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:8px 14px;border:1px solid transparent;border-radius:10px;
+  font-weight:700;font-size:11px;transition:.25s;white-space:nowrap;
 }
 .btn:hover{transform:translateY(-2px)}
 .btn-primary{
   color:#17110a;background:linear-gradient(120deg,#ffd16b,#ff8d2d);
-  box-shadow:0 8px 30px rgba(255,154,39,.17);
+  box-shadow:0 6px 20px rgba(255,154,39,.17);
 }
 .btn-secondary{background:#ffffff08;border-color:var(--border)}
 .btn-secondary:hover{border-color:#ffb52e77}
 .btn-danger{background:#ff45451b;color:#ff7b7b;border-color:#ff45453d}
 .badge{
-  display:inline-flex;align-items:center;gap:6px;padding:5px 9px;
-  border-radius:8px;background:#ffb52e16;color:var(--gold);
+  display:inline-flex;align-items:center;gap:5px;padding:4px 8px;
+  border-radius:6px;background:#ffb52e16;color:var(--gold);
   font-size:9px;font-weight:800;letter-spacing:.5px;
 }
 
@@ -76,37 +76,44 @@ section{padding:60px 0}
   background:rgba(11,11,18,.92);backdrop-filter:blur(18px);
   border-bottom:1px solid var(--border);
 }
-.nav-inner{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:15px}
-.logo{display:flex;align-items:center;gap:10px;font-family:Orbitron,sans-serif;font-weight:900;font-size:15px}
+.nav-inner{min-height:65px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{display:flex;align-items:center;gap:9px;font-family:Orbitron,sans-serif;font-weight:900;font-size:14px}
 .logo-icon{
-  width:38px;height:38px;display:grid;place-items:center;border-radius:12px;
+  width:35px;height:35px;display:grid;place-items:center;border-radius:10px;
   background:linear-gradient(140deg,#ffd36a,#ff762b);color:#211305;
-  font-size:18px;box-shadow:0 5px 24px #ff9d2733;
+  font-size:16px;box-shadow:0 4px 18px #ff9d2733;
 }
-.logo small{display:block;color:var(--muted);font:700 8px Poppins,sans-serif;letter-spacing:2px;margin-top:2px}
-.nav-links{display:flex;align-items:center;gap:20px}
-.nav-links a{font-size:12px;font-weight:700;color:#b9b9c9;transition:.2s}
+.logo small{display:block;color:var(--muted);font:700 8px Poppins,sans-serif;letter-spacing:2px;margin-top:1px}
+.nav-links{display:flex;align-items:center;gap:18px}
+.nav-links a{font-size:11px;font-weight:700;color:#b9b9c9;transition:.2s}
 .nav-links a:hover{color:var(--gold)}
 .nav-actions{display:flex;align-items:center;gap:8px}
-.mobile-toggle{display:none;background:none;border:0;color:white;font-size:22px;padding:5px}
+.mobile-toggle{display:none;background:none;border:0;color:white;font-size:20px;padding:4px}
 
 /* ONLINE PLAYER BADGE */
 .online-badge{
-  display:flex;align-items:center;gap:6px;padding:7px 10px;
-  border-radius:10px;background:#ffffff05;border:1px solid var(--border);
+  display:flex;align-items:center;gap:5px;padding:5px 9px;
+  border-radius:8px;background:#ffffff05;border:1px solid var(--border);
   font-size:10px;font-weight:700;
 }
 .online-dot{
-  width:7px;height:7px;border-radius:50%;background:var(--green);
-  box-shadow:0 0 10px var(--green);animation:pulseDot 2s infinite;
+  width:6px;height:6px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 8px var(--green);animation:pulseDot 2s infinite;
 }
+.user-badge{
+  display:flex;align-items:center;gap:6px;padding:5px 9px;
+  border-radius:8px;background:#ffb52e12;border:1px solid #ffb52e33;
+  font-size:10px;font-weight:700;color:var(--gold);
+}
+.user-avatar{width:18px;height:18px;border-radius:4px;image-rendering:pixelated}
+
 @keyframes pulseDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.2);opacity:.7}}
 
 @media(max-width:900px){
   .nav-links{
-    display:none;position:absolute;top:70px;left:0;right:0;padding:20px 5%;
+    display:none;position:absolute;top:65px;left:0;right:0;padding:18px 5%;
     flex-direction:column;align-items:stretch;background:#11111b;
-    border-bottom:1px solid var(--border);gap:15px;
+    border-bottom:1px solid var(--border);gap:14px;
   }
   .nav-links.open{display:flex}
   .mobile-toggle{display:block}
@@ -115,24 +122,24 @@ section{padding:60px 0}
 /* HERO */
 .hero{
   min-height:auto;display:flex;align-items:center;position:relative;
-  overflow:hidden;padding:50px 0 40px;
+  overflow:hidden;padding:45px 0 35px;
   background:
     radial-gradient(ellipse at 78% 35%,#ff8d2d17,transparent 35%),
     radial-gradient(ellipse at 10% 80%,#5932ff12,transparent 35%);
 }
 .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
 .hero h1{
-  font-family:Orbitron,sans-serif;font-size:clamp(30px,5vw,58px);
-  line-height:1.15;font-weight:900;letter-spacing:-1px;margin-bottom:18px;
+  font-family:Orbitron,sans-serif;font-size:clamp(28px,4.8vw,54px);
+  line-height:1.15;font-weight:900;letter-spacing:-1px;margin-bottom:16px;
 }
-.hero p{color:#aaaabd;line-height:1.8;font-size:13px;max-width:520px;margin-bottom:22px}
+.hero p{color:#aaaabd;line-height:1.8;font-size:13px;max-width:520px;margin-bottom:20px}
 .hero-buttons{display:flex;gap:10px;flex-wrap:wrap}
-.hero-stats{display:flex;gap:20px;flex-wrap:wrap;margin-top:28px}
-.stat strong{display:block;font-family:Orbitron,sans-serif;font-size:20px}
+.hero-stats{display:flex;gap:20px;flex-wrap:wrap;margin-top:24px}
+.stat strong{display:block;font-family:Orbitron,sans-serif;font-size:18px}
 .stat span{font-size:9px;color:var(--muted);letter-spacing:1px}
-.hero-visual{position:relative;min-height:320px;display:grid;place-items:center}
+.hero-visual{position:relative;min-height:300px;display:grid;place-items:center}
 .planet{
-  width:min(280px,65vw);aspect-ratio:1;border-radius:50%;position:relative;
+  width:min(260px,65vw);aspect-ratio:1;border-radius:50%;position:relative;
   background:
     radial-gradient(circle at 30% 25%,#ffe49c 0%,#ffb52e 12%,#e87921 37%,#9c3e22 65%,#3b1b2b 85%);
   box-shadow:inset -20px -18px 40px #1c112eaa,
@@ -140,16 +147,16 @@ section{padding:60px 0}
   animation:float 6s ease-in-out infinite;
 }
 .planet-ring{
-  position:absolute;width:135%;height:35%;border:10px solid #ffcb6570;
+  position:absolute;width:135%;height:35%;border:8px solid #ffcb6570;
   border-left-color:#ffe7a6aa;border-right-color:#e7793180;
   border-radius:50%;transform:rotate(-22deg);filter:drop-shadow(0 0 10px #ffb52e44);
 }
 .floating-card{
   position:absolute;background:#151521eF;border:1px solid var(--border);
-  padding:10px 13px;border-radius:12px;backdrop-filter:blur(12px);
+  padding:8px 12px;border-radius:10px;backdrop-filter:blur(12px);
   box-shadow:0 15px 40px #0005;font-size:10px;
 }
-.floating-card i{color:var(--gold);font-size:15px;margin-right:6px}
+.floating-card i{color:var(--gold);font-size:14px;margin-right:5px}
 .fc-one{left:0;top:15%}.fc-two{right:0;bottom:15%}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 
@@ -157,123 +164,123 @@ section{padding:60px 0}
  .hero-grid{grid-template-columns:1fr;text-align:center}
  .hero p{margin-left:auto;margin-right:auto}
  .hero-buttons,.hero-stats{justify-content:center}
- .hero-visual{min-height:260px;margin-top:20px}
+ .hero-visual{min-height:240px;margin-top:15px}
 }
 
 /* SERVER STATUS */
 .status-wrap{margin-top:-15px;position:relative;z-index:5}
 .status-bar{
-  padding:16px 20px;border-radius:15px;border:1px solid var(--border);
+  padding:14px 18px;border-radius:14px;border:1px solid var(--border);
   background:linear-gradient(110deg,#171722,#11111b);
-  display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
   box-shadow:0 15px 40px #0003;
 }
 .status-left{display:flex;align-items:center;gap:10px}
-.status-dot{width:10px;height:10px;background:var(--green);border-radius:50%;box-shadow:0 0 14px #5bffab66}
+.status-dot{width:9px;height:9px;background:var(--green);border-radius:50%;box-shadow:0 0 12px #5bffab66}
 .status-left strong{font-size:12px;display:block}
 .status-left small{font-size:10px;color:var(--muted)}
 .server-ip{display:flex;align-items:center;gap:8px}
-.server-ip code{font-family:Orbitron,sans-serif;color:var(--gold);font-size:13px}
+.server-ip code{font-family:Orbitron,sans-serif;color:var(--gold);font-size:12px}
 .copy-btn{
-  width:34px;height:34px;border-radius:8px;background:#ffb52e15;
-  border:1px solid #ffb52e35;color:var(--gold);
+  width:32px;height:32px;border-radius:7px;background:#ffb52e15;
+  border:1px solid #ffb52e35;color:var(--gold);font-size:11px;
 }
 
 /* WORLDS */
-.world-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.world-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .world-card{
-  position:relative;overflow:hidden;min-height:240px;border:1px solid var(--border);
+  position:relative;overflow:hidden;min-height:220px;border:1px solid var(--border);
   border-radius:var(--radius);background:#151520;transition:.3s;
 }
-.world-card:hover{transform:translateY(-5px);border-color:#ffb52e66}
-.world-art{height:120px;display:grid;place-items:center;position:relative;overflow:hidden}
-.world-art i{font-size:50px;filter:drop-shadow(0 8px 15px #0005);z-index:1}
-.world-content{padding:16px}
-.world-content h3{font-family:Orbitron,sans-serif;font-size:15px;margin-bottom:6px}
-.world-content p{font-size:11px;line-height:1.6;color:var(--muted);margin-bottom:12px}
+.world-card:hover{transform:translateY(-4px);border-color:#ffb52e66}
+.world-art{height:110px;display:grid;place-items:center;position:relative;overflow:hidden}
+.world-art i{font-size:45px;filter:drop-shadow(0 8px 15px #0005);z-index:1}
+.world-content{padding:14px}
+.world-content h3{font-family:Orbitron,sans-serif;font-size:14px;margin-bottom:5px}
+.world-content p{font-size:11px;line-height:1.5;color:var(--muted);margin-bottom:10px}
 .world-action{font-size:10px;color:var(--gold);font-weight:800}
 @media(max-width:750px){.world-grid{grid-template-columns:1fr}}
 
-/* STORE */
-.store-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px}
-.category-list{display:flex;gap:6px;flex-wrap:wrap}
+/* STORE TOOLBAR (KÜÇÜLTÜLDÜ) */
+.store-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.category-list{display:flex;gap:5px;flex-wrap:wrap}
 .category-btn{
-  padding:8px 12px;border-radius:8px;background:#ffffff05;border:1px solid var(--border);
-  color:#aaaabd;font-size:10px;font-weight:800;transition:.2s;
+  padding:6px 10px;border-radius:7px;background:#ffffff05;border:1px solid var(--border);
+  color:#aaaabd;font-size:10px;font-weight:700;transition:.2s;
 }
 .category-btn.active,.category-btn:hover{color:var(--gold);border-color:#ffb52e66;background:#ffb52e12}
 .store-search{
-  padding:9px 12px;border-radius:8px;background:#14141f;border:1px solid var(--border);
-  color:white;outline:none;width:100%;max-width:200px;font-size:11px;
+  padding:7px 11px;border-radius:7px;background:#14141f;border:1px solid var(--border);
+  color:white;outline:none;width:100%;max-width:170px;font-size:10px;
 }
 @media(max-width:550px){.store-search{max-width:100%}}
 
-.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .product-card{
   border:1px solid var(--border);background:linear-gradient(150deg,#171722,#101019);
-  border-radius:14px;overflow:hidden;transition:.25s;position:relative;
+  border-radius:12px;overflow:hidden;transition:.25s;position:relative;
 }
-.product-card:hover{transform:translateY(-4px);border-color:#ffb52e55}
+.product-card:hover{transform:translateY(-3px);border-color:#ffb52e55}
 .product-art{
-  height:140px;display:grid;place-items:center;position:relative;overflow:hidden;
+  height:125px;display:grid;place-items:center;position:relative;overflow:hidden;
   background:radial-gradient(ellipse at 50% 60%,#ffb52e18,transparent 65%),#ffffff03;
-  border-bottom:1px solid var(--border);padding:10px;
+  border-bottom:1px solid var(--border);padding:8px;
 }
 .product-art img, .product-art svg{
-  width:75px;height:75px;object-fit:contain;image-rendering:pixelated;
-  filter:drop-shadow(0 8px 12px #0008);transition:.3s;
+  width:65px;height:65px;object-fit:contain;image-rendering:pixelated;
+  filter:drop-shadow(0 6px 10px #0008);transition:.3s;
 }
-.product-label{position:absolute;top:10px;left:10px}
-.product-info{padding:13px}
-.product-info h3{font-size:13px;margin-bottom:4px}
-.product-info p{font-size:10px;color:var(--muted);line-height:1.5;min-height:30px}
-.product-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:12px}
-.price{font-family:Orbitron,sans-serif;color:var(--gold);font-size:15px;font-weight:900}
+.product-label{position:absolute;top:8px;left:8px}
+.product-info{padding:11px}
+.product-info h3{font-size:12px;margin-bottom:4px}
+.product-info p{font-size:10px;color:var(--muted);line-height:1.4;min-height:28px}
+.product-bottom{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:10px}
+.price{font-family:Orbitron,sans-serif;color:var(--gold);font-size:14px;font-weight:900}
 .buy-btn{
-  border:0;border-radius:8px;padding:8px 10px;background:#ffb52e18;color:var(--gold);
-  font-size:10px;font-weight:900;transition:.2s;
+  border:0;border-radius:7px;padding:6px 9px;background:#ffb52e18;color:var(--gold);
+  font-size:9px;font-weight:800;transition:.2s;
 }
 .buy-btn:hover{background:var(--gold);color:#17110a}
 @media(max-width:1000px){.product-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:650px){.product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.product-art{height:120px}.product-info{padding:10px}.product-art img,.product-art svg{width:60px;height:60px}.product-info h3{font-size:11px}.price{font-size:13px}.buy-btn{padding:7px 8px}}
+@media(max-width:650px){.product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.product-art{height:110px}.product-info{padding:9px}.product-art img,.product-art svg{width:55px;height:55px}.product-info h3{font-size:11px}.price{font-size:12px}.buy-btn{padding:5px 7px}}
 @media(max-width:380px){.product-grid{grid-template-columns:1fr}}
 
 /* FEATURES */
-.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .feature{
-  padding:20px;border:1px solid var(--border);border-radius:14px;
+  padding:18px;border:1px solid var(--border);border-radius:12px;
   background:linear-gradient(145deg,#171722,#11111a);
 }
 .feature-icon{
-  width:42px;height:42px;border-radius:12px;display:grid;place-items:center;
-  background:#ffb52e15;color:var(--gold);font-size:18px;margin-bottom:14px;
+  width:36px;height:36px;border-radius:10px;display:grid;place-items:center;
+  background:#ffb52e15;color:var(--gold);font-size:16px;margin-bottom:12px;
 }
-.feature h3{font-size:14px;margin-bottom:6px}
-.feature p{font-size:11px;color:var(--muted);line-height:1.7}
+.feature h3{font-size:13px;margin-bottom:5px}
+.feature p{font-size:10px;color:var(--muted);line-height:1.6}
 @media(max-width:750px){.feature-grid{grid-template-columns:1fr}}
 
 /* NEWS */
-.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
-.news-card{border:1px solid var(--border);border-radius:14px;background:#151520;overflow:hidden}
-.news-cover{height:110px;display:grid;place-items:center;font-size:38px;background:radial-gradient(circle,#ffb52e22,#171722)}
-.news-body{padding:16px}
-.news-body h3{font-size:14px;margin:8px 0 6px}
-.news-body p{font-size:11px;color:var(--muted);line-height:1.7}
-.news-date{font-size:9px;color:var(--gold)}
+.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.news-card{border:1px solid var(--border);border-radius:12px;background:#151520;overflow:hidden}
+.news-cover{height:100px;display:grid;place-items:center;font-size:34px;background:radial-gradient(circle,#ffb52e22,#171722)}
+.news-body{padding:14px}
+.news-body h3{font-size:13px;margin:6px 0 4px}
+.news-body p{font-size:10px;color:var(--muted);line-height:1.6}
+.news-date{font-size:8px;color:var(--gold)}
 @media(max-width:750px){.news-grid{grid-template-columns:1fr}}
 
 /* CTA / FOOTER */
 .cta{
-  padding:35px 20px;border:1px solid #ffb52e33;border-radius:18px;text-align:center;
+  padding:30px 18px;border:1px solid #ffb52e33;border-radius:16px;text-align:center;
   background:radial-gradient(ellipse at 50% 0%,#ffb52e1d,transparent 65%),#14141e;
 }
-.cta h2{font-family:Orbitron,sans-serif;font-size:clamp(20px,4vw,30px);margin-bottom:10px}
-.cta p{font-size:12px;color:var(--muted);margin-bottom:18px}
-footer{border-top:1px solid var(--border);padding:25px 0;margin-top:50px}
-.footer-inner{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.cta h2{font-family:Orbitron,sans-serif;font-size:clamp(18px,4vw,28px);margin-bottom:8px}
+.cta p{font-size:11px;color:var(--muted);margin-bottom:16px}
+footer{border-top:1px solid var(--border);padding:20px 0;margin-top:45px}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .footer-inner p{font-size:10px;color:var(--muted)}
-.socials{display:flex;gap:8px}
-.socials a{width:34px;height:34px;display:grid;place-items:center;background:#ffffff08;border:1px solid var(--border);border-radius:9px;color:#bdbdce}
+.socials{display:flex;gap:6px}
+.socials a{width:30px;height:30px;display:grid;place-items:center;background:#ffffff08;border:1px solid var(--border);border-radius:8px;color:#bdbdce;font-size:11px}
 
 /* MODALS */
 .modal-backdrop{
@@ -282,41 +289,44 @@ footer{border-top:1px solid var(--border);padding:25px 0;margin-top:50px}
 }
 .modal-backdrop.show{display:flex}
 .modal{
-  width:min(480px,100%);max-height:88vh;overflow-y:auto;
-  background:#151520;border:1px solid var(--border);border-radius:18px;padding:20px;
+  width:min(440px,100%);max-height:88vh;overflow-y:auto;
+  background:#151520;border:1px solid var(--border);border-radius:16px;padding:18px;
   box-shadow:0 20px 80px #0009;
 }
-.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;gap:10px}
-.modal-header h2{font-family:Orbitron,sans-serif;font-size:16px}
-.close-modal{border:0;background:#ffffff0b;color:white;width:32px;height:32px;border-radius:8px;font-size:18px}
-.form-group{margin-bottom:12px}
-.form-group label{display:block;color:#aaaabd;font-size:10px;font-weight:700;margin-bottom:5px}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px}
+.modal-header h2{font-family:Orbitron,sans-serif;font-size:15px}
+.close-modal{border:0;background:#ffffff0b;color:white;width:30px;height:30px;border-radius:8px;font-size:16px}
+.form-group{margin-bottom:10px}
+.form-group label{display:block;color:#aaaabd;font-size:10px;font-weight:700;margin-bottom:4px}
 .form-control{
-  width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;
+  width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:7px;
   background:#0d0d15;color:white;outline:none;font-size:11px;
 }
 .form-control:focus{border-color:#ffb52e66}
-.modal-product{text-align:center;padding:10px 0}
-.modal-product img, .modal-product svg{width:90px;height:90px;margin-bottom:12px;object-fit:contain}
-.modal-product h3{font-size:16px;margin:8px 0 4px}
-.modal-product p{font-size:11px;line-height:1.7;color:var(--muted)}
-.modal-product .price{font-size:20px;margin:10px}
+.modal-product{text-align:center;padding:8px 0}
+.modal-product img, .modal-product svg{width:80px;height:80px;margin-bottom:10px;object-fit:contain}
+.modal-product h3{font-size:15px;margin:6px 0 4px}
+.modal-product p{font-size:11px;line-height:1.6;color:var(--muted)}
+.modal-product .price{font-size:18px;margin:8px}
 .toast{
-  position:fixed;z-index:4000;bottom:18px;left:50%;transform:translate(-50%,20px);
-  background:#1b1b29;border:1px solid #ffffff1a;padding:11px 15px;border-radius:10px;
+  position:fixed;z-index:4000;bottom:16px;left:50%;transform:translate(-50%,20px);
+  background:#1b1b29;border:1px solid #ffffff1a;padding:10px 14px;border-radius:9px;
   font-size:11px;box-shadow:0 10px 30px #0007;opacity:0;pointer-events:none;transition:.25s;
   width:max-content;max-width:92%;text-align:center;
 }
 .toast.show{opacity:1;transform:translate(-50%,0)}
-.admin-panel{width:min(850px,100%)}
+.admin-panel{width:min(820px,100%)}
 .admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.admin-list{margin-top:15px;display:grid;gap:8px}
-.admin-item{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#ffffff06;padding:10px;border-radius:8px;border:1px solid var(--border);font-size:11px}
-.admin-item button{font-size:9px;padding:5px 8px}
-.admin-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:15px}
-.admin-tab{background:#ffffff08;border:1px solid var(--border);color:#aaaabd;padding:7px 10px;border-radius:8px;font-size:10px;font-weight:800}
+.admin-list{margin-top:12px;display:grid;gap:6px}
+.admin-item{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#ffffff06;padding:8px;border-radius:7px;border:1px solid var(--border);font-size:10px}
+.admin-item button{font-size:9px;padding:4px 7px}
+.admin-tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.admin-tab{background:#ffffff08;border:1px solid var(--border);color:#aaaabd;padding:6px 9px;border-radius:7px;font-size:10px;font-weight:700}
 .admin-tab.active{color:var(--gold);border-color:#ffb52e66}
-.admin-divider{margin:18px 0 12px;border:0;border-top:1px solid var(--border)}
+.admin-divider{margin:15px 0 10px;border:0;border-top:1px solid var(--border)}
+.auth-tabs{display:flex;gap:5px;margin-bottom:12px;background:#ffffff05;padding:3px;border-radius:8px;border:1px solid var(--border)}
+.auth-tab{flex:1;padding:6px;text-align:center;border-radius:6px;border:0;background:transparent;color:var(--muted);font-size:10px;font-weight:700}
+.auth-tab.active{background:#ffb52e18;color:var(--gold)}
 </style>
 </head>
 <body>
@@ -341,8 +351,11 @@ footer{border-top:1px solid var(--border);padding:25px 0;margin-top:50px}
         <span>Aktif: <strong id="headerOnline" class="gold">48</strong>/100</span>
       </div>
 
-      <!-- Kayıt / Giriş Yap Butonu -->
-      <button class="btn btn-primary" onclick="openLogin()"><i class="fa-solid fa-user-plus"></i> Giriş</button>
+      <!-- Kullanıcı Giriş / Profil Alanı -->
+      <div id="userProfileArea">
+        <button class="btn btn-primary" onclick="openLogin()"><i class="fa-solid fa-user"></i> Giriş Yap</button>
+      </div>
+
       <button class="mobile-toggle" onclick="toggleMenu()" aria-label="Menüyü aç"><i class="fa-solid fa-bars"></i></button>
     </div>
   </div>
@@ -405,7 +418,7 @@ footer{border-top:1px solid var(--border);padding:25px 0;margin-top:50px}
         <div class="world-art art-earth"><i class="fa-solid fa-earth-europe" style="color:#8de7a8"></i></div>
         <div class="world-content">
           <span class="badge">ANA DÜNYA</span>
-          <h3 style="margin-top:10px">Dünya</h3>
+          <h3 style="margin-top:8px">Dünya</h3>
           <p>Yeni yerler keşfet, kaynaklarını topla ve kendi maceranı oluştur.</p>
           <a href="#magaza" class="world-action">MACERAYA HAZIRLAN <i class="fa-solid fa-arrow-right"></i></a>
         </div>
@@ -414,7 +427,7 @@ footer{border-top:1px solid var(--border);padding:25px 0;margin-top:50px}
         <div class="world-art art-towny"><i class="fa-solid fa-city" style="color:#f6d28b"></i></div>
         <div class="world-content">
           <span class="badge">ŞEHİR KUR</span>
-          <h3 style="margin-top:10px">Towny</h3>
+          <h3 style="margin-top:8px">Towny</h3>
           <p>Kendi şehrini kur, arazini geliştir ve arkadaşlarınla büyü.</p>
           <a href="#ozellikler" class="world-action">DAHA FAZLASI <i class="fa-solid fa-arrow-right"></i></a>
         </div>
@@ -423,7 +436,7 @@ footer{border-top:1px solid var(--border);padding:25px 0;margin-top:50px}
         <div class="world-art art-mining"><i class="fa-solid fa-gem" style="color:#c4b5fd"></i></div>
         <div class="world-content">
           <span class="badge">KAYNAK AVCISI</span>
-          <h3 style="margin-top:10px">Madenler</h3>
+          <h3 style="margin-top:8px">Madenler</h3>
           <p>Değerli kaynakları bul, ekipmanlarını geliştir ve hazineleri keşfet.</p>
           <a href="#magaza" class="world-action">EKİPMANLARI GÖR <i class="fa-solid fa-arrow-right"></i></a>
         </div>
@@ -432,6 +445,7 @@ footer{border-top:1px solid var(--border);padding:25px 0;margin-top:50px}
   </div>
 </section>
 
+<!-- MAĞAZA (KÜÇÜLTÜLMÜŞ KATEGORİ VE ARAMA) -->
 <section id="magaza" style="background:linear-gradient(180deg,transparent,#15152050,transparent)">
   <div class="container">
     <div class="section-head">
@@ -449,8 +463,8 @@ footer{border-top:1px solid var(--border);padding:25px 0;margin-top:50px}
       <input class="store-search" id="storeSearch" placeholder="Ürün ara..." oninput="renderProducts()">
     </div>
     <div class="product-grid" id="productGrid"></div>
-    <p id="emptyProducts" class="muted hidden" style="text-align:center;padding:30px">Bu kategoride ürün bulunamadı.</p>
-    <div style="text-align:center;margin-top:25px">
+    <p id="emptyProducts" class="muted hidden" style="text-align:center;padding:25px">Bu kategoride ürün bulunamadı.</p>
+    <div style="text-align:center;margin-top:20px">
       <span class="muted" style="font-size:10px"><i class="fa-solid fa-circle-info gold"></i> Satın alma ve ödeme işlemleri için sunucu yönetimiyle iletişime geç.</span>
     </div>
   </div>
@@ -547,32 +561,64 @@ footer{border-top:1px solid var(--border);padding:25px 0;margin-top:50px}
   </div>
 </div>
 
-<!-- KAYIT / GİRİŞ & YÖNETİCİ GİRİŞİ MODALI -->
+<!-- KAYIT / OYUNCU GİRİŞİ & YÖNETİCİ GİRİŞİ MODALI -->
 <div class="modal-backdrop" id="loginModal" onclick="backdropClose(event,'loginModal')">
   <div class="modal">
     <div class="modal-header">
-      <h2><i class="fa-solid fa-user gold"></i> HESAP / YÖNETİCİ GİRİŞİ</h2>
+      <h2><i class="fa-solid fa-user-shield gold"></i> PORTAL GİRİŞİ</h2>
       <button class="close-modal" onclick="closeModal('loginModal')">&times;</button>
     </div>
     
-    <div style="background:#ffffff05;padding:12px;border-radius:10px;border:1px solid var(--border);margin-bottom:15px;">
-      <h3 style="font-size:12px;color:var(--gold);margin-bottom:4px"><i class="fa-solid fa-gamepad"></i> Oyuna Doğrudan Katılın!</h3>
-      <p class="muted" style="font-size:10px;line-height:1.5">Minecraft sunucumuza katılmak için ek bir site kaydı gerekmez. Oyunda <code>/register [şifre] [şifre]</code> yazarak kayıt olabilirsiniz!</p>
+    <!-- Giriş Türü Sekmeleri -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchAuthTab('user_login', this)">Oyuncu Girişi</button>
+      <button class="auth-tab" onclick="switchAuthTab('user_register', this)">Kayıt Ol</button>
+      <button class="auth-tab" onclick="switchAuthTab('admin_login', this)">Admin Girişi</button>
     </div>
 
-    <hr class="admin-divider">
-    <h3 style="font-size:12px;margin-bottom:10px;color:white"><i class="fa-solid fa-shield-halved gold"></i> Yönetici (Admin) Girişi</h3>
-    <form onsubmit="adminLogin(event)">
+    <!-- 1. Oyuncu Giriş Formu -->
+    <form id="formUserLogin" onsubmit="userLogin(event)">
       <div class="form-group">
-        <label for="adminUser">Yönetici Kullanıcı Adı</label>
+        <label for="playerUser">Minecraft Kullanıcı Adı</label>
+        <input class="form-control" id="playerUser" placeholder="Steve" required>
+      </div>
+      <div class="form-group">
+        <label for="playerPass">Şifre</label>
+        <input class="form-control" id="playerPass" type="password" placeholder="••••••" required>
+      </div>
+      <button class="btn btn-primary" style="width:100%"><i class="fa-solid fa-right-to-bracket"></i> Oyuncu Girişi Yap</button>
+    </form>
+
+    <!-- 2. Oyuncu Kayıt Formu -->
+    <form id="formUserRegister" class="hidden" onsubmit="userRegister(event)">
+      <div class="form-group">
+        <label for="regUser">Minecraft Kullanıcı Adı</label>
+        <input class="form-control" id="regUser" placeholder="Steve" required>
+      </div>
+      <div class="form-group">
+        <label for="regEmail">E-Posta Adresi</label>
+        <input class="form-control" id="regEmail" type="email" placeholder="ornek@mail.com" required>
+      </div>
+      <div class="form-group">
+        <label for="regPass">Şifre Oluştur</label>
+        <input class="form-control" id="regPass" type="password" placeholder="••••••" required>
+      </div>
+      <button class="btn btn-primary" style="width:100%"><i class="fa-solid fa-user-plus"></i> Kayıt Ol ve Giriş Yap</button>
+    </form>
+
+    <!-- 3. Yönetici (Admin) Giriş Formu -->
+    <form id="formAdminLogin" class="hidden" onsubmit="adminLogin(event)">
+      <div class="form-group">
+        <label for="adminUser">Yönetici Adı</label>
         <input class="form-control" id="adminUser" placeholder="Admin" autocomplete="username" required>
       </div>
       <div class="form-group">
         <label for="adminPass">Şifre</label>
         <input class="form-control" id="adminPass" type="password" placeholder="••••••" autocomplete="current-password" required>
       </div>
-      <button class="btn btn-primary" style="width:100%"><i class="fa-solid fa-lock-open"></i> Yönetici Girişi Yap</button>
+      <button class="btn btn-primary" style="width:100%"><i class="fa-solid fa-shield-halved"></i> Admin Paneline Giriş</button>
     </form>
+
   </div>
 </div>
 
@@ -580,7 +626,7 @@ footer{border-top:1px solid var(--border);padding:25px 0;margin-top:50px}
 <div class="modal-backdrop" id="adminModal" onclick="backdropClose(event,'adminModal')">
   <div class="modal admin-panel">
     <div class="modal-header">
-      <div><div class="eyebrow" style="margin-bottom:3px">GÜNEŞCRAFT NETWORK</div><h2>YÖNETİCİ PANELİ</h2></div>
+      <div><div class="eyebrow" style="margin-bottom:2px">GÜNEŞCRAFT NETWORK</div><h2>YÖNETİCİ PANELİ</h2></div>
       <button class="close-modal" onclick="closeModal('adminModal')">&times;</button>
     </div>
     <div class="admin-tabs">
@@ -589,10 +635,10 @@ footer{border-top:1px solid var(--border);padding:25px 0;margin-top:50px}
       <button class="admin-tab" onclick="adminTab('settings',this)">Site Ayarları</button>
     </div>
     <div id="adminProducts">
-      <h3 style="font-size:13px;margin-bottom:12px">Yeni Ürün Ekle</h3>
+      <h3 style="font-size:12px;margin-bottom:10px">Yeni Ürün Ekle</h3>
       <form onsubmit="addProduct(event)">
         <div class="admin-grid">
-          <div class="form-group"><label for="newName">Ürün Adı</label><input class="form-control" id="newName" placeholder="Örn: VIP Paketi" required></div>
+          <div class="form-group"><label for="newName">Ürün Adı</label><input class="form-control" id="newName" placeholder="VIP Paketi" required></div>
           <div class="form-group"><label for="newPrice">Fiyat (₺)</label><input class="form-control" id="newPrice" type="number" min="0" step="0.01" placeholder="99" required></div>
           <div class="form-group">
             <label for="newCategory">Kategori</label>
@@ -623,13 +669,13 @@ footer{border-top:1px solid var(--border);padding:25px 0;margin-top:50px}
             <input class="form-control" id="newDescription" value="GüneşCraft mağaza ürünü.">
           </div>
         </div>
-        <button class="btn btn-primary" style="margin-top:5px;"><i class="fa-solid fa-plus"></i> Ürünü Ekle</button>
+        <button class="btn btn-primary" style="margin-top:3px;"><i class="fa-solid fa-plus"></i> Ürünü Ekle</button>
       </form>
       <div class="admin-list" id="adminProductList"></div>
     </div>
     
     <div id="adminNews" class="hidden">
-      <h3 style="font-size:13px;margin-bottom:12px">Yeni Duyuru Ekle</h3>
+      <h3 style="font-size:12px;margin-bottom:10px">Yeni Duyuru Ekle</h3>
       <form onsubmit="addNews(event)">
         <div class="form-group"><label for="newsTitle">Duyuru Başlığı</label><input class="form-control" id="newsTitle" required></div>
         <div class="form-group"><label for="newsText">Açıklama</label><textarea class="form-control" id="newsText" rows="3" required></textarea></div>
@@ -640,7 +686,7 @@ footer{border-top:1px solid var(--border);padding:25px 0;margin-top:50px}
     </div>
     
     <div id="adminSettings" class="hidden">
-      <h3 style="font-size:13px;margin-bottom:12px">Site Ayarları</h3>
+      <h3 style="font-size:12px;margin-bottom:10px">Site Ayarları</h3>
       <form onsubmit="saveSettings(event)">
         <div class="form-group"><label for="settingIP">Sunucu IP Adresi</label><input class="form-control" id="settingIP" value="gunescraft.xyz" required></div>
         <div class="form-group"><label for="settingTitle">Site Başlığı</label><input class="form-control" id="settingTitle" value="GüneşCraft Network" required></div>
@@ -685,6 +731,8 @@ const DEFAULT_NEWS = [
 
 let products = JSON.parse(localStorage.getItem('gc_products')) || DEFAULT_PRODUCTS;
 let newsList = JSON.parse(localStorage.getItem('gc_news')) || DEFAULT_NEWS;
+let registeredUsers = JSON.parse(localStorage.getItem('gc_users')) || [];
+let currentUser = JSON.parse(localStorage.getItem('gc_current_user')) || null;
 let currentCategory = 'all';
 
 document.getElementById('year').textContent = new Date().getFullYear();
@@ -799,7 +847,11 @@ function openProduct(id){
 }
 
 function buyAction(name){
-  showToast(`${name} için satın alma talebi alındı. Oyun içi yetkiliye başvurabilirsiniz.`);
+  if(currentUser){
+    showToast(`Sayın ${currentUser.username}, ${name} talebiniz alındı! Yetkililer iletişime geçecek.`);
+  } else {
+    showToast(`${name} için satın alma talebi alındı. Oyun içi yetkiliye başvurabilirsiniz.`);
+  }
   closeModal('productModal');
 }
 
@@ -807,19 +859,108 @@ function openLogin(){
   document.getElementById('loginModal').classList.add('show');
 }
 
-// YÖNETİCİ GİRİŞİ (Kullanıcı Adı: Admin, Şifre: 269826)
+function switchAuthTab(tab, btn){
+  document.querySelectorAll('.auth-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('formUserLogin').classList.add('hidden');
+  document.getElementById('formUserRegister').classList.add('hidden');
+  document.getElementById('formAdminLogin').classList.add('hidden');
+  
+  if(tab === 'user_login') document.getElementById('formUserLogin').classList.remove('hidden');
+  if(tab === 'user_register') document.getElementById('formUserRegister').classList.remove('hidden');
+  if(tab === 'admin_login') document.getElementById('formAdminLogin').classList.remove('hidden');
+}
+
+// Oyuncu Kayıt Fonksiyonu
+function userRegister(e){
+  e.preventDefault();
+  const username = document.getElementById('regUser').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const password = document.getElementById('regPass').value;
+
+  if(registeredUsers.some(u => u.username.toLowerCase() === username.toLowerCase())){
+    showToast("Bu kullanıcı adı zaten kayıtlı!");
+    return;
+  }
+
+  const newUser = { username, email, password, isAdmin: false };
+  registeredUsers.push(newUser);
+  localStorage.setItem('gc_users', JSON.stringify(registeredUsers));
+  
+  currentUser = newUser;
+  localStorage.setItem('gc_current_user', JSON.stringify(currentUser));
+
+  closeModal('loginModal');
+  updateUserUI();
+  showToast(`Hoş geldin ${username}! Hesabın oluşturuldu.`);
+}
+
+// Oyuncu Giriş Fonksiyonu
+function userLogin(e){
+  e.preventDefault();
+  const username = document.getElementById('playerUser').value.trim();
+  const password = document.getElementById('playerPass').value;
+
+  const user = registeredUsers.find(u => u.username.toLowerCase() === username.toLowerCase() && u.password === password);
+
+  if(user){
+    currentUser = user;
+    localStorage.setItem('gc_current_user', JSON.stringify(currentUser));
+    closeModal('loginModal');
+    updateUserUI();
+    showToast(`Tekrar hoş geldin, ${username}!`);
+  } else {
+    showToast("Kullanıcı adı veya şifre hatalı!");
+  }
+}
+
+// Yönetici Girişi (Admin / 269826)
 function adminLogin(e){
   e.preventDefault();
   const u = document.getElementById('adminUser').value;
   const p = document.getElementById('adminPass').value;
   if(u === 'Admin' && p === '269826'){
+    currentUser = { username: 'Admin', isAdmin: true };
+    localStorage.setItem('gc_current_user', JSON.stringify(currentUser));
     closeModal('loginModal');
+    updateUserUI();
     document.getElementById('adminModal').classList.add('show');
     renderAdminLists();
-    showToast("Yönetici paneline başarıyla giriş yapıldı.");
+    showToast("Admin paneline giriş yapıldı.");
   } else {
-    showToast("Hatalı Kullanıcı Adı veya Şifre!");
+    showToast("Hatalı Admin Bilgileri!");
   }
+}
+
+function userLogout(){
+  currentUser = null;
+  localStorage.removeItem('gc_current_user');
+  updateUserUI();
+  showToast("Çıkış yapıldı.");
+}
+
+function updateUserUI(){
+  const area = document.getElementById('userProfileArea');
+  if(currentUser){
+    const avatarUrl = `https://mc-heads.net/avatar/${currentUser.username}/20`;
+    area.innerHTML = `
+      <div style="display:flex;align-items:center;gap:5px">
+        <div class="user-badge">
+          <img src="${avatarUrl}" class="user-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/20'">
+          <span>${currentUser.username}</span>
+        </div>
+        ${currentUser.isAdmin ? `<button class="btn btn-secondary" onclick="openAdminPanel()" title="Admin Paneli"><i class="fa-solid fa-gear"></i></button>` : ''}
+        <button class="btn btn-danger" onclick="userLogout()" title="Çıkış Yap"><i class="fa-solid fa-power-off"></i></button>
+      </div>
+    `;
+  } else {
+    area.innerHTML = `<button class="btn btn-primary" onclick="openLogin()"><i class="fa-solid fa-user"></i> Giriş Yap</button>`;
+  }
+}
+
+function openAdminPanel(){
+  document.getElementById('adminModal').classList.add('show');
+  renderAdminLists();
 }
 
 function closeModal(id){
@@ -919,6 +1060,7 @@ function saveSettings(e){
 // Initial Render
 renderProducts();
 renderNews();
+updateUserUI();
 </script>
 </body>
 </html>
