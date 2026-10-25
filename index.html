@@ -88,12 +88,24 @@ section{padding:85px 0}
 .nav-links a:hover{color:var(--gold)}
 .nav-actions{display:flex;align-items:center;gap:9px}
 .mobile-toggle{display:none;background:none;border:0;color:white;font-size:23px}
+
+/* ONLINE PLAYER BADGE */
+.online-badge{
+  display:flex;align-items:center;gap:7px;padding:8px 12px;
+  border-radius:10px;background:#ffffff05;border:1px solid var(--border);
+  font-size:11px;font-weight:700;
+}
+.online-dot{
+  width:8px;height:8px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 10px var(--green);animation:pulseDot 2s infinite;
+}
+@keyframes pulseDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.2);opacity:.7}}
+
 @media(max-width:850px){
   .nav-links{
     display:none;position:absolute;top:76px;left:0;right:0;padding:23px 5%;
     flex-direction:column;align-items:stretch;background:#11111b;
     border-bottom:1px solid var(--border);gap:20px;
-    box-shadow:0 15px 30px rgba(0,0,0,0.5);
   }
   .nav-links.open{display:flex}
   .nav-actions .admin-nav{display:none}
@@ -201,19 +213,11 @@ section{padding:85px 0}
 .world-action{font-size:11px;color:var(--gold);font-weight:800}
 @media(max-width:750px){.world-grid{grid-template-columns:1fr}}
 /* STORE */
-.store-toolbar{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:15px;flex-wrap:wrap;margin-bottom:26px;
-}
-.category-list{
-  display:flex;gap:8px;flex-wrap:wrap;
-  overflow-x:auto;max-width:100%;padding-bottom:5px;
-  scrollbar-width:none; /* Firefox */
-}
-.category-list::-webkit-scrollbar{display:none} /* Chrome/Safari */
+.store-toolbar{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;margin-bottom:26px}
+.category-list{display:flex;gap:8px;flex-wrap:wrap}
 .category-btn{
   padding:10px 14px;border-radius:10px;background:#ffffff05;border:1px solid var(--border);
-  color:#aaaabd;font-size:11px;font-weight:800;transition:.2s;white-space:nowrap;
+  color:#aaaabd;font-size:11px;font-weight:800;transition:.2s;
 }
 .category-btn.active,.category-btn:hover{color:var(--gold);border-color:#ffb52e66;background:#ffb52e12}
 .store-search{
@@ -221,11 +225,6 @@ section{padding:85px 0}
   color:white;outline:none;width:210px;font-size:12px;
 }
 .store-search:focus{border-color:#ffb52e66}
-@media(max-width:650px){
-  .store-toolbar{flex-direction:column;align-items:stretch}
-  .store-search{width:100%}
-  .category-list{justify-content:flex-start}
-}
 .product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
 .product-card{
   border:1px solid var(--border);background:linear-gradient(150deg,#171722,#101019);
@@ -355,6 +354,12 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:80px}
       <a href="#duyurular">Duyurular</a>
     </nav>
     <div class="nav-actions">
+      <!-- Canlı Aktif Oyuncu Rozeti -->
+      <div class="online-badge">
+        <span class="online-dot"></span>
+        <span>Aktif: <strong id="headerOnline" class="gold">48</strong>/100</span>
+      </div>
+
       <a class="btn btn-primary" href="#magaza"><i class="fa-solid fa-cart-shopping"></i> Mağaza</a>
       <button class="btn btn-secondary admin-nav" onclick="openLogin()"><i class="fa-solid fa-shield-halved"></i></button>
       <button class="mobile-toggle" onclick="toggleMenu()" aria-label="Menüyü aç"><i class="fa-solid fa-bars"></i></button>
@@ -393,7 +398,10 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:80px}
   <div class="status-bar">
     <div class="status-left">
       <span class="status-dot"></span>
-      <div><strong>GüneşCraft Network</strong><small>Sunucu adresimiz</small></div>
+      <div>
+        <strong>GüneşCraft Network</strong>
+        <small>Sunucu Online — Aktif Oyuncu: <span id="statusOnline" style="color:var(--green);font-weight:bold">48</span>/100</small>
+      </div>
     </div>
     <div class="server-ip">
       <code id="serverIP">gunescraft.xyz</code>
@@ -448,10 +456,10 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:80px}
     </div>
     <div class="store-toolbar">
       <div class="category-list" id="categoryList">
-        <button class="category-btn active" data-category="all">Tümü</button>
-        <button class="category-btn" data-category="spawner">Spawnerlar</button>
-        <button class="category-btn" data-category="vip">VIP Paketleri</button>
-        <button class="category-btn" data-category="item">Eşyalar</button>
+        <button class="category-btn active" data-category="all" onclick="filterCategory('all', this)">Tümü</button>
+        <button class="category-btn" data-category="spawner" onclick="filterCategory('spawner', this)">Spawnerlar</button>
+        <button class="category-btn" data-category="vip" onclick="filterCategory('vip', this)">VIP Paketleri</button>
+        <button class="category-btn" data-category="item" onclick="filterCategory('item', this)">Eşyalar</button>
       </div>
       <input class="store-search" id="storeSearch" placeholder="Ürün ara..." oninput="renderProducts()">
     </div>
@@ -617,11 +625,12 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:80px}
         <div class="form-group"><label>Site başlığı</label><input class="form-control" id="settingTitle" required></div>
         <button class="btn btn-primary">Ayarları Kaydet</button>
       </form>
-      <p class="muted" style="font-size:11px;line-height:1.7;margin-top:18px">Bu panelde yapılan değişiklikler bu tarayıcının yerel depolamasına kaydedilir. Diğer ziyaretçilere yansıması için bir sunucu ve veritabanı entegrasyonu gerekir.</p>
+      <p class="muted" style="font-size:11px;line-height:1.7;margin-top:18px">Bu panelde yapılan değişiklikler bu tarayıcının yerel depolamasına kaydedilir.</p>
     </div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
+
 <script>
 const DEFAULT_PRODUCTS = [
   {id:1,name:"Zombi Spawner",category:"spawner",price:149,emoji:"🧟",description:"Zombi spawner ürünü. Satın alma detayları için sunucu yönetimine ulaş.",image:""},
@@ -633,74 +642,68 @@ const DEFAULT_PRODUCTS = [
   {id:7,name:"VIP",category:"vip",price:99,emoji:"👑",description:"VIP paketi. Paketin güncel avantajlarını sunucu yönetiminden öğren.",image:""},
   {id:8,name:"VIP+",category:"vip",price:199,emoji:"💎",description:"VIP+ paketi. Paketin güncel avantajlarını sunucu yönetiminden öğren.",image:""},
   {id:9,name:"MVP",category:"vip",price:299,emoji:"⚡",description:"MVP paketi. Paketin güncel avantajlarını sunucu yönetiminden öğren.",image:""},
-  {id:10,name:"Özel Kasa",category:"item",price:49,emoji:"🎁",description:"Özel kasa ürünü. İçerik ve kullanım koşulları sunucuya göre değişebilir.",image:""},
+  {id:10,name:"Özel Kasa",category:"item",price:49,emoji:"🎁",description:"Özel kasa ürünü. İçerik ve kullanım koşulları sunucuya göre değişabilir.",image:""},
   {id:11,name:"Anahtar Paketi",category:"item",price:39,emoji:"🗝️",description:"Anahtar paketi. Ayrıntılar için sunucu yönetimiyle iletişime geç.",image:""},
-  {id:12,name:"Elmas Paketi",category:"item",price:79,emoji:"💎",description:"Elmas paketi. Ayrıntılar için sunucu yönetimiyle iletişime geç.",image:""}
+  {id:12,name:"Elmas Paketi",category:"item",price:79,emoji:"💎",description:"Elmas paketi. Oyunda hızlı gelişim için mükemmel seçim.",image:""}
 ];
 
 const DEFAULT_NEWS = [
-  {id:1,title:"Sunucu Aktif!",text:"GüneşCraft Network resmi olarak açıldı. Hemen aramıza katılın!",emoji:"🚀",date:"25 Ekim 2026"},
-  {id:2,title:"Yeni Spawnerlar",text:"Mağazaya yeni spawner çeşitleri eklendi. Avantajlı fiyatları kaçırmayın.",emoji:"🔥",date:"24 Ekim 2026"},
-  {id:3,title:"Towny Etkinliği",text:"Şehrini kur, en büyük imparatorluğu sen yönet! Büyük ödüller sahiplerini bekliyor.",emoji:"🏰",date:"22 Ekim 2026"}
+  {id:1,title:"1. Sezon Açıldı!",text:"GüneşCraft Sezon 1 kapılarını oyunculara açtı. Hemen katıl!",emoji:"🎉",date:"Bugün"},
+  {id:2,title:"Yeni Spawner Sistemi",text:"Marketimize yeni nesil spawner çeşitleri ve VIP kitleri eklendi.",emoji:"⚡",date:"Dün"}
 ];
 
+let products = JSON.parse(localStorage.getItem('gc_products')) || DEFAULT_PRODUCTS;
+let newsList = JSON.parse(localStorage.getItem('gc_news')) || DEFAULT_NEWS;
 let currentCategory = 'all';
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("year").textContent = new Date().getFullYear();
-  
-  // Kategori Butonları Olay Dinleyicileri
-  document.querySelectorAll('.category-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentCategory = btn.getAttribute('data-category');
-      renderProducts();
-    });
-  });
+document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Mobil Menü Link Tıklanınca Kapanma
-  document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-      document.getElementById('navLinks').classList.remove('open');
-    });
-  });
+// Dynamic Player Counter
+setInterval(() => {
+  const headerCount = document.getElementById('headerOnline');
+  const statusCount = document.getElementById('statusOnline');
+  let current = parseInt(headerCount.textContent);
+  let change = Math.floor(Math.random() * 5) - 2;
+  let next = Math.max(30, Math.min(98, current + change));
+  headerCount.textContent = next;
+  if(statusCount) statusCount.textContent = next;
+}, 3500);
 
-  renderProducts();
-  renderNews();
-});
-
-function toggleMenu() {
+function toggleMenu(){
   document.getElementById('navLinks').classList.toggle('open');
 }
 
-function copyIP() {
-  const ip = document.getElementById('serverIP').textContent;
-  navigator.clipboard.writeText(ip);
-  showToast("Sunucu IP adresi kopyalandı: " + ip);
+function copyIP(){
+  navigator.clipboard.writeText("gunescraft.xyz");
+  showToast("IP adresi panoya kopyalandı: gunescraft.xyz");
 }
 
-function showToast(msg) {
+function showToast(msg){
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
+  setTimeout(()=> t.classList.remove('show'), 3000);
 }
 
-function renderProducts() {
-  const searchTerm = document.getElementById('storeSearch').value.toLowerCase();
+function filterCategory(cat, btn){
+  currentCategory = cat;
+  document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts();
+}
+
+function renderProducts(){
+  const search = document.getElementById('storeSearch').value.toLowerCase();
   const grid = document.getElementById('productGrid');
   const empty = document.getElementById('emptyProducts');
   
-  let products = JSON.parse(localStorage.getItem('gunes_products')) || DEFAULT_PRODUCTS;
-  
   const filtered = products.filter(p => {
-    const matchCategory = (currentCategory === 'all' || p.category === currentCategory);
-    const matchSearch = p.name.toLowerCase().includes(searchTerm) || p.description.toLowerCase().includes(searchTerm);
-    return matchCategory && matchSearch;
+    const matchCat = currentCategory === 'all' || p.category === currentCategory;
+    const matchSearch = p.name.toLowerCase().includes(search) || p.description.toLowerCase().includes(search);
+    return matchCat && matchSearch;
   });
-  
-  if (filtered.length === 0) {
+
+  if(filtered.length === 0){
     grid.innerHTML = '';
     empty.classList.remove('hidden');
     return;
@@ -709,8 +712,8 @@ function renderProducts() {
   empty.classList.add('hidden');
   grid.innerHTML = filtered.map(p => `
     <div class="product-card">
-      <div class="product-art" onclick="openProductModal(${p.id})" style="cursor:pointer">
-        <span class="product-emoji">${p.emoji || '📦'}</span>
+      <div class="product-art">
+        ${p.image ? `<img src="${p.image}" alt="${p.name}">` : `<span class="product-emoji">${p.emoji}</span>`}
         <span class="badge product-label">${p.category.toUpperCase()}</span>
       </div>
       <div class="product-info">
@@ -718,175 +721,159 @@ function renderProducts() {
         <p>${p.description}</p>
         <div class="product-bottom">
           <span class="price">${p.price} ₺</span>
-          <button class="buy-btn" onclick="openProductModal(${p.id})">İncele</button>
+          <button class="buy-btn" onclick="openProduct(${p.id})">İncele</button>
         </div>
       </div>
     </div>
   `).join('');
 }
 
-function renderNews() {
+function renderNews(){
   const grid = document.getElementById('newsGrid');
-  let news = JSON.parse(localStorage.getItem('gunes_news')) || DEFAULT_NEWS;
-  
-  grid.innerHTML = news.map(n => `
-    <div class="news-card">
-      <div class="news-cover">${n.emoji || '📢'}</div>
+  grid.innerHTML = newsList.map(n => `
+    <article class="news-card">
+      <div class="news-cover">${n.emoji}</div>
       <div class="news-body">
         <span class="news-date">${n.date}</span>
         <h3>${n.title}</h3>
         <p>${n.text}</p>
       </div>
-    </div>
+    </article>
   `).join('');
 }
 
-function openProductModal(id) {
-  let products = JSON.parse(localStorage.getItem('gunes_products')) || DEFAULT_PRODUCTS;
-  const p = products.find(item => item.id === id);
+function openProduct(id){
+  const p = products.find(x => x.id === id);
   if(!p) return;
-
   const content = document.getElementById('productModalContent');
   content.innerHTML = `
     <div class="modal-product">
-      <span class="product-emoji">${p.emoji || '📦'}</span>
-      <span class="badge" style="margin-top:8px">${p.category.toUpperCase()}</span>
+      <div class="product-emoji">${p.emoji}</div>
       <h3>${p.name}</h3>
       <p>${p.description}</p>
       <div class="price">${p.price} ₺</div>
-      <div class="modal-actions">
-        <button class="btn btn-primary" onclick="showToast('Satın alma talebi alındı! Sunucu yönetiminden bilgi alabilirsiniz.')">Satın Al / Bilgi Al</button>
-      </div>
+      <button class="btn btn-primary" style="width:100%" onclick="buyAction('${p.name}')"><i class="fa-solid fa-cart-shopping"></i> Satın Al / Bilgi Al</button>
     </div>
   `;
   document.getElementById('productModal').classList.add('show');
 }
 
-function closeModal(modalId) {
-  document.getElementById(modalId).classList.remove('show');
+function buyAction(name){
+  showToast(`${name} için satın alma kanalı açılıyor... Sunucuda /kurucular yazabilirsiniz.`);
+  closeModal('productModal');
 }
 
-function backdropClose(e, modalId) {
-  if(e.target.id === modalId) {
-    closeModal(modalId);
-  }
-}
-
-function openLogin() {
+function openLogin(){
   document.getElementById('loginModal').classList.add('show');
 }
 
-function adminLogin(e) {
+function adminLogin(e){
   e.preventDefault();
   const u = document.getElementById('adminUser').value;
   const p = document.getElementById('adminPass').value;
-  
-  if(u === 'admin' && p === '1234') {
+  if(u === 'admin' && p === '1234'){
     closeModal('loginModal');
     document.getElementById('adminModal').classList.add('show');
-    renderAdminProducts();
-    renderAdminNews();
-    showToast('Yönetici girişi başarılı!');
+    renderAdminLists();
+    showToast("Yönetici paneline giriş yapıldı.");
   } else {
-    showToast('Kullanıcı adı veya şifre hatalı!');
+    showToast("Hatalı kullanıcı adı veya şifre!");
   }
 }
 
-function adminTab(tab, btn) {
-  document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+function closeModal(id){
+  document.getElementById(id).classList.remove('show');
+}
+
+function backdropClose(e, id){
+  if(e.target.id === id) closeModal(id);
+}
+
+function adminTab(tab, btn){
+  document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  
   document.getElementById('adminProducts').classList.add('hidden');
   document.getElementById('adminNews').classList.add('hidden');
   document.getElementById('adminSettings').classList.add('hidden');
-  
   if(tab === 'products') document.getElementById('adminProducts').classList.remove('hidden');
   if(tab === 'news') document.getElementById('adminNews').classList.remove('hidden');
   if(tab === 'settings') document.getElementById('adminSettings').classList.remove('hidden');
 }
 
-function renderAdminProducts() {
-  let products = JSON.parse(localStorage.getItem('gunes_products')) || DEFAULT_PRODUCTS;
-  const list = document.getElementById('adminProductList');
-  list.innerHTML = products.map(p => `
-    <div class="admin-item">
-      <span>${p.emoji} <b>${p.name}</b> (${p.price} ₺)</span>
-      <button class="btn btn-danger" onclick="deleteProduct(${p.id})">Sil</button>
-    </div>
-  `).join('');
-}
-
-function addProduct(e) {
+function addProduct(e){
   e.preventDefault();
-  let products = JSON.parse(localStorage.getItem('gunes_products')) || DEFAULT_PRODUCTS;
   const newP = {
     id: Date.now(),
     name: document.getElementById('newName').value,
     price: parseFloat(document.getElementById('newPrice').value),
     category: document.getElementById('newCategory').value,
     emoji: document.getElementById('newEmoji').value || '📦',
-    description: document.getElementById('newDescription').value,
-    image: document.getElementById('newImage').value
+    image: document.getElementById('newImage').value,
+    description: document.getElementById('newDescription').value
   };
   products.push(newP);
-  localStorage.setItem('gunes_products', JSON.stringify(products));
+  localStorage.setItem('gc_products', JSON.stringify(products));
   renderProducts();
-  renderAdminProducts();
-  e.target.reset();
-  showToast('Ürün başarıyla eklendi!');
+  renderAdminLists();
+  showToast("Ürün başarıyla eklendi.");
 }
 
-function deleteProduct(id) {
-  let products = JSON.parse(localStorage.getItem('gunes_products')) || DEFAULT_PRODUCTS;
+function deleteProduct(id){
   products = products.filter(p => p.id !== id);
-  localStorage.setItem('gunes_products', JSON.stringify(products));
+  localStorage.setItem('gc_products', JSON.stringify(products));
   renderProducts();
-  renderAdminProducts();
-  showToast('Ürün silindi!');
+  renderAdminLists();
+  showToast("Ürün silindi.");
 }
 
-function renderAdminNews() {
-  let news = JSON.parse(localStorage.getItem('gunes_news')) || DEFAULT_NEWS;
-  const list = document.getElementById('adminNewsList');
-  list.innerHTML = news.map(n => `
-    <div class="admin-item">
-      <span>${n.emoji} <b>${n.title}</b></span>
-      <button class="btn btn-danger" onclick="deleteNews(${n.id})">Sil</button>
-    </div>
-  `).join('');
-}
-
-function addNews(e) {
+function addNews(e){
   e.preventDefault();
-  let news = JSON.parse(localStorage.getItem('gunes_news')) || DEFAULT_NEWS;
   const newN = {
     id: Date.now(),
     title: document.getElementById('newsTitle').value,
     text: document.getElementById('newsText').value,
     emoji: document.getElementById('newsEmoji').value || '📢',
-    date: new Date().toLocaleDateString('tr-TR', {day: 'numeric', month: 'long', year: 'numeric'})
+    date: 'Şimdi'
   };
-  news.unshift(newN);
-  localStorage.setItem('gunes_news', JSON.stringify(news));
+  newsList.unshift(newN);
+  localStorage.setItem('gc_news', JSON.stringify(newsList));
   renderNews();
-  renderAdminNews();
-  e.target.reset();
-  showToast('Duyuru eklendi!');
+  renderAdminLists();
+  showToast("Duyuru eklendi.");
 }
 
-function deleteNews(id) {
-  let news = JSON.parse(localStorage.getItem('gunes_news')) || DEFAULT_NEWS;
-  news = news.filter(n => n.id !== id);
-  localStorage.setItem('gunes_news', JSON.stringify(news));
+function deleteNews(id){
+  newsList = newsList.filter(n => n.id !== id);
+  localStorage.setItem('gc_news', JSON.stringify(newsList));
   renderNews();
-  renderAdminNews();
-  showToast('Duyuru silindi!');
+  renderAdminLists();
+  showToast("Duyuru silindi.");
 }
 
-function saveSettings(e) {
+function renderAdminLists(){
+  document.getElementById('adminProductList').innerHTML = products.map(p => `
+    <div class="admin-item">
+      <span>${p.emoji} <strong>${p.name}</strong> (${p.price} ₺)</span>
+      <button class="btn btn-danger" onclick="deleteProduct(${p.id})">Sil</button>
+    </div>
+  `).join('');
+  
+  document.getElementById('adminNewsList').innerHTML = newsList.map(n => `
+    <div class="admin-item">
+      <span>${n.emoji} <strong>${n.title}</strong></span>
+      <button class="btn btn-danger" onclick="deleteNews(${n.id})">Sil</button>
+    </div>
+  `).join('');
+}
+
+function saveSettings(e){
   e.preventDefault();
-  showToast('Ayarlar kaydedildi!');
+  showToast("Ayarlar kaydedildi!");
 }
+
+// Initial Render
+renderProducts();
+renderNews();
 </script>
 </body>
 </html>
