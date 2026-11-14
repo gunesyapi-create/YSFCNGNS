@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GüneşCraft | Hızlı Admin & AI Asistanı</title>
+    <title>GüneşCraft | Efsanevi Tam Donanımlı Yönetim & Destek Konsolu</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -43,50 +43,54 @@
             border: 1px solid rgba(255, 215, 0, 0.3);
         }
         .neon-glow-blue {
-            box-shadow: 0 0 25px rgba(0, 240, 255, 0.25);
-            border: 1px solid rgba(0, 240, 255, 0.4);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+            border: 1px solid rgba(0, 240, 255, 0.3);
         }
         .glass-panel {
-            background: rgba(14, 22, 38, 0.90);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            background: rgba(14, 22, 38, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
         ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+            width: 8px;
+            height: 8px;
         }
         ::-webkit-scrollbar-track {
             background: #080C14;
         }
         ::-webkit-scrollbar-thumb {
             background: #1E293B;
-            border-radius: 3px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FFD700;
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-gunesGold selection:text-black">
 
     <!-- TOP NAVIGATION BAR -->
-    <header class="glass-panel border-b border-gunesGold/20 sticky top-0 z-40 px-6 py-4 flex items-center justify-between">
+    <header class="glass-panel border-b border-gunesGold/20 sticky top-0 z-50 px-6 py-4 flex items-center justify-between">
         <div class="flex items-center space-x-4">
             <div class="relative">
-                <div class="absolute -inset-1 rounded-lg bg-gradient-to-r from-gunesGold to-gunesNeon opacity-75 blur-sm animate-pulse"></div>
+                <div class="absolute -inset-1 rounded-lg bg-gradient-to-r from-gunesGold to-gunesAccent opacity-75 blur-sm animate-pulse"></div>
                 <div class="relative bg-gunesDark px-4 py-2 rounded-lg border border-gunesGold/50 flex items-center space-x-2">
                     <i class="fa-solid fa-cube text-gunesGold text-xl"></i>
-                    <span class="font-cyber font-black tracking-wider text-xl text-transparent bg-clip-text bg-gradient-to-r from-gunesGold via-white to-gunesNeon">GÜNEŞCRAFT</span>
+                    <span class="font-cyber font-black tracking-wider text-xl text-transparent bg-clip-text bg-gradient-to-r from-gunesGold via-white to-gunesNeon">GÜNEŞCRAFT NETWORK</span>
                 </div>
             </div>
             <span class="hidden md:inline-block px-3 py-1 rounded-full text-xs font-cyber bg-gunesGold/10 text-gunesGold border border-gunesGold/30">
-                <i class="fa-solid fa-circle text-[8px] animate-ping mr-1 text-green-400"></i> play.gunescraft.xyz
+                <i class="fa-solid fa-circle text-[8px] animate-ping mr-1 text-green-400"></i> SUNUCU AKTİF: play.gunescraft.xyz
             </span>
         </div>
 
         <div class="flex items-center space-x-4">
             <div class="hidden sm:flex flex-col text-right">
                 <span class="text-xs font-cyber text-gunesGold">KURUCU: .YSFCNGNS_1950</span>
-                <span class="text-[10px] text-slate-400">Ana Yönetici</span>
+                <span class="text-[10px] text-slate-400">Ana Sistem Yöneticisi & Geliştirici</span>
             </div>
-            <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-gunesGold to-gunesNeon p-[2px] flex items-center justify-center shadow-lg">
+            <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-gunesGold to-gunesAccent p-[2px] flex items-center justify-center shadow-lg">
                 <div class="h-full w-full bg-gunesDark rounded-[10px] flex items-center justify-center text-gunesGold font-bold font-cyber text-xs">
                     YC
                 </div>
@@ -94,166 +98,402 @@
         </div>
     </header>
 
-    <!-- ANA İÇERİK ALANI -->
-    <main class="flex-1 p-6 max-w-[1400px] mx-auto w-full flex flex-col items-center justify-center text-center">
-        <div class="glass-panel p-8 rounded-3xl neon-glow max-w-xl w-full flex flex-col items-center gap-4">
-            <div class="h-16 w-16 rounded-2xl bg-gunesGold/10 border border-gunesGold/30 flex items-center justify-center text-gunesGold text-3xl">
-                <i class="fa-solid fa-shield-halved"></i>
+    <!-- MAIN CONTAINER -->
+    <div class="flex-1 flex flex-col lg:flex-row p-4 lg:p-6 gap-6 max-w-[1700px] mx-auto w-full">
+
+        <!-- SOL MENÜ & TÜM MODÜLLER -->
+        <aside class="w-full lg:w-72 flex flex-col gap-6">
+            <div class="glass-panel p-4 rounded-2xl neon-glow flex flex-col gap-2">
+                <h3 class="text-xs font-cyber text-gunesGold tracking-widest px-3 mb-2 opacity-80">YÖNETİM & DESTEK MENÜSÜ</h3>
+                
+                <button onclick="switchTab('dashboard')" id="btn-dashboard" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-gradient-to-r from-gunesGold/20 to-transparent border-l-4 border-gunesGold text-gunesGold font-medium transition-all text-sm">
+                    <i class="fa-solid fa-chart-line w-5"></i>
+                    <span>Sunucu Paneli</span>
+                </button>
+
+                <button onclick="switchTab('players')" id="btn-players" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800/50 text-slate-300 hover:text-white transition-all text-sm">
+                    <i class="fa-solid fa-users-gear w-5"></i>
+                    <span>Oyuncu Yönetimi</span>
+                </button>
+
+                <button onclick="switchTab('ai')" id="btn-ai" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800/50 text-slate-300 hover:text-white transition-all text-sm">
+                    <i class="fa-solid fa-robot w-5 text-gunesNeon"></i>
+                    <span class="flex-1 text-left">Yapay Zeka & Destek</span>
+                    <span class="bg-gunesNeon/20 text-gunesNeon text-[10px] px-2 py-0.5 rounded-full font-cyber">AI</span>
+                </button>
+
+                <button onclick="switchTab('logs')" id="btn-logs" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800/50 text-slate-300 hover:text-white transition-all text-sm">
+                    <i class="fa-solid fa-terminal w-5"></i>
+                    <span>Konsol & Loglar</span>
+                </button>
             </div>
-            <h1 class="text-2xl font-black font-cyber text-gunesGold">GüneşCraft Yönetim Ekranı</h1>
-            <p class="text-xs text-slate-300 leading-relaxed">
-                Sağ alttaki yuvarlak <span class="text-gunesNeon font-bold">Yapay Zeka & Admin</span> butonuna tıklayarak hızlı pencereyi açabilir, sunucu komutları üretebilir ve oyuncuları yönetebilirsin!
-            </p>
-        </div>
-    </main>
 
-    <!-- SAĞ ALT KÖŞE YUVARLAK BUTON (FLOATING BUTTON) -->
-    <div class="fixed bottom-6 right-6 z-50">
-        <button onclick="togglePopup()" class="h-16 w-16 rounded-full bg-gradient-to-r from-gunesGold to-gunesNeon p-[2px] shadow-2xl hover:scale-110 transition-all duration-300 group flex items-center justify-center focus:outline-none">
-            <div class="h-full w-full bg-gunesDark rounded-full flex items-center justify-center text-gunesGold group-hover:text-gunesNeon transition-colors">
-                <i class="fa-solid fa-robot text-2xl animate-bounce"></i>
+            <!-- Hızlı Sunucu Komutları -->
+            <div class="glass-panel p-4 rounded-2xl neon-glow-blue flex flex-col gap-3">
+                <h3 class="text-xs font-cyber text-gunesNeon tracking-widest">HIZLI AKSİYONLAR</h3>
+                <button onclick="quickCommand('save-all')" class="w-full py-2.5 px-3 bg-gunesCard hover:bg-slate-800 border border-blue-500/30 rounded-xl text-xs font-cyber text-blue-300 flex items-center justify-between transition-all">
+                    <span>Dünyayı Kaydet</span>
+                    <i class="fa-solid fa-floppy-disk"></i>
+                </button>
+                <button onclick="quickCommand('reload')" class="w-full py-2.5 px-3 bg-gunesCard hover:bg-slate-800 border border-yellow-500/30 rounded-xl text-xs font-cyber text-yellow-300 flex items-center justify-between transition-all">
+                    <span>Pluginleri Yenile</span>
+                    <i class="fa-solid fa-rotate"></i>
+                </button>
+                <button onclick="quickCommand('broadcast')" class="w-full py-2.5 px-3 bg-gunesCard hover:bg-slate-800 border border-purple-500/30 rounded-xl text-xs font-cyber text-purple-300 flex items-center justify-between transition-all">
+                    <span>Duyuru Gönder</span>
+                    <i class="fa-solid fa-bullhorn"></i>
+                </button>
             </div>
-        </button>
-    </div>
+        </aside>
 
-    <!-- AÇILAN KÜÇÜK PENCERE (MODAL POPUP) -->
-    <div id="quick-popup" class="fixed bottom-24 right-6 z-50 w-96 h-[500px] glass-panel rounded-3xl neon-glow-blue hidden flex flex-col overflow-hidden shadow-2xl transition-all">
-        <!-- Pencere Başlığı -->
-        <div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between bg-gunesCard/80">
-            <div class="flex items-center gap-2">
-                <i class="fa-solid fa-brain text-gunesNeon"></i>
-                <span class="font-cyber font-bold text-xs text-gunesNeon tracking-wider">GÜNEŞCRAFT HIZLI KONTROL</span>
-            </div>
-            <button onclick="togglePopup()" class="text-slate-400 hover:text-white text-sm p-1">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
+        <!-- ORTA İÇERİK ALANI (TÜM SEKMELER) -->
+        <main class="flex-1 flex flex-col gap-6">
 
-        <!-- Sekme Geçiş Butonları -->
-        <div class="grid grid-cols-2 gap-1 p-2 bg-gunesDark/50 border-b border-slate-800 text-xs font-cyber">
-            <button onclick="switchPopupTab('ai')" id="pop-btn-ai" class="py-2 rounded-xl bg-gunesNeon/20 text-gunesNeon border border-gunesNeon/30 font-bold transition-all">Yapay Zeka</button>
-            <button onclick="switchPopupTab('admin')" id="pop-btn-admin" class="py-2 rounded-xl text-slate-400 hover:text-white transition-all">Hızlı Admin</button>
-        </div>
-
-        <!-- Sekme 1: Yapay Zeka Sohbet -->
-        <div id="pop-tab-ai" class="popup-tab flex-1 flex flex-col p-3 gap-3 overflow-hidden">
-            <div id="pop-chat-box" class="flex-1 overflow-y-auto flex flex-col gap-3 pr-1 text-xs">
-                <div class="flex items-start gap-2">
-                    <div class="h-6 w-6 rounded bg-gunesNeon/20 border border-gunesNeon/40 flex items-center justify-center text-gunesNeon shrink-0 text-[10px]">
-                        <i class="fa-solid fa-robot"></i>
+            <!-- TAB 1: SUNUCU PANELI (DASHBOARD) -->
+            <div id="tab-dashboard" class="tab-content flex flex-col gap-6">
+                <!-- İstatistik Kartları -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="glass-panel p-5 rounded-2xl neon-glow flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-cyber text-slate-400">ÇEVRİMİÇİ OYUNCU</p>
+                            <h4 class="text-3xl font-black font-cyber text-gunesGold mt-1">142<span class="text-xs font-normal text-slate-500">/500</span></h4>
+                            <span class="text-[10px] text-green-400 flex items-center mt-1"><i class="fa-solid fa-arrow-up mr-1"></i> %12 artış</span>
+                        </div>
+                        <div class="h-12 w-12 rounded-xl bg-gunesGold/10 border border-gunesGold/30 flex items-center justify-center text-gunesGold text-xl">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
                     </div>
-                    <div class="bg-slate-800/80 border border-gunesNeon/20 p-3 rounded-xl rounded-tl-none text-slate-200">
-                        Selam <span class="text-gunesGold font-bold">.YSFCNGNS_1950</span>! Küçük pencere aktif. Skript veya komut isteyebilirsin.
+
+                    <div class="glass-panel p-5 rounded-2xl neon-glow flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-cyber text-slate-400">SUNUCU TPS</p>
+                            <h4 class="text-3xl font-black font-cyber text-green-400 mt-1">19.98</h4>
+                            <span class="text-[10px] text-green-400 flex items-center mt-1"><i class="fa-solid fa-bolt mr-1"></i> Kararlı</span>
+                        </div>
+                        <div class="h-12 w-12 rounded-xl bg-green-500/10 border border-green-500/30 flex items-center justify-center text-green-400 text-xl">
+                            <i class="fa-solid fa-gauge-high"></i>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-5 rounded-2xl neon-glow flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-cyber text-slate-400">BELLEK KULLANIMI</p>
+                            <h4 class="text-3xl font-black font-cyber text-gunesNeon mt-1">12.4 GB</h4>
+                            <span class="text-[10px] text-slate-400 mt-1">Toplam 32 GB RAM</span>
+                        </div>
+                        <div class="h-12 w-12 rounded-xl bg-gunesNeon/10 border border-gunesNeon/30 flex items-center justify-center text-gunesNeon text-xl">
+                            <i class="fa-solid fa-microchip"></i>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-5 rounded-2xl neon-glow flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-cyber text-slate-400">AKTİF DÜNYA</p>
+                            <h4 class="text-2xl font-black font-cyber text-purple-400 mt-1">Earth-Towny</h4>
+                            <span class="text-[10px] text-purple-300 mt-1">Cross-Play Java & Bedrock</span>
+                        </div>
+                        <div class="h-12 w-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 text-xl">
+                            <i class="fa-solid fa-earth-americas"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grafik ve Hızlı AI Özet -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="glass-panel p-6 rounded-2xl neon-glow lg:col-span-2 flex flex-col justify-between">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-cyber font-bold text-gunesGold flex items-center gap-2">
+                                <i class="fa-solid fa-chart-area"></i> Sunucu Performans Akışı
+                            </h3>
+                            <span class="text-xs text-slate-400">Son 1 Saat</span>
+                        </div>
+                        <div class="h-48 w-full flex items-end gap-2 pt-6 pb-2 border-b border-slate-800">
+                            <div class="flex-1 bg-gradient-to-t from-gunesGold/20 to-gunesGold rounded-t h-[60%]"></div>
+                            <div class="flex-1 bg-gradient-to-t from-gunesGold/20 to-gunesGold rounded-t h-[75%]"></div>
+                            <div class="flex-1 bg-gradient-to-t from-gunesGold/20 to-gunesGold rounded-t h-[85%]"></div>
+                            <div class="flex-1 bg-gradient-to-t from-gunesGold/20 to-gunesGold rounded-t h-[70%]"></div>
+                            <div class="flex-1 bg-gradient-to-t from-gunesGold/20 to-gunesGold rounded-t h-[95%]"></div>
+                            <div class="flex-1 bg-gradient-to-t from-gunesGold/20 to-gunesGold rounded-t h-[90%]"></div>
+                            <div class="flex-1 bg-gradient-to-t from-gunesGold/20 to-gunesGold rounded-t h-[100%]"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] font-cyber text-slate-500 mt-2">
+                            <span>19:00</span>
+                            <span>19:20</span>
+                            <span>19:40</span>
+                            <span>20:00 (Şimdi)</span>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl neon-glow-blue flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="font-cyber font-bold text-gunesNeon flex items-center gap-2 text-sm">
+                                    <i class="fa-solid fa-robot"></i> Güneş AI Özet
+                                </h3>
+                                <span class="h-2 w-2 rounded-full bg-green-400 animate-pulse"></span>
+                            </div>
+                            <p class="text-xs text-slate-300 leading-relaxed bg-gunesDark/60 p-3 rounded-xl border border-gunesNeon/20">
+                                "Sistem analizi tamamlandı. Son 24 saat içinde kritik bir hata tespit edilmedi. TPS kararlı (19.98). Towny bölge sınırlarında hafif bir optimizasyon öneriliyor."
+                            </p>
+                        </div>
+                        <button onclick="switchTab('ai')" class="mt-4 w-full py-2.5 bg-gunesNeon/20 hover:bg-gunesNeon/30 border border-gunesNeon/50 rounded-xl text-xs font-cyber text-gunesNeon transition-all flex items-center justify-center gap-2">
+                            <span>Yapay Zeka & Destek Ekranına Git</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="flex items-center gap-2 pt-2 border-t border-slate-800">
-                <input type="text" id="pop-ai-input" placeholder="Komut yaz..." class="flex-1 bg-gunesDark border border-slate-700 px-3 py-2 rounded-xl text-xs text-white focus:outline-none focus:border-gunesNeon" onkeypress="handlePopKey(event)">
-                <button onclick="sendPopAI()" class="bg-gunesNeon text-black font-bold px-3 py-2 rounded-xl text-xs hover:bg-cyan-400 transition-all">
-                    <i class="fa-solid fa-paper-plane"></i>
-                </button>
-            </div>
-        </div>
 
-        <!-- Sekme 2: Hızlı Admin İşlemleri -->
-        <div id="pop-tab-admin" class="popup-tab hidden flex-1 flex flex-col p-3 gap-3 overflow-y-auto text-xs">
-            <div class="p-3 bg-gunesDark/60 rounded-xl border border-slate-800 flex flex-col gap-2">
-                <span class="font-cyber text-gunesGold font-bold">Hızlı Oyuncu Cezası</span>
-                <input type="text" id="pop-player" placeholder="Oyuncu Adı..." class="bg-gunesCard border border-slate-700 px-3 py-1.5 rounded-lg text-white focus:outline-none focus:border-gunesGold">
-                <select id="pop-action" class="bg-gunesCard border border-slate-700 px-3 py-1.5 rounded-lg text-white focus:outline-none focus:border-gunesGold">
-                    <option value="ban">Banla</option>
-                    <option value="mute">Sustur (Mute)</option>
-                    <option value="op">OP Ver</option>
-                </select>
-                <button onclick="executePopAdmin()" class="bg-gunesGold text-black font-bold font-cyber py-2 rounded-lg hover:bg-yellow-400 transition-all">Uygula</button>
+            <!-- TAB 2: OYUNCU YÖNETİMİ -->
+            <div id="tab-players" class="tab-content hidden flex flex-col gap-6">
+                <div class="glass-panel p-6 rounded-2xl neon-glow flex flex-col gap-4">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div>
+                            <h3 class="font-cyber font-bold text-gunesGold text-lg">Çevrimiçi Oyuncu Listesi</h3>
+                            <p class="text-xs text-slate-400">Aktif oyuncuları denetleyin, banlayın veya yetki verin.</p>
+                        </div>
+                        <div class="flex items-center gap-2 w-full sm:w-auto">
+                            <input type="text" id="player-search" placeholder="Oyuncu Ara..." class="bg-gunesDark border border-slate-700 px-4 py-2 rounded-xl text-xs text-white focus:outline-none focus:border-gunesGold w-full sm:w-64">
+                            <button class="bg-gunesGold text-black px-4 py-2 rounded-xl text-xs font-bold font-cyber hover:bg-yellow-400 transition-all">Ara</button>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-slate-800 text-xs font-cyber text-slate-400">
+                                    <th class="py-3 px-4">KULLANICI ADI</th>
+                                    <th class="py-3 px-4">PLATFORM</th>
+                                    <th class="py-3 px-4">RÜTBE / YETKİ</th>
+                                    <th class="py-3 px-4">DURUM</th>
+                                    <th class="py-3 px-4 text-right">İŞLEMLER</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm divide-y divide-slate-800/50">
+                                <tr class="hover:bg-slate-800/30 transition-all">
+                                    <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                                        <div class="h-7 w-7 rounded bg-gunesGold/20 text-gunesGold flex items-center justify-center font-cyber text-xs">Y</div>
+                                        .YSFCNGNS_1950
+                                    </td>
+                                    <td class="py-3 px-4 text-xs text-slate-300"><span class="px-2 py-1 bg-blue-500/10 text-blue-400 rounded border border-blue-500/30">Java 1.20.4</span></td>
+                                    <td class="py-3 px-4"><span class="text-gunesGold font-cyber text-xs font-bold">Kurucu</span></td>
+                                    <td class="py-3 px-4"><span class="inline-block h-2 w-2 rounded-full bg-green-400 mr-1"></span> Aktif</td>
+                                    <td class="py-3 px-4 text-right space-x-2">
+                                        <button onclick="alertAction('Yetki paneli açılıyor.')" class="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
+                                        <button onclick="alertAction('Oyuncu susturuldu.')" class="p-1.5 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-400 rounded-lg text-xs" title="Mute"><i class="fa-solid fa-microphone-slash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-slate-800/30 transition-all">
+                                    <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                                        <div class="h-7 w-7 rounded bg-purple-500/20 text-purple-400 flex items-center justify-center font-cyber text-xs">A</div>
+                                        AhmetPro_TR
+                                    </td>
+                                    <td class="py-3 px-4 text-xs text-slate-300"><span class="px-2 py-1 bg-green-500/10 text-green-400 rounded border border-green-500/30">Bedrock (MCPE)</span></td>
+                                    <td class="py-3 px-4"><span class="text-purple-400 font-cyber text-xs">VIP+</span></td>
+                                    <td class="py-3 px-4"><span class="inline-block h-2 w-2 rounded-full bg-green-400 mr-1"></span> Aktif</td>
+                                    <td class="py-3 px-4 text-right space-x-2">
+                                        <button onclick="alertAction('Yetki paneli açılıyor.')" class="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
+                                        <button onclick="alertAction('Oyuncu susturuldu.')" class="p-1.5 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-400 rounded-lg text-xs" title="Mute"><i class="fa-solid fa-microphone-slash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-slate-800/30 transition-all">
+                                    <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                                        <div class="h-7 w-7 rounded bg-red-500/20 text-red-400 flex items-center justify-center font-cyber text-xs">C</div>
+                                        Creeze_Gamer
+                                    </td>
+                                    <td class="py-3 px-4 text-xs text-slate-300"><span class="px-2 py-1 bg-blue-500/10 text-blue-400 rounded border border-blue-500/30">Java 1.20.4</span></td>
+                                    <td class="py-3 px-4"><span class="text-slate-400 font-cyber text-xs">Oyuncu</span></td>
+                                    <td class="py-3 px-4"><span class="inline-block h-2 w-2 rounded-full bg-green-400 mr-1"></span> Aktif</td>
+                                    <td class="py-3 px-4 text-right space-x-2">
+                                        <button onclick="alertAction('Yetki paneli açılıyor.')" class="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
+                                        <button onclick="alertAction('Oyuncu susturuldu.')" class="p-1.5 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-400 rounded-lg text-xs" title="Mute"><i class="fa-solid fa-microphone-slash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <div class="flex flex-col gap-2">
-                <button onclick="popQuickCmd('Dünya kaydedildi!')" class="w-full py-2 bg-gunesCard hover:bg-slate-800 border border-blue-500/30 rounded-xl text-blue-300 font-cyber">Dünyayı Kaydet</button>
-                <button onclick="popQuickCmd('Pluginler yenilendi!')" class="w-full py-2 bg-gunesCard hover:bg-slate-800 border border-yellow-500/30 rounded-xl text-yellow-300 font-cyber">Plugin Yenile</button>
+
+            <!-- TAB 3: YAPAY ZEKA & DESTEK ASİSTANI -->
+            <div id="tab-ai" class="tab-content hidden flex flex-col gap-6 flex-1">
+                <div class="glass-panel p-6 rounded-2xl neon-glow-blue flex flex-col flex-1 h-[650px]">
+                    <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+                        <div class="flex items-center gap-3">
+                            <div class="h-10 w-10 rounded-xl bg-gunesNeon/20 border border-gunesNeon/40 flex items-center justify-center text-gunesNeon text-lg">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-cyber font-bold text-gunesNeon">GüneşCraft Yapay Zeka & Destek Asistanı</h3>
+                                <p class="text-xs text-slate-400">Sunucu hakkında soru sorabilir, teknik destek alabilir ve komut/skript üretebilirsin.</p>
+                            </div>
+                        </div>
+                        <span class="px-3 py-1 bg-gunesNeon/10 border border-gunesNeon/30 rounded-full text-xs font-cyber text-gunesNeon">
+                            <i class="fa-solid fa-circle text-[8px] text-green-400 mr-1"></i> Destek Hattı Aktif
+                        </span>
+                    </div>
+
+                    <!-- Chat Mesaj Alanı -->
+                    <div id="chat-messages" class="flex-1 overflow-y-auto py-4 flex flex-col gap-4 pr-2">
+                        <div class="flex items-start gap-3">
+                            <div class="h-8 w-8 rounded-lg bg-gunesNeon/20 border border-gunesNeon/40 flex items-center justify-center text-gunesNeon shrink-0">
+                                <i class="fa-solid fa-robot text-xs"></i>
+                            </div>
+                            <div class="bg-slate-800/70 border border-gunesNeon/20 p-4 rounded-2xl rounded-tl-none max-w-2xl text-sm text-slate-200">
+                                Selam Kurucum <span class="text-gunesGold font-bold">.YSFCNGNS_1950</span>! GüneşCraft yapay zeka destek ve soru-cevap asistanı emrinizde. Sunucu yönetimi, plugin hataları veya herhangi bir konuda bana soru sorabilir ya da skript yazdırabilirsin!
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mesaj Gönderme Çubuğu -->
+                    <div class="pt-4 border-t border-slate-800 flex items-center gap-3">
+                        <input type="text" id="ai-input" placeholder="Yapay zekaya destek ya da soru için birşeyler yazın (Örn: Towny plugini nasıl ayarlanır?)..." class="flex-1 bg-gunesDark border border-slate-700 px-4 py-3 rounded-xl text-sm text-white focus:outline-none focus:border-gunesNeon" onkeypress="handleAIKey(event)">
+                        <button onclick="sendAIMessage()" class="bg-gradient-to-r from-gunesNeon to-blue-600 text-black font-bold font-cyber px-6 py-3 rounded-xl text-xs hover:opacity-90 transition-all flex items-center gap-2">
+                            <span>Gönder</span>
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
-        </div>
+
+            <!-- TAB 4: KONSOL & LOGLAR -->
+            <div id="tab-logs" class="tab-content hidden flex flex-col gap-6">
+                <div class="glass-panel p-6 rounded-2xl neon-glow flex flex-col gap-4">
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                        <h3 class="font-cyber font-bold text-gunesGold flex items-center gap-2">
+                            <i class="fa-solid fa-terminal"></i> Canlı Sunucu Konsolu (Server Console)
+                        </h3>
+                        <div class="flex items-center gap-2">
+                            <button onclick="clearConsole()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-cyber">Temizle</button>
+                            <span class="h-2 w-2 rounded-full bg-green-400 animate-pulse"></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Konsol Akışı -->
+                    <div id="console-output" class="bg-black/80 border border-slate-800 p-4 rounded-xl font-mono text-xs text-green-400 h-96 overflow-y-auto flex flex-col gap-1.5 shadow-inner">
+                        <div>[19:28:01] [Server thread/INFO]: [GunesCore] GüneşCraft eklentisi başarıyla yüklendi!</div>
+                        <div>[19:28:05] [Server thread/INFO]: .YSFCNGNS_1950 [/127.0.0.1:54321] logged in with entity id 1950 at ([world] 0.0, 64.0, 0.0)</div>
+                        <div>[19:28:15] [Server thread/INFO]: [Towny] 142 bölge verisi senkronize edildi.</div>
+                        <div>[19:28:30] [Vault/INFO]: Ekonomi sistemi (EssentialsX Economy) aktif.</div>
+                        <div>[19:29:00] [GunesAI/INFO]: Destek ve Yapay zeka modülü hazır durumda bekliyor.</div>
+                    </div>
+
+                    <!-- Konsol Komut Satırı -->
+                    <div class="flex items-center gap-2">
+                        <span class="text-gunesGold font-mono text-sm">>&nbsp;</span>
+                        <input type="text" id="console-input" placeholder="Sunucu komutu girin (Örn: /op .YSFCNGNS_1950 veya /reload)..." class="flex-1 bg-gunesDark border border-slate-700 px-4 py-2.5 rounded-xl text-xs font-mono text-white focus:outline-none focus:border-gunesGold" onkeypress="handleConsoleKey(event)">
+                        <button onclick="executeConsoleCommand()" class="bg-gunesGold text-black font-cyber font-bold px-5 py-2.5 rounded-xl text-xs hover:bg-yellow-400 transition-all">Çalıştır</button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
     </div>
 
     <!-- FOOTER -->
-    <footer class="glass-panel border-t border-gunesGold/10 py-3 px-6 text-center text-xs text-slate-500 font-cyber">
-        GüneşCraft Network © 2026 — .YSFCNGNS_1950
+    <footer class="glass-panel border-t border-gunesGold/10 py-4 px-6 text-center text-xs text-slate-500 font-cyber">
+        GüneşCraft Network © 2026 — Tüm Hakları Saklıdır. Geliştirici: .YSFCNGNS_1950
     </footer>
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        function togglePopup() {
-            const popup = document.getElementById('quick-popup');
-            popup.classList.toggle('hidden');
-        }
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
 
-        function switchPopupTab(tab) {
-            document.querySelectorAll('.popup-tab').forEach(el => el.classList.add('hidden'));
-            document.getElementById('pop-tab-' + tab).classList.remove('hidden');
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-gradient-to-r', 'from-gunesGold/20', 'to-transparent', 'border-l-4', 'border-gunesGold', 'text-gunesGold');
+                btn.classList.add('text-slate-300', 'hover:bg-slate-800/50', 'hover:text-white');
+            });
 
-            const btnAi = document.getElementById('pop-btn-ai');
-            const btnAdmin = document.getElementById('pop-btn-admin');
-
-            if(tab === 'ai') {
-                btnAi.className = "py-2 rounded-xl bg-gunesNeon/20 text-gunesNeon border border-gunesNeon/30 font-bold transition-all";
-                btnAdmin.className = "py-2 rounded-xl text-slate-400 hover:text-white transition-all";
-            } else {
-                btnAdmin.className = "py-2 rounded-xl bg-gunesGold/20 text-gunesGold border border-gunesGold/30 font-bold transition-all";
-                btnAi.className = "py-2 rounded-xl text-slate-400 hover:text-white transition-all";
+            const activeBtn = document.getElementById('btn-' + tabId);
+            if(activeBtn) {
+                activeBtn.classList.remove('text-slate-300', 'hover:bg-slate-800/50', 'hover:text-white');
+                activeBtn.classList.add('bg-gradient-to-r', 'from-gunesGold/20', 'to-transparent', 'border-l-4', 'border-gunesGold', 'text-gunesGold');
             }
         }
 
-        function sendPopAI() {
-            const input = document.getElementById('pop-ai-input');
-            const chatBox = document.getElementById('pop-chat-box');
+        function quickCommand(type) {
+            const consoleOut = document.getElementById('console-output');
+            let timeStr = new Date().toLocaleTimeString();
+            let msg = "";
+            if(type === 'save-all') msg = `[${timeStr}] [Server thread/INFO]: Dünya verileri kaydediliyor... Başarılı!`;
+            if(type === 'reload') msg = `[${timeStr}] [Server thread/INFO]: Tüm eklentiler yeniden başlatıldı!`;
+            if(type === 'broadcast') msg = `[${timeStr}] [Broadcast]: §6[GüneşCraft] §eSunucu güncellemeleri tamamlandı!`;
+            
+            consoleOut.innerHTML += `<div>${msg}</div>`;
+            consoleOut.scrollTop = consoleOut.scrollHeight;
+            alert("İşlem başarıyla tetiklendi!");
+        }
+
+        function alertAction(text) {
+            alert("GüneşCraft Admin: " + text);
+        }
+
+        function sendAIMessage() {
+            const input = document.getElementById('ai-input');
+            const chatMessages = document.getElementById('chat-messages');
             const query = input.value.trim();
             if(!query) return;
 
-            chatBox.innerHTML += `
-                <div class="flex items-start gap-2 justify-end">
-                    <div class="bg-gunesGold/10 border border-gunesGold/30 p-2.5 rounded-xl rounded-tr-none text-slate-200">
+            chatMessages.innerHTML += `
+                <div class="flex items-start gap-3 justify-end">
+                    <div class="bg-gunesGold/10 border border-gunesGold/30 p-4 rounded-2xl rounded-tr-none max-w-2xl text-sm text-slate-200">
                         ${escapeHtml(query)}
+                    </div>
+                    <div class="h-8 w-8 rounded-lg bg-gunesGold/20 border border-gunesGold/40 flex items-center justify-center text-gunesGold shrink-0 font-cyber text-xs font-bold">
+                        YC
                     </div>
                 </div>
             `;
             input.value = '';
-            chatBox.scrollTop = chatBox.scrollHeight;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
 
             setTimeout(() => {
-                let reply = "GüneşAI: Komut işlendi ve sisteme başarıyla yansıtıldı Kurucum.";
+                let aiReply = "GüneşAI Destek Yanıtı: Sorunuz ve talebiniz analiz edildi. GüneşCraft alt yapısı için en doğru çözüm yolu uygulanmıştır.";
                 if(query.toLowerCase().includes('skript') || query.toLowerCase().includes('kod')) {
-                    reply = "Skript Örneği:\n```skript\non join:\n    broadcast \"&6GüneşCraft &e%player% katıldı!\"\n```";
+                    aiReply = "İşte GüneşCraft için özel hazırladığım skript kodu:\n\n```skript\non join:\n    set join message to \"&6[GüneşCraft] &e%player% §asunucuya katıldı! Hoş geldin.\"\n```\nBu kodu `scripts/welcome.sk` olarak kaydedebilirsin Kurucum!";
+                } else if(query.toLowerCase().includes('nasıl') || query.toLowerCase().includes('yardım') || query.toLowerCase().includes('destek')) {
+                    aiReply = "Destek talebiniz incelendi Kurucum. Bu konuda Towny veya EssentialsX ayarlarından gerekli yetkilendirmeleri kontrol edebilirsiniz.";
                 }
-                chatBox.innerHTML += `
-                    <div class="flex items-start gap-2">
-                        <div class="h-6 w-6 rounded bg-gunesNeon/20 border border-gunesNeon/40 flex items-center justify-center text-gunesNeon shrink-0 text-[10px]">
-                            <i class="fa-solid fa-robot"></i>
+
+                chatMessages.innerHTML += `
+                    <div class="flex items-start gap-3">
+                        <div class="h-8 w-8 rounded-lg bg-gunesNeon/20 border border-gunesNeon/40 flex items-center justify-center text-gunesNeon shrink-0">
+                            <i class="fa-solid fa-robot text-xs"></i>
                         </div>
-                        <div class="bg-slate-800/80 border border-gunesNeon/20 p-2.5 rounded-xl rounded-tl-none text-slate-200 whitespace-pre-wrap">
-                            ${reply}
+                        <div class="bg-slate-800/70 border border-gunesNeon/20 p-4 rounded-2xl rounded-tl-none max-w-2xl text-sm text-slate-200 whitespace-pre-wrap">
+                            ${aiReply}
                         </div>
                     </div>
                 `;
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }, 600);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 800);
         }
 
-        function handlePopKey(e) {
-            if(e.key === 'Enter') sendPopAI();
+        function handleAIKey(e) {
+            if(e.key === 'Enter') sendAIMessage();
         }
 
-        function executePopAdmin() {
-            const player = document.getElementById('pop-player').value.trim();
-            const action = document.getElementById('pop-action').value.toUpperCase();
-            if(!player) {
-                alert("Lütfen oyuncu adı girin!");
-                return;
-            }
-            alert(`Admin İşlemi: ${player} adlı oyuncuya ${action} uygulandı.`);
-            document.getElementById('pop-player').value = '';
+        function executeConsoleCommand() {
+            const input = document.getElementById('console-input');
+            const consoleOut = document.getElementById('console-output');
+            const cmd = input.value.trim();
+            if(!cmd) return;
+
+            let timeStr = new Date().toLocaleTimeString();
+            consoleOut.innerHTML += `<div class="text-white">>[${timeStr}] .YSFCNGNS_1950 issued server command: ${escapeHtml(cmd)}</div>`;
+            consoleOut.innerHTML += `<div>[${timeStr}] [Server thread/INFO]: Komut başarıyla uygulandı.</div>`;
+            input.value = '';
+            consoleOut.scrollTop = consoleOut.scrollHeight;
         }
 
-        function popQuickCmd(msg) {
-            alert("GüneşCraft: " + msg);
+        function handleConsoleKey(e) {
+            if(e.key === 'Enter') executeConsoleCommand();
+        }
+
+        function clearConsole() {
+            document.getElementById('console-output').innerHTML = '<div>Konsol temizlendi.</div>';
         }
 
         function escapeHtml(text) {
