@@ -78,6 +78,10 @@ section{padding:60px 0}
 }
 .nav-inner{min-height:65px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .logo{display:flex;align-items:center;gap:9px;font-family:Orbitron,sans-serif;font-weight:900;font-size:14px}
+.logo-img{
+  width:35px;height:35px;border-radius:10px;object-fit:cover;
+  box-shadow:0 4px 18px #ff9d2733;border:1px solid #ffe7a677;
+}
 .logo-icon{
   width:35px;height:35px;display:grid;place-items:center;border-radius:10px;
   background:linear-gradient(140deg,#ffd36a,#ff762b);color:#211305;
@@ -89,12 +93,6 @@ section{padding:60px 0}
 .nav-links a:hover{color:var(--gold)}
 .nav-actions{display:flex;align-items:center;gap:8px}
 .mobile-toggle{display:none;background:none;border:0;color:white;font-size:20px;padding:4px}
-
-.top-round-logo{
-  width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
-  background:linear-gradient(135deg,#ffb52e,#ff642d);color:#17110a;
-  font-size:14px;box-shadow:0 0 12px #ff9d2744;border:1px solid #ffe7a677;
-}
 
 .online-badge{
   display:flex;align-items:center;gap:5px;padding:5px 9px;
@@ -293,6 +291,17 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 }
 .socials a:hover{color:var(--gold);border-color:#ffb52e55;transform:translateY(-2px)}
 
+/* FLOATING SUPPORT WIDGET */
+.support-widget{
+  position:fixed;bottom:20px;right:20px;z-index:1500;
+}
+.support-btn{
+  width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#ffb52e,#ff642d);
+  color:#17110a;border:0;font-size:20px;box-shadow:0 6px 20px rgba(255,154,39,0.4);
+  display:grid;place-items:center;transition:.25s;cursor:pointer;
+}
+.support-btn:hover{transform:scale(1.08)}
+
 /* MODALS */
 .modal-backdrop{
   position:fixed;inset:0;z-index:2000;background:#000b;backdrop-filter:blur(8px);
@@ -326,7 +335,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
   width:max-content;max-width:92%;text-align:center;
 }
 .toast.show{opacity:1;transform:translate(-50%,0)}
-.admin-panel{width:min(820px,100%)}
+.admin-panel{width:min(860px,100%)}
 .admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .admin-list{margin-top:12px;display:grid;gap:6px}
 .admin-item{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#ffffff06;padding:8px;border-radius:7px;border:1px solid var(--border);font-size:10px}
@@ -337,8 +346,9 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 .auth-tabs{display:flex;gap:5px;margin-bottom:12px;background:#ffffff05;padding:3px;border-radius:8px;border:1px solid var(--border)}
 .auth-tab{flex:1;padding:6px;text-align:center;border-radius:6px;border:0;background:transparent;color:var(--muted);font-size:10px;font-weight:700}
 .auth-tab.active{background:#ffb52e18;color:var(--gold)}
+.ticket-box{background:#0d0d15;border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:8px;font-size:11px}
 
-/* BAKIM MODU EKRANI STİLİ */
+/* BAKIM MODU EKRANI */
 #maintenanceScreen {
   position: fixed; inset: 0; z-index: 99999;
   background: #080C14; display: flex; align-items: center; justify-content: center;
@@ -354,22 +364,22 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 </head>
 <body>
 
-<!-- BAKIM MODU EKRANI (Eğer bakım aktifse ve kullanıcı admin değilse görünür) -->
+<!-- BAKIM MODU EKRANI -->
 <div id="maintenanceScreen" class="hidden">
   <div class="maintenance-card">
     <i class="fa-solid fa-triangle-exclamation"></i>
     <h1 style="font-family:Orbitron,sans-serif; font-size:22px; margin-bottom:10px; color:var(--gold);">SİTEDE BAKIM VAR</h1>
     <p class="muted" style="font-size:12px; line-height:1.6; margin-bottom:20px;">
-      GüneşCraft Network şu anda daha iyi bir deneyim sunabilmek için bakım modundadır. Çok yakında buradayız!
+      GüneşCraft Network şu anda bakım modundadır. Yönetici olarak giriş yaparak siteye erişebilirsiniz.
     </p>
-    <button class="btn btn-primary" onclick="openLogin()"><i class="fa-solid fa-user-shield"></i> Yönetici Olarak Giriş Yap</button>
+    <button class="btn btn-primary" onclick="openLogin()"><i class="fa-solid fa-user-shield"></i> Yönetici / Admin Girişi Yap</button>
   </div>
 </div>
 
 <header class="navbar">
   <div class="container nav-inner">
     <a href="#anasayfa" class="logo">
-      <span class="logo-icon"><i class="fa-solid fa-sun"></i></span>
+      <img src="logo.png" class="logo-img" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-icon',innerHTML:'<i class=\'fa-solid fa-sun\'></i>'}))" alt="GüneşCraft Logo">
       <span>GÜNEŞCRAFT<small>NETWORK</small></span>
     </a>
     <nav class="nav-links" id="navLinks">
@@ -388,8 +398,6 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
       <div id="userProfileArea" style="display:flex;align-items:center;gap:6px">
         <button class="btn btn-primary" onclick="openLogin()"><i class="fa-solid fa-user"></i> Giriş Yap</button>
       </div>
-
-      <div class="top-round-logo" title="GüneşCraft Network"><i class="fa-solid fa-sun"></i></div>
 
       <button class="mobile-toggle" onclick="toggleMenu()" aria-label="Menüyü aç"><i class="fa-solid fa-bars"></i></button>
     </div>
@@ -485,7 +493,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
     <div class="section-head">
       <div class="eyebrow">Gücünü yükselt</div>
       <h2 class="section-title">GÜNEŞCRAFT <span class="gradient">MAĞAZA</span></h2>
-      <p class="section-desc">Spawnerlar, VIP paketleri ve daha fazlası burada.</p>
+      <p class="section-desc">Shopier güvencesiyle spawnerlar, VIP paketleri ve daha fazlası.</p>
     </div>
     <div class="store-toolbar">
       <div class="category-list" id="categoryList">
@@ -538,9 +546,9 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
         <p>Sunucu için hazırlanan VIP seçeneklerini mağazadan keşfet.</p>
       </div>
       <div class="feature">
-        <div class="feature-icon"><i class="fa-solid fa-bullhorn"></i></div>
-        <h3>Güncel Duyurular</h3>
-        <p>Etkinlikleri ve sunucuyla ilgili yenilikleri duyurular bölümünden takip et.</p>
+        <div class="feature-icon"><i class="fa-solid fa-headset"></i></div>
+        <h3>Canlı Destek & Şikayet</h3>
+        <p>Sağ alttaki destek butonundan şikayet ve taleplerini anında ilet.</p>
       </div>
     </div>
   </div>
@@ -551,7 +559,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
     <div class="section-head">
       <div class="eyebrow">Gelişmeleri takip et</div>
       <h2 class="section-title">SON <span class="gradient">DUYURULAR</span></h2>
-      <p class="section-desc">GüneşCraft dünyasındaki gelişmeler.</p>
+      <p class="section-desc">GüneşCraft dünyasındaki gelişmeler (Detay için tıkla).</p>
     </div>
     <div class="news-grid" id="newsGrid"></div>
   </div>
@@ -569,10 +577,15 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 </section>
 </main>
 
+<!-- SAĞ ALT DESTEK WIDGET -->
+<div class="support-widget">
+  <button class="support-btn" onclick="openSupportModal()" title="Canlı Destek & Şikayet" aria-label="Canlı Destek"><i class="fa-solid fa-headset"></i></button>
+</div>
+
 <footer>
   <div class="container footer-inner">
     <a href="#anasayfa" class="logo">
-      <span class="logo-icon"><i class="fa-solid fa-sun"></i></span>
+      <img src="logo.png" class="logo-img" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-icon',innerHTML:'<i class=\'fa-solid fa-sun\'></i>'}))" alt="GüneşCraft Logo">
       <span>GÜNEŞCRAFT<small>NETWORK</small></span>
     </a>
     <p>© <span id="year"></span> GüneşCraft Network. Tüm hakları saklıdır.</p>
@@ -584,17 +597,18 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
   </div>
 </footer>
 
-<!-- MODALLAR -->
+<!-- ÜRÜN & SHOPIER MODALI -->
 <div class="modal-backdrop" id="productModal" onclick="backdropClose(event,'productModal')">
   <div class="modal">
     <div class="modal-header">
-      <h2>ÜRÜN DETAYI</h2>
+      <h2>SHOPIER İLE SATIN AL</h2>
       <button class="close-modal" onclick="closeModal('productModal')">&times;</button>
     </div>
     <div id="productModalContent"></div>
   </div>
 </div>
 
+<!-- DUYURU DETAY MODALI -->
 <div class="modal-backdrop" id="newsModal" onclick="backdropClose(event,'newsModal')">
   <div class="modal">
     <div class="modal-header">
@@ -605,6 +619,35 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
   </div>
 </div>
 
+<!-- CANLI DESTEK / ŞİKAYET MODALI -->
+<div class="modal-backdrop" id="supportModal" onclick="backdropClose(event,'supportModal')">
+  <div class="modal">
+    <div class="modal-header">
+      <h2><i class="fa-solid fa-headset gold"></i> DESTEK & ŞİKAYET TALEBİ</h2>
+      <button class="close-modal" onclick="closeModal('supportModal')">&times;</button>
+    </div>
+    <div id="supportModalBody">
+      <p class="muted" style="font-size:11px; margin-bottom:12px;">Sorunlarını, önerilerini veya şikayetlerini doğrudan yönetim ekibimize ilet.</p>
+      <form onsubmit="submitTicket(event)">
+        <div class="form-group">
+          <label for="ticketName">Minecraft Kullanıcı Adın</label>
+          <input class="form-control" id="ticketName" placeholder="Steve" required>
+        </div>
+        <div class="form-group">
+          <label for="ticketSubject">Konu / Kategori</label>
+          <input class="form-control" id="ticketSubject" placeholder="Örn: Ödeme Bildirimi / Oyuncu Şikayeti" required>
+        </div>
+        <div class="form-group">
+          <label for="ticketMessage">Mesajın / Şikayet Detayı</label>
+          <textarea class="form-control" id="ticketMessage" rows="3" placeholder="Detayları buraya yaz..." required></textarea>
+        </div>
+        <button class="btn btn-primary" style="width:100%"><i class="fa-solid fa-paper-plane"></i> Talebi Gönder</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- CANLI HARİTA MODALI -->
 <div class="modal-backdrop" id="mapModal" onclick="backdropClose(event,'mapModal')">
   <div class="modal" style="width:min(880px, 95%); max-height:92vh;">
     <div class="modal-header">
@@ -620,6 +663,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
   </div>
 </div>
 
+<!-- GİRİŞ / KAYIT / ADMIN MODALI -->
 <div class="modal-backdrop" id="loginModal" onclick="backdropClose(event,'loginModal')">
   <div class="modal">
     <div class="modal-header">
@@ -675,6 +719,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
   </div>
 </div>
 
+<!-- YÖNETİCİ PANELİ MODALI -->
 <div class="modal-backdrop" id="adminModal" onclick="backdropClose(event,'adminModal')">
   <div class="modal admin-panel">
     <div class="modal-header">
@@ -682,12 +727,14 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
       <button class="close-modal" onclick="closeModal('adminModal')">&times;</button>
     </div>
     <div class="admin-tabs">
-      <button class="admin-tab active" onclick="adminTab('products',this)">Ürünler</button>
+      <button class="admin-tab active" onclick="adminTab('products',this)">Ürünler & Shopier</button>
+      <button class="admin-tab" onclick="adminTab('tickets',this)">Destek & Şikayetler <span id="ticketBadge" style="background:#ff4545;color:white;padding:1px 5px;border-radius:10px;font-size:9px">0</span></button>
       <button class="admin-tab" onclick="adminTab('news',this)">Duyurular</button>
       <button class="admin-tab" onclick="adminTab('settings',this)">Site Ayarları & Bakım</button>
     </div>
+    
     <div id="adminProducts">
-      <h3 style="font-size:12px;margin-bottom:10px">Yeni Ürün Ekle</h3>
+      <h3 style="font-size:12px;margin-bottom:10px">Yeni Ürün Ekle ve Shopier Linki Bağla</h3>
       <form onsubmit="addProduct(event)">
         <div class="admin-grid">
           <div class="form-group"><label for="newName">Ürün Adı</label><input class="form-control" id="newName" placeholder="VIP Paketi" required></div>
@@ -709,23 +756,28 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
               <option value="vip_diamond">💎 VIP Elmas Kask</option>
               <option value="diamond">💎 Elmas Paketi</option>
               <option value="key">🗝️ Kasa Anahtarı</option>
-              <option value="custom">🌐 Özel URL Kullan</option>
             </select>
           </div>
           <div class="form-group" style="grid-column: 1 / -1;">
-            <label for="newImage">Özel Görsel URL'si (Opsiyonel)</label>
-            <input class="form-control" id="newImage" placeholder="https://...">
+            <label for="newShopier">Shopier Ödeme Linki</label>
+            <input class="form-control" id="newShopier" placeholder="https://www.shopier.com/ShowProductNew/products.php?id=..." required>
           </div>
           <div class="form-group" style="grid-column: 1 / -1;">
             <label for="newDescription">Açıklama</label>
-            <input class="form-control" id="newDescription" value="GüneşCraft mağaza ürünü.">
+            <input class="form-control" id="newDescription" value="GüneşCraft Shopier mağaza ürünü.">
           </div>
         </div>
-        <button class="btn btn-primary" style="margin-top:3px;"><i class="fa-solid fa-plus"></i> Ürünü Ekle</button>
+        <button class="btn btn-primary" style="margin-top:3px;"><i class="fa-solid fa-plus"></i> Ürünü Kaydet</button>
       </form>
       <div class="admin-list" id="adminProductList"></div>
     </div>
     
+    <!-- DESTEK / ŞİKAYET TALEPLERİ -->
+    <div id="adminTickets" class="hidden">
+      <h3 style="font-size:12px;margin-bottom:10px">Gelen Oyuncu Destek & Şikayet Talepleri</h3>
+      <div id="adminTicketList"></div>
+    </div>
+
     <div id="adminNews" class="hidden">
       <h3 style="font-size:12px;margin-bottom:10px">Yeni Duyuru Ekle</h3>
       <form onsubmit="addNews(event)">
@@ -768,27 +820,20 @@ const BOX_ASSETS = {
 };
 
 const DEFAULT_PRODUCTS = [
-  {id:1, name:"Zombi Spawner", category:"spawner", price:149, description:"Otomatik zombi ve XP kasma spawnerı.", boxType:"spawner", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_1"},
-  {id:2, name:"İskelet Spawner", category:"spawner", price:179, description:"Kemik ve ok stoklamak için harika spawner.", boxType:"spawner", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_2"},
-  {id:3, name:"Örümcek Spawner", category:"spawner", price:169, description:"İp ve örümcek gözü üretimi için birebir.", boxType:"spawner", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_3"},
-  {id:4, name:"İnek Spawner", category:"spawner", price:129, description:"Sınırsız deri ve biftek üretimi sağlar.", boxType:"spawner", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_4"},
-  {id:5, name:"Creeper Spawner", category:"spawner", price:199, description:"TNT ve barut farmı kurmak için ideal.", boxType:"spawner", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_5"},
-  {id:6, name:"Blaze Spawner", category:"spawner", price:229, description:"İksir yapımı için blaze çubuğu kasın.", boxType:"spawner", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_6"},
-  {id:7, name:"VIP Paketi", category:"vip", price:99, description:"Özel komutlar, uçuş yetkisi ve ekstra ev hakkı.", boxType:"vip_gold", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_7"},
-  {id:8, name:"VIP+ Paketi", category:"vip", price:199, description:"Gelişmiş kitler ve renkli sohbet ayrıcalığı.", boxType:"vip_diamond", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_8"},
-  {id:9, name:"MVP Paketi", category:"vip", price:299, description:"En üst düzey yetkiler ve sınırsız özellikler.", boxType:"vip_diamond", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_9"},
-  {id:10, name:"Özel Kasa", category:"item", price:49, description:"İçerisinden nadir Minecraft eşyaları çıkar.", boxType:"chest", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_10"},
-  {id:11, name:"Anahtar Paketi", category:"item", price:39, description:"Sunucudaki gizli kasaları açmak için 5x Anahtar.", boxType:"key", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_11"},
-  {id:12, name:"Elmas Paketi", category:"item", price:79, description:"Oyun içi ekonomide yükselmek için 64x Elmas.", boxType:"diamond", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_12"}
+  {id:1, name:"Zombi Spawner", category:"spawner", price:149, description:"Otomatik zombi ve XP kasma spawnerı.", boxType:"spawner", shopierLink:"https://www.shopier.com/"},
+  {id:2, name:"İskelet Spawner", category:"spawner", price:179, description:"Kemik ve ok stoklamak için harika spawner.", boxType:"spawner", shopierLink:"https://www.shopier.com/"},
+  {id:3, name:"VIP Paketi", category:"vip", price:99, description:"Özel komutlar, uçuş yetkisi ve ekstra ev hakkı.", boxType:"vip_gold", shopierLink:"https://www.shopier.com/"},
+  {id:4, name:"Özel Kasa", category:"item", price:49, description:"İçerisinden nadir Minecraft eşyaları çıkar.", boxType:"chest", shopierLink:"https://www.shopier.com/"}
 ];
 
 const DEFAULT_NEWS = [
-  {id:1, title:"1. Sezon Açıldı!", text:"GüneşCraft Sezon 1 kapılarını oyunculara açtı. Hemen katıl ve Towny dünyasında kendi krallığını kurmaya başla!", emoji:"🎉", date:"Bugün"},
+  {id:1, title:"1. Sezon Açıldı!", text:"GüneşCraft Sezon 1 kapılarını oyunculara açtı. Hemen katıl ve krallığını kurmaya başla!", emoji:"🎉", date:"Bugün"},
   {id:2, title:"Yeni Spawner Sistemi", text:"Marketimize yeni nesil spawner çeşitleri ve VIP kitleri eklendi. Avantajlı fiyatları kaçırma.", emoji:"⚡", date:"Dün"}
 ];
 
 let products = JSON.parse(localStorage.getItem('gc_products')) || DEFAULT_PRODUCTS;
 let newsList = JSON.parse(localStorage.getItem('gc_news')) || DEFAULT_NEWS;
+let tickets = JSON.parse(localStorage.getItem('gc_tickets')) || [];
 let registeredUsers = JSON.parse(localStorage.getItem('gc_users')) || [];
 let currentUser = JSON.parse(localStorage.getItem('gc_current_user')) || null;
 let isMaintenance = JSON.parse(localStorage.getItem('gc_maintenance')) || false;
@@ -796,7 +841,7 @@ let currentCategory = 'all';
 
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Bakım modunu kontrol et ve uygula
+// Bakım modunu kontrol et
 function checkMaintenance() {
   const mScreen = document.getElementById('maintenanceScreen');
   if (isMaintenance && (!currentUser || !currentUser.isAdmin)) {
@@ -813,11 +858,9 @@ function fetchServerStatus() {
     .then(data => {
       const headerCount = document.getElementById('headerOnline');
       const statusCount = document.getElementById('statusOnline');
-      
       if (data.online) {
         let players = data.players.online;
         let maxPlayers = data.players.max;
-        
         if(headerCount) headerCount.textContent = players;
         if(statusCount) statusCount.textContent = players + "/" + maxPlayers + " Oyuncu";
       } else {
@@ -838,6 +881,33 @@ function openMapModal(title){
   document.getElementById('mapModalTitle').innerHTML = `<i class="fa-solid fa-earth-europe gold"></i> ${title}`;
   document.getElementById('mapIframe').src = "about:blank"; 
   document.getElementById('mapModal').classList.add('show');
+}
+
+function openSupportModal(){
+  document.getElementById('supportModal').classList.add('show');
+}
+
+function submitTicket(e){
+  e.preventDefault();
+  const name = document.getElementById('ticketName').value;
+  const subject = document.getElementById('ticketSubject').value;
+  const message = document.getElementById('ticketMessage').value;
+  
+  const newT = { id: Date.now(), name, subject, message, date: new Date().toLocaleTimeString() };
+  tickets.unshift(newT);
+  localStorage.setItem('gc_tickets', JSON.stringify(tickets));
+  
+  closeModal('supportModal');
+  showToast("Destek ve şikayet talebin yöneticiye iletildi!");
+  document.getElementById('ticketName').value = '';
+  document.getElementById('ticketSubject').value = '';
+  document.getElementById('ticketMessage').value = '';
+  updateTicketBadge();
+}
+
+function updateTicketBadge(){
+  const badge = document.getElementById('ticketBadge');
+  if(badge) badge.textContent = tickets.length;
 }
 
 function toggleMenu(){
@@ -865,9 +935,6 @@ function filterCategory(cat, btn){
 }
 
 function getProductArt(p){
-  if(p.image && p.image.trim() !== '') {
-    return `<img src="${p.image}" alt="${p.name}">`;
-  }
   return BOX_ASSETS[p.boxType] || BOX_ASSETS.chest;
 }
 
@@ -901,7 +968,7 @@ function renderProducts(){
         <p>${p.description}</p>
         <div class="product-bottom">
           <span class="price">${p.price} ₺</span>
-          <button class="buy-btn" onclick="openProduct(${p.id})">İncele</button>
+          <button class="buy-btn" onclick="openProduct(${p.id})">Satın Al</button>
         </div>
       </div>
     </div>
@@ -947,7 +1014,7 @@ function openProduct(id){
       <p>${p.description}</p>
       <div class="price">${p.price} ₺</div>
       <a href="${shopierUrl}" target="_blank" class="btn btn-primary" style="width:100%; text-decoration:none; display:inline-flex; justify-content:center; align-items:center; gap:6px;">
-        <i class="fa-solid fa-cart-shopping"></i> Shopier ile Satın Al
+        <i class="fa-solid fa-cart-shopping"></i> Shopier ile Güvenli Öde
       </a>
     </div>
   `;
@@ -1076,9 +1143,12 @@ function adminTab(tab, btn){
   document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('adminProducts').classList.add('hidden');
+  document.getElementById('adminTickets').classList.add('hidden');
   document.getElementById('adminNews').classList.add('hidden');
   document.getElementById('adminSettings').classList.add('hidden');
+  
   if(tab === 'products') document.getElementById('adminProducts').classList.remove('hidden');
+  if(tab === 'tickets') document.getElementById('adminTickets').classList.remove('hidden');
   if(tab === 'news') document.getElementById('adminNews').classList.remove('hidden');
   if(tab === 'settings') document.getElementById('adminSettings').classList.remove('hidden');
 }
@@ -1092,15 +1162,14 @@ function addProduct(e){
     price: parseFloat(document.getElementById('newPrice').value),
     category: document.getElementById('newCategory').value,
     boxType: boxTypeVal,
-    image: boxTypeVal === 'custom' ? document.getElementById('newImage').value : '',
-    description: document.getElementById('newDescription').value,
-    shopierLink: "https://www.shopier.com/"
+    shopierLink: document.getElementById('newShopier').value,
+    description: document.getElementById('newDescription').value
   };
   products.push(newP);
   localStorage.setItem('gc_products', JSON.stringify(products));
   renderProducts();
   renderAdminLists();
-  showToast("Yeni ürün eklendi.");
+  showToast("Ürün ve Shopier bağlantısı eklendi.");
 }
 
 function deleteProduct(id){
@@ -1111,6 +1180,14 @@ function deleteProduct(id){
   showToast("Ürün silindi.");
 }
 
+function resolveTicket(id){
+  tickets = tickets.filter(t => t.id !== id);
+  localStorage.setItem('gc_tickets', JSON.stringify(tickets));
+  renderAdminLists();
+  updateTicketBadge();
+  showToast("Destek talebi kapatıldı.");
+}
+
 function addNews(e){
   e.preventDefault();
   const newN = {
@@ -1118,7 +1195,7 @@ function addNews(e){
     title: document.getElementById('newsTitle').value,
     text: document.getElementById('newsText').value,
     emoji: document.getElementById('newsEmoji').value || '📢',
-    date: 'Bugün'
+    date: 'Şimdi'
   };
   newsList.unshift(newN);
   localStorage.setItem('gc_news', JSON.stringify(newsList));
@@ -1138,17 +1215,36 @@ function deleteNews(id){
 function renderAdminLists(){
   document.getElementById('adminProductList').innerHTML = products.map(p => `
     <div class="admin-item">
-      <span><strong>${p.name}</strong> (${p.price} ₺) - <small class="gold">${p.category}</small></span>
+      <span><strong>${p.name}</strong> (${p.price} ₺) - <a href="${p.shopierLink}" target="_blank" style="color:var(--gold)">Shopier Bağlantısı</a></span>
       <button class="btn btn-danger" onclick="deleteProduct(${p.id})">Sil</button>
     </div>
   `).join('');
   
+  const ticketContainer = document.getElementById('adminTicketList');
+  if(tickets.length === 0){
+    ticketContainer.innerHTML = `<p class="muted" style="font-size:11px">Henüz açık destek ya da şikayet talebi bulunmuyor.</p>`;
+  } else {
+    ticketContainer.innerHTML = tickets.map(t => `
+      <div class="ticket-box">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+          <strong><i class="fa-solid fa-user gold"></i> ${t.name}</strong>
+          <span class="muted" style="font-size:9px">${t.date}</span>
+        </div>
+        <div style="color:var(--gold);font-weight:600;margin-bottom:2px">Konu: ${t.subject}</div>
+        <p style="color:#aaaabd;margin-bottom:8px">${t.message}</p>
+        <button class="btn btn-danger" onclick="resolveTicket(${t.id})"><i class="fa-solid fa-check"></i> Talebi Kapat / Çözüldü İşaretle</button>
+      </div>
+    `).join('');
+  }
+
   document.getElementById('adminNewsList').innerHTML = newsList.map(n => `
     <div class="admin-item">
       <span>${n.emoji} <strong>${n.title}</strong></span>
       <button class="btn btn-danger" onclick="deleteNews(${n.id})">Sil</button>
     </div>
   `).join('');
+  
+  updateTicketBadge();
 }
 
 function saveSettings(e){
@@ -1159,14 +1255,15 @@ function saveSettings(e){
   const mVal = document.getElementById('settingMaintenance').value === 'true';
   isMaintenance = mVal;
   localStorage.setItem('gc_maintenance', JSON.stringify(isMaintenance));
-  
   checkMaintenance();
-  showToast("Ayarlar ve bakım modu başarıyla kaydedildi!");
+
+  showToast("Ayarlar ve bakım modu kaydedildi!");
   closeModal('adminModal');
 }
 
 renderProducts();
 renderNews();
+updateTicketBadge();
 updateUserUI();
 </script>
 </body>
