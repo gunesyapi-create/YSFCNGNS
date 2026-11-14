@@ -292,6 +292,17 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 }
 .socials a:hover{color:var(--gold);border-color:#ffb52e55;transform:translateY(-2px)}
 
+/* FLOATING SUPPORT WIDGET */
+.support-widget{
+  position:fixed;bottom:20px;right:20px;z-index:1500;
+}
+.support-btn{
+  width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#ffb52e,#ff642d);
+  color:#17110a;border:0;font-size:20px;box-shadow:0 6px 20px rgba(255,154,39,0.4);
+  display:grid;place-items:center;transition:.25s;cursor:pointer;
+}
+.support-btn:hover{transform:scale(1.08)}
+
 /* MODALS */
 .modal-backdrop{
   position:fixed;inset:0;z-index:2000;background:#000b;backdrop-filter:blur(8px);
@@ -336,6 +347,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 .auth-tabs{display:flex;gap:5px;margin-bottom:12px;background:#ffffff05;padding:3px;border-radius:8px;border:1px solid var(--border)}
 .auth-tab{flex:1;padding:6px;text-align:center;border-radius:6px;border:0;background:transparent;color:var(--muted);font-size:10px;font-weight:700}
 .auth-tab.active{background:#ffb52e18;color:var(--gold)}
+.ticket-box{background:#0d0d15;border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:8px;font-size:11px}
 </style>
 </head>
 <body>
@@ -512,9 +524,9 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
         <p>Sunucu için hazırlanan VIP seçeneklerini mağazadan keşfet.</p>
       </div>
       <div class="feature">
-        <div class="feature-icon"><i class="fa-solid fa-bullhorn"></i></div>
-        <h3>Güncel Duyurular</h3>
-        <p>Etkinlikleri ve sunucuyla ilgili yenilikleri duyurular bölümünden takip et.</p>
+        <div class="feature-icon"><i class="fa-solid fa-headset"></i></div>
+        <h3>Canlı Destek & Şikayet</h3>
+        <p>Sağ alttaki destek butonundan şikayet ve taleplerini anında ilet.</p>
       </div>
     </div>
   </div>
@@ -543,13 +555,18 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 </section>
 </main>
 
+<!-- SAĞ ALT DESTEK WIDGET -->
+<div class="support-widget">
+  <button class="support-btn" onclick="openSupportModal()" title="Canlı Destek & Şikayet" aria-label="Canlı Destek"><i class="fa-solid fa-headset"></i></button>
+</div>
+
 <footer>
   <div class="container footer-inner">
     <a href="#anasayfa" class="logo">
       <span class="logo-icon"><i class="fa-solid fa-sun"></i></span>
       <span>GÜNEŞCRAFT<small>NETWORK</small></span>
     </a>
-    <p>© <span id="year"></span> GüneşCraft Network. Tüm hakları saklıdır.</p>
+    <p>©️ <span id="year"></span> GüneşCraft Network. Tüm hakları saklıdır.</p>
     <div class="socials">
       <a href="https://instagram.com/güneşcraftofficial" target="_blank" title="Instagram" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
       <a href="https://youtube.com/@güneşcraftofficial" target="_blank" title="YouTube" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
@@ -565,6 +582,34 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
       <button class="close-modal" onclick="closeModal('productModal')">&times;</button>
     </div>
     <div id="productModalContent"></div>
+  </div>
+</div>
+
+<!-- CANLI DESTEK / ŞİKAYET MODALI -->
+<div class="modal-backdrop" id="supportModal" onclick="backdropClose(event,'supportModal')">
+  <div class="modal">
+    <div class="modal-header">
+      <h2><i class="fa-solid fa-headset gold"></i> DESTEK & ŞİKAYET TALEBİ</h2>
+      <button class="close-modal" onclick="closeModal('supportModal')">&times;</button>
+    </div>
+    <div id="supportModalBody">
+      <p class="muted" style="font-size:11px; margin-bottom:12px;">Sorunlarını, önerilerini veya şikayetlerini doğrudan yönetim ekibimize ilet.</p>
+      <form onsubmit="submitTicket(event)">
+        <div class="form-group">
+          <label for="ticketName">Minecraft Kullanıcı Adın</label>
+          <input class="form-control" id="ticketName" placeholder="Steve" required>
+        </div>
+        <div class="form-group">
+          <label for="ticketSubject">Konu / Kategori</label>
+          <input class="form-control" id="ticketSubject" placeholder="Örn: Ödeme Bildirimi / Oyuncu Şikayeti" required>
+        </div>
+        <div class="form-group">
+          <label for="ticketMessage">Mesajın / Şikayet Detayı</label>
+          <textarea class="form-control" id="ticketMessage" rows="3" placeholder="Detayları buraya yaz..." required></textarea>
+        </div>
+        <button class="btn btn-primary" style="width:100%"><i class="fa-solid fa-paper-plane"></i> Talebi Gönder</button>
+      </form>
+    </div>
   </div>
 </div>
 
@@ -646,6 +691,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
     </div>
     <div class="admin-tabs">
       <button class="admin-tab active" onclick="adminTab('products',this)">Ürünler</button>
+      <button class="admin-tab" onclick="adminTab('tickets',this)">Destek & Şikayetler <span id="ticketBadge" style="background:#ff4545;color:white;padding:1px 5px;border-radius:10px;font-size:9px">0</span></button>
       <button class="admin-tab" onclick="adminTab('news',this)">Duyurular</button>
       <button class="admin-tab" onclick="adminTab('settings',this)">Site Ayarları</button>
     </div>
@@ -689,6 +735,12 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
       <div class="admin-list" id="adminProductList"></div>
     </div>
     
+    <!-- DESTEK / ŞİKAYET TALEPLERİ SEKMESİ -->
+    <div id="adminTickets" class="hidden">
+      <h3 style="font-size:12px;margin-bottom:10px">Gelen Oyuncu Destek & Şikayet Talepleri</h3>
+      <div id="adminTicketList"></div>
+    </div>
+
     <div id="adminNews" class="hidden">
       <h3 style="font-size:12px;margin-bottom:10px">Yeni Duyuru Ekle</h3>
       <form onsubmit="addNews(event)">
@@ -745,6 +797,7 @@ const DEFAULT_NEWS = [
 
 let products = JSON.parse(localStorage.getItem('gc_products')) || DEFAULT_PRODUCTS;
 let newsList = JSON.parse(localStorage.getItem('gc_news')) || DEFAULT_NEWS;
+let tickets = JSON.parse(localStorage.getItem('gc_tickets')) || [];
 let registeredUsers = JSON.parse(localStorage.getItem('gc_users')) || [];
 let currentUser = JSON.parse(localStorage.getItem('gc_current_user')) || null;
 let currentCategory = 'all';
@@ -782,6 +835,33 @@ function openMapModal(title){
   document.getElementById('mapModalTitle').innerHTML = `<i class="fa-solid fa-earth-europe gold"></i> ${title}`;
   document.getElementById('mapIframe').src = "about:blank"; 
   document.getElementById('mapModal').classList.add('show');
+}
+
+function openSupportModal(){
+  document.getElementById('supportModal').classList.add('show');
+}
+
+function submitTicket(e){
+  e.preventDefault();
+  const name = document.getElementById('ticketName').value;
+  const subject = document.getElementById('ticketSubject').value;
+  const message = document.getElementById('ticketMessage').value;
+  
+  const newT = { id: Date.now(), name, subject, message, date: new Date().toLocaleTimeString() };
+  tickets.unshift(newT);
+  localStorage.setItem('gc_tickets', JSON.stringify(tickets));
+  
+  closeModal('supportModal');
+  showToast("Destek ve şikayet talebin yöneticiye iletildi!");
+  document.getElementById('ticketName').value = '';
+  document.getElementById('ticketSubject').value = '';
+  document.getElementById('ticketMessage').value = '';
+  updateTicketBadge();
+}
+
+function updateTicketBadge(){
+  const badge = document.getElementById('ticketBadge');
+  if(badge) badge.textContent = tickets.length;
 }
 
 function toggleMenu(){
@@ -1003,9 +1083,12 @@ function adminTab(tab, btn){
   document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('adminProducts').classList.add('hidden');
+  document.getElementById('adminTickets').classList.add('hidden');
   document.getElementById('adminNews').classList.add('hidden');
   document.getElementById('adminSettings').classList.add('hidden');
+  
   if(tab === 'products') document.getElementById('adminProducts').classList.remove('hidden');
+  if(tab === 'tickets') document.getElementById('adminTickets').classList.remove('hidden');
   if(tab === 'news') document.getElementById('adminNews').classList.remove('hidden');
   if(tab === 'settings') document.getElementById('adminSettings').classList.remove('hidden');
 }
@@ -1036,6 +1119,14 @@ function deleteProduct(id){
   renderProducts();
   renderAdminLists();
   showToast("Ürün silindi.");
+}
+
+function resolveTicket(id){
+  tickets = tickets.filter(t => t.id !== id);
+  localStorage.setItem('gc_tickets', JSON.stringify(tickets));
+  renderAdminLists();
+  updateTicketBadge();
+  showToast("Destek talebi kapatıldı.");
 }
 
 function addNews(e){
@@ -1070,12 +1161,31 @@ function renderAdminLists(){
     </div>
   `).join('');
   
+  const ticketContainer = document.getElementById('adminTicketList');
+  if(tickets.length === 0){
+    ticketContainer.innerHTML = `<p class="muted" style="font-size:11px">Henüz açık destek ya da şikayet talebi bulunmuyor.</p>`;
+  } else {
+    ticketContainer.innerHTML = tickets.map(t => `
+      <div class="ticket-box">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+          <strong><i class="fa-solid fa-user gold"></i> ${t.name}</strong>
+          <span class="muted" style="font-size:9px">${t.date}</span>
+        </div>
+        <div style="color:var(--gold);font-weight:600;margin-bottom:2px">Konu: ${t.subject}</div>
+        <p style="color:#aaaabd;margin-bottom:8px">${t.message}</p>
+        <button class="btn btn-danger" onclick="resolveTicket(${t.id})"><i class="fa-solid fa-check"></i> Talebi Kapat / Çözüldü İşaretle</button>
+      </div>
+    `).join('');
+  }
+
   document.getElementById('adminNewsList').innerHTML = newsList.map(n => `
     <div class="admin-item">
       <span>${n.emoji} <strong>${n.title}</strong></span>
       <button class="btn btn-danger" onclick="deleteNews(${n.id})">Sil</button>
     </div>
   `).join('');
+
+  updateTicketBadge();
 }
 
 function saveSettings(e){
@@ -1088,6 +1198,7 @@ function saveSettings(e){
 
 renderProducts();
 renderNews();
+updateTicketBadge();
 updateUserUI();
 </script>
 </body>
