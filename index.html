@@ -70,20 +70,22 @@ section{padding:60px 0}
   font-size:9px;font-weight:800;letter-spacing:.5px;
 }
 
-/* NAVIGATION */
+/* NAVBAR */
 .navbar{
   position:sticky;top:0;z-index:1000;
   background:rgba(11,11,18,.92);backdrop-filter:blur(18px);
   border-bottom:1px solid var(--border);
 }
 .nav-inner{min-height:65px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.nav-left{display:flex;align-items:center;gap:15px}
+.nav-left{display:flex;align-items:center;gap:15px;flex-wrap:wrap}
+
 .logo{display:flex;align-items:center;gap:9px;font-family:Orbitron,sans-serif;font-weight:900;font-size:14px}
 .logo-icon{
   width:35px;height:35px;display:grid;place-items:center;border-radius:10px;
   background:linear-gradient(140deg,#ffd36a,#ff762b);color:#211305;
-  font-size:16px;box-shadow:0 4px 18px #ff9d2733;
+  font-size:16px;box-shadow:0 4px 18px #ff9d2733;overflow:hidden;
 }
+.logo-icon img{width:100%;height:100%;object-fit:cover;}
 .logo small{display:block;color:var(--muted);font:700 8px Poppins,sans-serif;letter-spacing:2px;margin-top:1px}
 
 .nav-links{display:flex;align-items:center;gap:18px}
@@ -95,8 +97,9 @@ section{padding:60px 0}
 .top-round-logo{
   width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
   background:linear-gradient(135deg,#ffb52e,#ff642d);color:#17110a;
-  font-size:14px;box-shadow:0 0 12px #ff9d2744;border:1px solid #ffe7a677;
+  font-size:14px;box-shadow:0 0 12px #ff9d2744;border:1px solid #ffe7a677;overflow:hidden;
 }
+.top-round-logo img{width:100%;height:100%;object-fit:cover;}
 
 .online-badge{
   display:flex;align-items:center;gap:5px;padding:5px 9px;
@@ -309,7 +312,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
   border-radius:50%;border:2px solid #13131e;
 }
 
-/* DESTEK & ŞİKAYET FORM PENCERESİ */
+/* SAĞ ALT DESTEK & ŞİKAYET PANELİ */
 .support-modal {
   position:fixed;bottom:85px;right:20px;width:360px;max-width:92vw;
   background:#13131e;border:1px solid rgba(255,181,46,0.3);border-radius:16px;
@@ -375,15 +378,17 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 <header class="navbar">
   <div class="container nav-inner">
     <div class="nav-left">
-      <!-- SOL ÜST PROFİL / GİRİŞ ALANI -->
+      <!-- SOL ÜST LOGO (.png) VE PROFİL / GİRİŞ ALANI YAN YANA -->
+      <a href="#anasayfa" class="logo">
+        <span class="logo-icon">
+          <img src="logo.png" alt="GüneşCraft" onerror="this.onerror=null; this.parentNode.innerHTML='<i class=\'fa-solid fa-sun\'></i>';">
+        </span>
+        <span>GÜNEŞCRAFT<small>NETWORK</small></span>
+      </a>
+
       <div id="userProfileArea" style="display:flex;align-items:center;gap:6px">
         <button class="btn btn-primary" onclick="openLogin()"><i class="fa-solid fa-user"></i> Giriş Yap</button>
       </div>
-
-      <a href="#anasayfa" class="logo">
-        <span class="logo-icon"><i class="fa-solid fa-sun"></i></span>
-        <span>GÜNEŞCRAFT<small>NETWORK</small></span>
-      </a>
     </div>
 
     <nav class="nav-links" id="navLinks">
@@ -399,7 +404,9 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
         <span>Aktif: <strong id="headerOnline" class="gold">...</strong>/100</span>
       </div>
 
-      <div class="top-round-logo" title="GüneşCraft Network"><i class="fa-solid fa-sun"></i></div>
+      <div class="top-round-logo" title="GüneşCraft Network">
+        <img src="logo.png" alt="GüneşCraft" onerror="this.onerror=null; this.parentNode.innerHTML='<i class=\'fa-solid fa-sun\'></i>';">
+      </div>
 
       <button class="mobile-toggle" onclick="toggleMenu()" aria-label="Menüyü aç"><i class="fa-solid fa-bars"></i></button>
     </div>
@@ -578,7 +585,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
   </button>
 </div>
 
-<!-- SAĞ ALT NORMAL DESTEK & ŞİKAYET PENCERESİ -->
+<!-- SAĞ ALT NORMAL DESTEK & ŞİKAYET PANELİ (Yapay Zeka Kaldırıldı) -->
 <div class="support-modal" id="supportModal">
   <div class="support-header">
     <h3><i class="fa-solid fa-ticket gold"></i> Destek & Şikayet Bildir</h3>
@@ -604,7 +611,9 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 <footer>
   <div class="container footer-inner">
     <a href="#anasayfa" class="logo">
-      <span class="logo-icon"><i class="fa-solid fa-sun"></i></span>
+      <span class="logo-icon">
+        <img src="logo.png" alt="GüneşCraft" onerror="this.onerror=null; this.parentNode.innerHTML='<i class=\'fa-solid fa-sun\'></i>';">
+      </span>
       <span>GÜNEŞCRAFT<small>NETWORK</small></span>
     </a>
     <p>©️ <span id="year"></span> GüneşCraft Network. Tüm hakları saklıdır.</p>
@@ -1074,7 +1083,6 @@ function updateUserUI(){
         <button class="btn btn-danger" onclick="userLogout()" title="Çıkış Yap"><i class="fa-solid fa-power-off"></i></button>
       </div>
     `;
-    // Destek formundaki adı otomatik doldur
     const ticketNameInput = document.getElementById('ticketName');
     if(ticketNameInput) ticketNameInput.value = currentUser.username;
   } else {
