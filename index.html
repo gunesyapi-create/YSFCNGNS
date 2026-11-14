@@ -77,6 +77,7 @@ section{padding:60px 0}
   border-bottom:1px solid var(--border);
 }
 .nav-inner{min-height:65px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.nav-left{display:flex;align-items:center;gap:15px}
 .logo{display:flex;align-items:center;gap:9px;font-family:Orbitron,sans-serif;font-weight:900;font-size:14px}
 .logo-icon{
   width:35px;height:35px;display:grid;place-items:center;border-radius:10px;
@@ -84,6 +85,7 @@ section{padding:60px 0}
   font-size:16px;box-shadow:0 4px 18px #ff9d2733;
 }
 .logo small{display:block;color:var(--muted);font:700 8px Poppins,sans-serif;letter-spacing:2px;margin-top:1px}
+
 .nav-links{display:flex;align-items:center;gap:18px}
 .nav-links a{font-size:11px;font-weight:700;color:#b9b9c9;transition:.2s}
 .nav-links a:hover{color:var(--gold)}
@@ -191,7 +193,7 @@ section{padding:60px 0}
   border:1px solid #ffb52e35;color:var(--gold);font-size:11px;
 }
 
-/* WORLDS (2'li Yerleşim) */
+/* WORLDS */
 .world-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;max-width:800px;margin:0 auto}
 .world-card{
   position:relative;overflow:hidden;min-height:220px;border:1px solid var(--border);
@@ -292,7 +294,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 }
 .socials a:hover{color:var(--gold);border-color:#ffb52e55;transform:translateY(-2px)}
 
-/* SAĞ ALT YAPAY ZEKA & DESTEK WIDGET */
+/* SAĞ ALT DESTEK WIDGET */
 .support-widget{
   position:fixed;bottom:20px;right:20px;z-index:1500;
 }
@@ -302,31 +304,24 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
   display:grid;place-items:center;transition:.25s;cursor:pointer;position:relative;
 }
 .support-btn:hover{transform:scale(1.1)}
-.ai-badge-dot{
+.support-badge-dot{
   position:absolute;top:2px;right:2px;width:14px;height:14px;background:#5bffab;
   border-radius:50%;border:2px solid #13131e;
 }
 
-/* YAPAY ZEKA CHAT & DESTEK PENCERESİ */
-.ai-modal {
-  position:fixed;bottom:85px;right:20px;width:360px;max-width:92vw;height:480px;
+/* DESTEK & ŞİKAYET FORM PENCERESİ */
+.support-modal {
+  position:fixed;bottom:85px;right:20px;width:360px;max-width:92vw;
   background:#13131e;border:1px solid rgba(255,181,46,0.3);border-radius:16px;
   box-shadow:0 15px 50px rgba(0,0,0,0.7);display:none;flex-direction:column;z-index:1600;
-  overflow:hidden;backdrop-filter:blur(15px);
+  overflow:hidden;backdrop-filter:blur(15px);padding:16px;
 }
-.ai-modal.show{display:flex}
-.ai-header{
-  background:linear-gradient(135deg,#1c1c2e,#141421);padding:12px 15px;
-  display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);
+.support-modal.show{display:flex}
+.support-header{
+  display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;
+  border-bottom:1px solid var(--border);padding-bottom:8px;
 }
-.ai-header-title{display:flex;align-items:center;gap:8px;font-family:Orbitron,sans-serif;font-size:12px;color:var(--gold)}
-.ai-body{flex:1;padding:12px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;font-size:11px}
-.ai-msg{max-width:85%;padding:9px 12px;border-radius:10px;line-height:1.5}
-.ai-msg.bot{background:#1d1d2c;color:#f5f5fa;align-self:flex-start;border-bottom-left-radius:2px}
-.ai-msg.user{background:linear-gradient(120deg,#ffd16b,#ff8d2d);color:#17110a;align-self:flex-end;font-weight:600;border-bottom-right-radius:2px}
-.ai-footer{padding:10px;background:#101018;border-top:1px solid var(--border);display:flex;gap:6px}
-.ai-input{flex:1;padding:8px 10px;border-radius:8px;background:#0d0d15;border:1px solid var(--border);color:white;font-size:11px;outline:none}
-.ai-send{background:var(--gold);color:#17110a;border:0;border-radius:8px;width:34px;height:34px;display:grid;place-items:center;font-size:12px}
+.support-header h3{font-family:Orbitron,sans-serif;font-size:13px;color:var(--gold)}
 
 /* MODALS */
 .modal-backdrop{
@@ -379,10 +374,18 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 
 <header class="navbar">
   <div class="container nav-inner">
-    <a href="#anasayfa" class="logo">
-      <span class="logo-icon"><i class="fa-solid fa-sun"></i></span>
-      <span>GÜNEŞCRAFT<small>NETWORK</small></span>
-    </a>
+    <div class="nav-left">
+      <!-- SOL ÜST PROFİL / GİRİŞ ALANI -->
+      <div id="userProfileArea" style="display:flex;align-items:center;gap:6px">
+        <button class="btn btn-primary" onclick="openLogin()"><i class="fa-solid fa-user"></i> Giriş Yap</button>
+      </div>
+
+      <a href="#anasayfa" class="logo">
+        <span class="logo-icon"><i class="fa-solid fa-sun"></i></span>
+        <span>GÜNEŞCRAFT<small>NETWORK</small></span>
+      </a>
+    </div>
+
     <nav class="nav-links" id="navLinks">
       <a href="#anasayfa" onclick="toggleMenu()">Ana Sayfa</a>
       <a href="#dunyalar" onclick="toggleMenu()">Dünyalar</a>
@@ -394,10 +397,6 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
       <div class="online-badge">
         <span class="online-dot"></span>
         <span>Aktif: <strong id="headerOnline" class="gold">...</strong>/100</span>
-      </div>
-
-      <div id="userProfileArea" style="display:flex;align-items:center;gap:6px">
-        <button class="btn btn-primary" onclick="openLogin()"><i class="fa-solid fa-user"></i> Giriş Yap</button>
       </div>
 
       <div class="top-round-logo" title="GüneşCraft Network"><i class="fa-solid fa-sun"></i></div>
@@ -540,9 +539,9 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
         <p>Sunucu için hazırlanan VIP seçeneklerini mağazadan keşfet.</p>
       </div>
       <div class="feature">
-        <div class="feature-icon"><i class="fa-solid fa-robot"></i></div>
-        <h3>Yapay Zeka Asistanı</h3>
-        <p>Sağ alttaki yapay zeka butonundan sorularını sor ve destek talebi oluştur.</p>
+        <div class="feature-icon"><i class="fa-solid fa-headset"></i></div>
+        <h3>Destek & Şikayet</h3>
+        <p>Sağ alttaki destek butonundan bize anında şikayet ve soru iletebilirsin.</p>
       </div>
     </div>
   </div>
@@ -571,27 +570,35 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 </section>
 </main>
 
-<!-- SAĞ ALT YAPAY ZEKA & DESTEK WIDGET -->
+<!-- SAĞ ALT DESTEK WIDGET BUTONU -->
 <div class="support-widget">
-  <button class="support-btn" onclick="toggleAiModal()" title="Yapay Zeka Asistanı & Destek" aria-label="Yapay Zeka Asistanı">
-    <i class="fa-solid fa-robot"></i>
-    <span class="ai-badge-dot"></span>
+  <button class="support-btn" onclick="toggleSupportModal()" title="Destek & Şikayet Bildir" aria-label="Destek Bildir">
+    <i class="fa-solid fa-headset"></i>
+    <span class="support-badge-dot"></span>
   </button>
 </div>
 
-<!-- YAPAY ZEKA CHAT & DESTEK PENCERESİ -->
-<div class="ai-modal" id="aiModal">
-  <div class="ai-header">
-    <div class="ai-header-title"><i class="fa-solid fa-microchip"></i> GüneşCraft Yapay Zeka Asistanı</div>
-    <button class="close-modal" onclick="toggleAiModal()">&times;</button>
+<!-- SAĞ ALT NORMAL DESTEK & ŞİKAYET PENCERESİ -->
+<div class="support-modal" id="supportModal">
+  <div class="support-header">
+    <h3><i class="fa-solid fa-ticket gold"></i> Destek & Şikayet Bildir</h3>
+    <button class="close-modal" onclick="toggleSupportModal()">&times;</button>
   </div>
-  <div class="ai-body" id="aiChatBody">
-    <div class="ai-msg bot">Selam kanka! Ben GüneşCraft yapay zeka asistanıyım. Komutlarımı öğrenmek için <b>!komutlar</b> yazabilir, soru sorabilir ya da şikayet iletebilirsin! Nasıl yardımcı olabilirim?</div>
-  </div>
-  <div class="ai-footer">
-    <input class="ai-input" id="aiInput" placeholder="Soru sor veya '!komutlar' yaz..." onkeypress="handleAiKeyPress(event)">
-    <button class="ai-send" onclick="sendAiMessage()"><i class="fa-solid fa-paper-plane"></i></button>
-  </div>
+  <form onsubmit="submitSupportTicket(event)">
+    <div class="form-group">
+      <label for="ticketName">Oyuncu Adı</label>
+      <input class="form-control" id="ticketName" placeholder="Minecraft Kullanıcı Adın" required>
+    </div>
+    <div class="form-group">
+      <label for="ticketSubject">Konu / Kategori</label>
+      <input class="form-control" id="ticketSubject" placeholder="Örn: Hata / Şikayet / Soru" required>
+    </div>
+    <div class="form-group">
+      <label for="ticketMessage">Mesajın</label>
+      <textarea class="form-control" id="ticketMessage" rows="3" placeholder="Detayları buraya yaz..." required></textarea>
+    </div>
+    <button class="btn btn-primary" style="width:100%"><i class="fa-solid fa-paper-plane"></i> Talebi Gönder</button>
+  </form>
 </div>
 
 <footer>
@@ -619,7 +626,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
   </div>
 </div>
 
-<!-- CANLI HARİTA MODALI (Towny Dynmap Bağlantılı) -->
+<!-- CANLI HARİTA MODALI -->
 <div class="modal-backdrop" id="mapModal" onclick="backdropClose(event,'mapModal')">
   <div class="modal" style="width:min(920px, 95%); max-height:92vh;">
     <div class="modal-header">
@@ -745,7 +752,6 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
       <div class="admin-list" id="adminProductList"></div>
     </div>
     
-    <!-- DESTEK / ŞİKAYET TALEPLERİ SEKMESİ -->
     <div id="adminTickets" class="hidden">
       <h3 style="font-size:12px;margin-bottom:10px">Gelen Oyuncu Destek & Şikayet Talepleri</h3>
       <div id="adminTicketList"></div>
@@ -848,80 +854,27 @@ function openMapModal(title, url){
   document.getElementById('mapModal').classList.add('show');
 }
 
-function toggleAiModal(){
-  document.getElementById('aiModal').classList.toggle('show');
+function toggleSupportModal(){
+  document.getElementById('supportModal').classList.toggle('show');
 }
 
-function handleAiKeyPress(e){
-  if(e.key === 'Enter') sendAiMessage();
-}
+function submitSupportTicket(e){
+  e.preventDefault();
+  const name = document.getElementById('ticketName').value.trim();
+  const subject = document.getElementById('ticketSubject').value.trim();
+  const message = document.getElementById('ticketMessage').value.trim();
 
-function sendAiMessage(){
-  const input = document.getElementById('aiInput');
-  const chatBody = document.getElementById('aiChatBody');
-  const text = input.value.trim();
-  if(!text) return;
+  if(!name || !subject || !message) return;
 
-  // Kullanıcı mesajı
-  chatBody.innerHTML += `<div class="ai-msg user">${escapeHtml(text)}</div>`;
-  input.value = '';
-  chatBody.scrollTop = chatBody.scrollHeight;
+  const newT = { id: Date.now(), name, subject, message, date: new Date().toLocaleTimeString() };
+  tickets.unshift(newT);
+  localStorage.setItem('gc_tickets', JSON.stringify(tickets));
+  updateTicketBadge();
 
-  // Yapay Zeka Gelişmiş Komut ve Cevap Mantığı
-  setTimeout(() => {
-    let reply = "Kanka bu konuda sana yardımcı olabilirim! Daha fazla komut görmek için `!komutlar` yazabilirsin.";
-    const lower = text.toLowerCase();
-
-    if(lower === '!komutlar' || lower === 'komutlar'){
-      reply = `🤖 <b>Yapay Zeka Komut Listesi:</b><br>
-      • <code>!ip</code> veya <code>ip</code>: Sunucu adresini gösterir.<br>
-      • <code>!discord</code>: Discord sunucu davet linkini verir.<br>
-      • <code>!market</code> veya <code>!magaza</code>: Mağaza ve spawner bilgilerini gösterir.<br>
-      • <code>!kurallar</code>: Sunucu kurallarını listeler.<br>
-      • <code>!etkinlik</code>: Yaklaşan etkinlikleri duyurur.<br>
-      • <code>Talep: Ad | Konu | Mesaj</code>: Yöneticiye şikayet veya destek talebi iletir.`;
-    } 
-    else if(lower.includes('sikayet') || lower.includes('şikayet') || lower.includes('destek') || lower.includes('sorun') || lower.includes('hata')){
-      reply = `Yöneticiye iletmek üzere bir şikayet/destek talebi oluşturalım. Lütfen şu formatta yaz:<br><b>Talep: [KullanıcıAdın] | [Konu] | [Mesajın]</b><br>Örnek: <code>Talep: Steve | Bug | Evim kayboldu</code>`;
-    } 
-    else if(lower.startsWith('talep:')){
-      const parts = text.replace('Talep:', '').split('|');
-      if(parts.length >= 3){
-        const name = parts[0].trim();
-        const subject = parts[1].trim();
-        const message = parts[2].trim();
-        const newT = { id: Date.now(), name, subject, message, date: new Date().toLocaleTimeString() };
-        tickets.unshift(newT);
-        localStorage.setItem('gc_tickets', JSON.stringify(tickets));
-        updateTicketBadge();
-        reply = `Harika! Şikayet ve destek talebin yönetim ekibine başarıyla iletildi. Adminler panelden inceleyecektir.`;
-      } else {
-        reply = `Formatı eksik yazdın kanka. Şöyle dene: <code>Talep: Adın | Konu | Mesaj</code>`;
-      }
-    } 
-    else if(lower.includes('ip') || lower.includes('adres') || lower.includes('giris') || lower === '!ip'){
-      reply = `Sunucumuza Java ve Bedrock üzerinden <code>gunescraft.xyz</code> adresiyle giriş yapabilirsin!`;
-    } 
-    else if(lower.includes('discord') || lower === '!discord'){
-      reply = `GüneşCraft Discord topluluğumuza katılmak için: <a href="https://discord.gg/83BwhExXm" target="_blank" style="color:var(--gold);text-decoration:underline">discord.gg/83BwhExXm</a>`;
-    } 
-    else if(lower.includes('market') || lower.includes('magaza') || lower.includes('spawner') || lower.includes('vip') || lower === '!market'){
-      reply = `Mağazamızda zombi/iskelet spawnerlar ve VIP paketleri bulunuyor. Sayfadaki 'Mağaza' sekmesinden Shopier ile güvenle satın alabilirsin!`;
-    } 
-    else if(lower.includes('kurallar') || lower === '!kurallar'){
-      reply = `📜 <b>GüneşCraft Kuralları:</b><br>1. Küfür, hakaret ve argo kesinlikle yasaktır.<br>2. Hile, X-Ray veya 3. parti yazılım kullanımı kalıcı ban sebebidir.<br>3. Başka oyuncuların arazilerini zarara uğratmak yasaktır.`;
-    } 
-    else if(lower.includes('etkinlik') || lower === '!etkinlik'){
-      reply = `🎉 Bu hafta sonu Towny savaşları ve maden turnuvası var! Ödülleri kaçırma, Discord'u takipte kal!`;
-    }
-
-    chatBody.innerHTML += `<div class="ai-msg bot">${reply}</div>`;
-    chatBody.scrollTop = chatBody.scrollHeight;
-  }, 600);
-}
-
-function escapeHtml(str){
-  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  document.getElementById('ticketSubject').value = '';
+  document.getElementById('ticketMessage').value = '';
+  toggleSupportModal();
+  showToast("Destek ve şikayet talebin başarıyla iletildi!");
 }
 
 function toggleMenu(){
@@ -1121,6 +1074,9 @@ function updateUserUI(){
         <button class="btn btn-danger" onclick="userLogout()" title="Çıkış Yap"><i class="fa-solid fa-power-off"></i></button>
       </div>
     `;
+    // Destek formundaki adı otomatik doldur
+    const ticketNameInput = document.getElementById('ticketName');
+    if(ticketNameInput) ticketNameInput.value = currentUser.username;
   } else {
     area.innerHTML = `<button class="btn btn-primary" onclick="openLogin()"><i class="fa-solid fa-user"></i> Giriş Yap</button>`;
   }
