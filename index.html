@@ -191,8 +191,8 @@ section{padding:60px 0}
   border:1px solid #ffb52e35;color:var(--gold);font-size:11px;
 }
 
-/* WORLDS */
-.world-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+/* WORLDS (2'li Yerleşim) */
+.world-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;max-width:800px;margin:0 auto}
 .world-card{
   position:relative;overflow:hidden;min-height:220px;border:1px solid var(--border);
   border-radius:var(--radius);background:#151520;transition:.3s;
@@ -292,16 +292,41 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 }
 .socials a:hover{color:var(--gold);border-color:#ffb52e55;transform:translateY(-2px)}
 
-/* FLOATING SUPPORT WIDGET */
+/* SAĞ ALT YAPAY ZEKA & DESTEK WIDGET */
 .support-widget{
   position:fixed;bottom:20px;right:20px;z-index:1500;
 }
 .support-btn{
-  width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#ffb52e,#ff642d);
-  color:#17110a;border:0;font-size:20px;box-shadow:0 6px 20px rgba(255,154,39,0.4);
-  display:grid;place-items:center;transition:.25s;cursor:pointer;
+  width:55px;height:55px;border-radius:50%;background:linear-gradient(135deg,#ffb52e,#ff642d);
+  color:#17110a;border:0;font-size:22px;box-shadow:0 8px 25px rgba(255,154,39,0.45);
+  display:grid;place-items:center;transition:.25s;cursor:pointer;position:relative;
 }
-.support-btn:hover{transform:scale(1.08)}
+.support-btn:hover{transform:scale(1.1)}
+.ai-badge-dot{
+  position:absolute;top:2px;right:2px;width:14px;height:14px;background:#5bffab;
+  border-radius:50%;border:2px solid #13131e;
+}
+
+/* YAPAY ZEKA CHAT & DESTEK PENCERESİ */
+.ai-modal {
+  position:fixed;bottom:85px;right:20px;width:360px;max-width:92vw;height:480px;
+  background:#13131e;border:1px solid rgba(255,181,46,0.3);border-radius:16px;
+  box-shadow:0 15px 50px rgba(0,0,0,0.7);display:none;flex-direction:column;z-index:1600;
+  overflow:hidden;backdrop-filter:blur(15px);
+}
+.ai-modal.show{display:flex}
+.ai-header{
+  background:linear-gradient(135deg,#1c1c2e,#141421);padding:12px 15px;
+  display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);
+}
+.ai-header-title{display:flex;align-items:center;gap:8px;font-family:Orbitron,sans-serif;font-size:12px;color:var(--gold)}
+.ai-body{flex:1;padding:12px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;font-size:11px}
+.ai-msg{max-width:85%;padding:9px 12px;border-radius:10px;line-height:1.5}
+.ai-msg.bot{background:#1d1d2c;color:#f5f5fa;align-self:flex-start;border-bottom-left-radius:2px}
+.ai-msg.user{background:linear-gradient(120deg,#ffd16b,#ff8d2d);color:#17110a;align-self:flex-end;font-weight:600;border-bottom-right-radius:2px}
+.ai-footer{padding:10px;background:#101018;border-top:1px solid var(--border);display:flex;gap:6px}
+.ai-input{flex:1;padding:8px 10px;border-radius:8px;background:#0d0d15;border:1px solid var(--border);color:white;font-size:11px;outline:none}
+.ai-send{background:var(--gold);color:#17110a;border:0;border-radius:8px;width:34px;height:34px;display:grid;place-items:center;font-size:12px}
 
 /* MODALS */
 .modal-backdrop{
@@ -432,7 +457,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
     <div class="section-head">
       <div class="eyebrow">Keşfetmeye başla</div>
       <h2 class="section-title">SENİ BEKLEYEN <span class="gradient">DÜNYALAR</span></h2>
-      <p class="section-desc">Her dünyada farklı bir macera, farklı bir hedef seni bekliyor.</p>
+      <p class="section-desc">Sunucumuzun aktif dünyalarını keşfedin.</p>
     </div>
     <div class="world-grid">
       <article class="world-card">
@@ -441,7 +466,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
           <span class="badge">ANA DÜNYA</span>
           <h3 style="margin-top:8px">Dünya</h3>
           <p>Yeni yerler keşfet, kaynaklarını topla ve kendi maceranı oluştur.</p>
-          <a class="world-action" onclick="openMapModal('Ana Dünya Haritası')">CANLI HARİTAYI AÇ <i class="fa-solid fa-arrow-right"></i></a>
+          <a class="world-action" onclick="openMapModal('Ana Dünya Haritası', 'http://157.90.133.100:25749/?world=world&renderer=vintage_story&zoom=-2&x=2651&z=-3147')">CANLI HARİTAYI AÇ <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </article>
       <article class="world-card">
@@ -450,16 +475,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
           <span class="badge">ŞEHİR KUR</span>
           <h3 style="margin-top:8px">Towny (Şehirler)</h3>
           <p>Kendi şehrini kur, arazini geliştir ve arkadaşlarınla büyü.</p>
-          <a class="world-action" onclick="openMapModal('Towny Şehir Haritası')">CANLI HARİTAYI AÇ <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-      </article>
-      <article class="world-card">
-        <div class="world-art"><i class="fa-solid fa-gem" style="color:#c4b5fd"></i></div>
-        <div class="world-content">
-          <span class="badge">KAYNAK AVCISI</span>
-          <h3 style="margin-top:8px">Madenler</h3>
-          <p>Değerli kaynakları bul, ekipmanlarını geliştir ve hazineleri keşfet.</p>
-          <a class="world-action" onclick="openMapModal('Maden Dünyası')">HARİTA BİLGİSİ <i class="fa-solid fa-arrow-right"></i></a>
+          <a class="world-action" onclick="openMapModal('Towny Şehir Haritası', 'http://157.90.133.100:25749/?world=world&renderer=vintage_story&zoom=-2&x=2651&z=-3147')">CANLI HARİTAYI AÇ <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </article>
     </div>
@@ -524,9 +540,9 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
         <p>Sunucu için hazırlanan VIP seçeneklerini mağazadan keşfet.</p>
       </div>
       <div class="feature">
-        <div class="feature-icon"><i class="fa-solid fa-headset"></i></div>
-        <h3>Canlı Destek & Şikayet</h3>
-        <p>Sağ alttaki destek butonundan şikayet ve taleplerini anında ilet.</p>
+        <div class="feature-icon"><i class="fa-solid fa-robot"></i></div>
+        <h3>Yapay Zeka Asistanı</h3>
+        <p>Sağ alttaki yapay zeka butonundan sorularını sor ve destek talebi oluştur.</p>
       </div>
     </div>
   </div>
@@ -555,9 +571,27 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 </section>
 </main>
 
-<!-- SAĞ ALT DESTEK WIDGET -->
+<!-- SAĞ ALT YAPAY ZEKA & DESTEK WIDGET -->
 <div class="support-widget">
-  <button class="support-btn" onclick="openSupportModal()" title="Canlı Destek & Şikayet" aria-label="Canlı Destek"><i class="fa-solid fa-headset"></i></button>
+  <button class="support-btn" onclick="toggleAiModal()" title="Yapay Zeka Asistanı & Destek" aria-label="Yapay Zeka Asistanı">
+    <i class="fa-solid fa-robot"></i>
+    <span class="ai-badge-dot"></span>
+  </button>
+</div>
+
+<!-- YAPAY ZEKA CHAT & DESTEK PENCERESİ -->
+<div class="ai-modal" id="aiModal">
+  <div class="ai-header">
+    <div class="ai-header-title"><i class="fa-solid fa-microchip"></i> GüneşCraft Yapay Zeka Asistanı</div>
+    <button class="close-modal" onclick="toggleAiModal()">&times;</button>
+  </div>
+  <div class="ai-body" id="aiChatBody">
+    <div class="ai-msg bot">Selam kanka! Ben GüneşCraft yapay zeka asistanıyım. Komutlarımı öğrenmek için <b>!komutlar</b> yazabilir, soru sorabilir ya da şikayet iletebilirsin! Nasıl yardımcı olabilirim?</div>
+  </div>
+  <div class="ai-footer">
+    <input class="ai-input" id="aiInput" placeholder="Soru sor veya '!komutlar' yaz..." onkeypress="handleAiKeyPress(event)">
+    <button class="ai-send" onclick="sendAiMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+  </div>
 </div>
 
 <footer>
@@ -585,46 +619,22 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
   </div>
 </div>
 
-<!-- CANLI DESTEK / ŞİKAYET MODALI -->
-<div class="modal-backdrop" id="supportModal" onclick="backdropClose(event,'supportModal')">
-  <div class="modal">
-    <div class="modal-header">
-      <h2><i class="fa-solid fa-headset gold"></i> DESTEK & ŞİKAYET TALEBİ</h2>
-      <button class="close-modal" onclick="closeModal('supportModal')">&times;</button>
-    </div>
-    <div id="supportModalBody">
-      <p class="muted" style="font-size:11px; margin-bottom:12px;">Sorunlarını, önerilerini veya şikayetlerini doğrudan yönetim ekibimize ilet.</p>
-      <form onsubmit="submitTicket(event)">
-        <div class="form-group">
-          <label for="ticketName">Minecraft Kullanıcı Adın</label>
-          <input class="form-control" id="ticketName" placeholder="Steve" required>
-        </div>
-        <div class="form-group">
-          <label for="ticketSubject">Konu / Kategori</label>
-          <input class="form-control" id="ticketSubject" placeholder="Örn: Ödeme Bildirimi / Oyuncu Şikayeti" required>
-        </div>
-        <div class="form-group">
-          <label for="ticketMessage">Mesajın / Şikayet Detayı</label>
-          <textarea class="form-control" id="ticketMessage" rows="3" placeholder="Detayları buraya yaz..." required></textarea>
-        </div>
-        <button class="btn btn-primary" style="width:100%"><i class="fa-solid fa-paper-plane"></i> Talebi Gönder</button>
-      </form>
-    </div>
-  </div>
-</div>
-
+<!-- CANLI HARİTA MODALI (Towny Dynmap Bağlantılı) -->
 <div class="modal-backdrop" id="mapModal" onclick="backdropClose(event,'mapModal')">
-  <div class="modal" style="width:min(880px, 95%); max-height:92vh;">
+  <div class="modal" style="width:min(920px, 95%); max-height:92vh;">
     <div class="modal-header">
       <h2 id="mapModalTitle"><i class="fa-solid fa-earth-europe gold"></i> CANLI DÜNYA HARİTASI</h2>
       <button class="close-modal" onclick="closeModal('mapModal')">&times;</button>
     </div>
-    <div style="position:relative; width:100%; height:420px; background:#0d0d15; border-radius:10px; overflow:hidden; border:1px solid var(--border);">
+    <div style="position:relative; width:100%; height:460px; background:#0d0d15; border-radius:10px; overflow:hidden; border:1px solid var(--border);">
       <iframe id="mapIframe" src="about:blank" style="width:100%; height:100%; border:0;"></iframe>
     </div>
-    <p class="muted" style="font-size:10px; margin-top:10px; text-align:center;">
-      <i class="fa-solid fa-circle-info gold"></i> Sunucunuzda Dynmap aktif olduğunda harita doğrudan burada yüklenecektir.
-    </p>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; flex-wrap:wrap; gap:8px;">
+      <p class="muted" style="font-size:10px;">
+        <i class="fa-solid fa-circle-info gold"></i> Towny sınırlarını ve oyuncu konumlarını canlı takip edin.
+      </p>
+      <a id="mapExternalLink" href="#" target="_blank" class="btn btn-secondary" style="font-size:10px;"><i class="fa-solid fa-external-link-alt"></i> Tam Ekran Aç</a>
+    </div>
   </div>
 </div>
 
@@ -784,7 +794,7 @@ const DEFAULT_PRODUCTS = [
   {id:6, name:"Blaze Spawner", category:"spawner", price:229, description:"İksir yapımı için blaze çubuğu kasın.", boxType:"spawner", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_6"},
   {id:7, name:"VIP Paketi", category:"vip", price:99, description:"Özel komutlar, uçuş yetkisi ve ekstra ev hakkı.", boxType:"vip_gold", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_7"},
   {id:8, name:"VIP+ Paketi", category:"vip", price:199, description:"Gelişmiş kitler ve renkli sohbet ayrıcalığı.", boxType:"vip_diamond", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_8"},
-  {id:9, name:"MVP Paketi", category:"vip", price:299, description:"En üst düzey yetkiler ve sınırsız özellikler.", boxType:"vip_diamond", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_9"},
+  {id:9, name:"MVP Paketi", category:"vip", price:299, description:"En üst düzey yetkiler ve sınırsız özellikler.", boxType:"vip_diamond", shopierLink:"https://www.shopier.com/ShowPropertyNew/products.php?id=ORNEK_ID_9"},
   {id:10, name:"Özel Kasa", category:"item", price:49, description:"İçerisinden nadir Minecraft eşyaları çıkar.", boxType:"chest", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_10"},
   {id:11, name:"Anahtar Paketi", category:"item", price:39, description:"Sunucudaki gizli kasaları açmak için 5x Anahtar.", boxType:"key", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_11"},
   {id:12, name:"Elmas Paketi", category:"item", price:79, description:"Oyun içi ekonomide yükselmek için 64x Elmas.", boxType:"diamond", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_12"}
@@ -792,7 +802,7 @@ const DEFAULT_PRODUCTS = [
 
 const DEFAULT_NEWS = [
   {id:1, title:"1. Sezon Açıldı!", text:"GüneşCraft Sezon 1 kapılarını oyunculara açtı. Hemen katıl!", emoji:"🎉", date:"Bugün"},
-  {id:2, title:"Yeni Spawner Sistemi", text:"Marketimize yeni nesil spawner çeşitleri ve VIP kitleri eklendi.", emoji:"⚡", date:"Dün"}
+  {id:2, title:"Yeni Towny Sistemi", text:"Towny dünyasında şehir sınırları ve canlı harita aktif edildi.", emoji:"⚡", date:"Dün"}
 ];
 
 let products = JSON.parse(localStorage.getItem('gc_products')) || DEFAULT_PRODUCTS;
@@ -831,37 +841,87 @@ function fetchServerStatus() {
 fetchServerStatus();
 setInterval(fetchServerStatus, 10000);
 
-function openMapModal(title){
+function openMapModal(title, url){
   document.getElementById('mapModalTitle').innerHTML = `<i class="fa-solid fa-earth-europe gold"></i> ${title}`;
-  document.getElementById('mapIframe').src = "about:blank"; 
+  document.getElementById('mapIframe').src = url;
+  document.getElementById('mapExternalLink').href = url;
   document.getElementById('mapModal').classList.add('show');
 }
 
-function openSupportModal(){
-  document.getElementById('supportModal').classList.add('show');
+function toggleAiModal(){
+  document.getElementById('aiModal').classList.toggle('show');
 }
 
-function submitTicket(e){
-  e.preventDefault();
-  const name = document.getElementById('ticketName').value;
-  const subject = document.getElementById('ticketSubject').value;
-  const message = document.getElementById('ticketMessage').value;
-  
-  const newT = { id: Date.now(), name, subject, message, date: new Date().toLocaleTimeString() };
-  tickets.unshift(newT);
-  localStorage.setItem('gc_tickets', JSON.stringify(tickets));
-  
-  closeModal('supportModal');
-  showToast("Destek ve şikayet talebin yöneticiye iletildi!");
-  document.getElementById('ticketName').value = '';
-  document.getElementById('ticketSubject').value = '';
-  document.getElementById('ticketMessage').value = '';
-  updateTicketBadge();
+function handleAiKeyPress(e){
+  if(e.key === 'Enter') sendAiMessage();
 }
 
-function updateTicketBadge(){
-  const badge = document.getElementById('ticketBadge');
-  if(badge) badge.textContent = tickets.length;
+function sendAiMessage(){
+  const input = document.getElementById('aiInput');
+  const chatBody = document.getElementById('aiChatBody');
+  const text = input.value.trim();
+  if(!text) return;
+
+  // Kullanıcı mesajı
+  chatBody.innerHTML += `<div class="ai-msg user">${escapeHtml(text)}</div>`;
+  input.value = '';
+  chatBody.scrollTop = chatBody.scrollHeight;
+
+  // Yapay Zeka Gelişmiş Komut ve Cevap Mantığı
+  setTimeout(() => {
+    let reply = "Kanka bu konuda sana yardımcı olabilirim! Daha fazla komut görmek için `!komutlar` yazabilirsin.";
+    const lower = text.toLowerCase();
+
+    if(lower === '!komutlar' || lower === 'komutlar'){
+      reply = `🤖 <b>Yapay Zeka Komut Listesi:</b><br>
+      • <code>!ip</code> veya <code>ip</code>: Sunucu adresini gösterir.<br>
+      • <code>!discord</code>: Discord sunucu davet linkini verir.<br>
+      • <code>!market</code> veya <code>!magaza</code>: Mağaza ve spawner bilgilerini gösterir.<br>
+      • <code>!kurallar</code>: Sunucu kurallarını listeler.<br>
+      • <code>!etkinlik</code>: Yaklaşan etkinlikleri duyurur.<br>
+      • <code>Talep: Ad | Konu | Mesaj</code>: Yöneticiye şikayet veya destek talebi iletir.`;
+    } 
+    else if(lower.includes('sikayet') || lower.includes('şikayet') || lower.includes('destek') || lower.includes('sorun') || lower.includes('hata')){
+      reply = `Yöneticiye iletmek üzere bir şikayet/destek talebi oluşturalım. Lütfen şu formatta yaz:<br><b>Talep: [KullanıcıAdın] | [Konu] | [Mesajın]</b><br>Örnek: <code>Talep: Steve | Bug | Evim kayboldu</code>`;
+    } 
+    else if(lower.startsWith('talep:')){
+      const parts = text.replace('Talep:', '').split('|');
+      if(parts.length >= 3){
+        const name = parts[0].trim();
+        const subject = parts[1].trim();
+        const message = parts[2].trim();
+        const newT = { id: Date.now(), name, subject, message, date: new Date().toLocaleTimeString() };
+        tickets.unshift(newT);
+        localStorage.setItem('gc_tickets', JSON.stringify(tickets));
+        updateTicketBadge();
+        reply = `Harika! Şikayet ve destek talebin yönetim ekibine başarıyla iletildi. Adminler panelden inceleyecektir.`;
+      } else {
+        reply = `Formatı eksik yazdın kanka. Şöyle dene: <code>Talep: Adın | Konu | Mesaj</code>`;
+      }
+    } 
+    else if(lower.includes('ip') || lower.includes('adres') || lower.includes('giris') || lower === '!ip'){
+      reply = `Sunucumuza Java ve Bedrock üzerinden <code>gunescraft.xyz</code> adresiyle giriş yapabilirsin!`;
+    } 
+    else if(lower.includes('discord') || lower === '!discord'){
+      reply = `GüneşCraft Discord topluluğumuza katılmak için: <a href="https://discord.gg/83BwhExXm" target="_blank" style="color:var(--gold);text-decoration:underline">discord.gg/83BwhExXm</a>`;
+    } 
+    else if(lower.includes('market') || lower.includes('magaza') || lower.includes('spawner') || lower.includes('vip') || lower === '!market'){
+      reply = `Mağazamızda zombi/iskelet spawnerlar ve VIP paketleri bulunuyor. Sayfadaki 'Mağaza' sekmesinden Shopier ile güvenle satın alabilirsin!`;
+    } 
+    else if(lower.includes('kurallar') || lower === '!kurallar'){
+      reply = `📜 <b>GüneşCraft Kuralları:</b><br>1. Küfür, hakaret ve argo kesinlikle yasaktır.<br>2. Hile, X-Ray veya 3. parti yazılım kullanımı kalıcı ban sebebidir.<br>3. Başka oyuncuların arazilerini zarara uğratmak yasaktır.`;
+    } 
+    else if(lower.includes('etkinlik') || lower === '!etkinlik'){
+      reply = `🎉 Bu hafta sonu Towny savaşları ve maden turnuvası var! Ödülleri kaçırma, Discord'u takipte kal!`;
+    }
+
+    chatBody.innerHTML += `<div class="ai-msg bot">${reply}</div>`;
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }, 600);
+}
+
+function escapeHtml(str){
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 function toggleMenu(){
@@ -1186,6 +1246,11 @@ function renderAdminLists(){
   `).join('');
 
   updateTicketBadge();
+}
+
+function updateTicketBadge(){
+  const badge = document.getElementById('ticketBadge');
+  if(badge) badge.textContent = tickets.length;
 }
 
 function saveSettings(e){
