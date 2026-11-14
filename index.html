@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#101019">
-<meta name="description" content="GüneşCraft Network Minecraft Towny sunucusu. Mağazayı keşfet, şehrini kur ve maceraya katıl!">
-<title>GüneşCraft Network | Towny Portal</title>
+<meta name="description" content="GüneşCraft Network Minecraft sunucusu. Mağazayı keşfet, VIP paketlerini incele ve maceraya katıl!">
+<title>GüneşCraft Network | Minecraft Portal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -79,11 +79,10 @@ section{padding:60px 0}
 .nav-inner{min-height:65px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .logo{display:flex;align-items:center;gap:9px;font-family:Orbitron,sans-serif;font-weight:900;font-size:14px}
 .logo-icon{
-  width:38px;height:38px;display:grid;place-items:center;border-radius:10px;
+  width:35px;height:35px;display:grid;place-items:center;border-radius:10px;
   background:linear-gradient(140deg,#ffd36a,#ff762b);color:#211305;
-  font-size:16px;box-shadow:0 4px 18px #ff9d2733;overflow:hidden;border:1px solid #ffe7a677;
+  font-size:16px;box-shadow:0 4px 18px #ff9d2733;
 }
-.logo-icon img{width:100%;height:100%;object-fit:cover}
 .logo small{display:block;color:var(--muted);font:700 8px Poppins,sans-serif;letter-spacing:2px;margin-top:1px}
 .nav-links{display:flex;align-items:center;gap:18px}
 .nav-links a{font-size:11px;font-weight:700;color:#b9b9c9;transition:.2s}
@@ -91,8 +90,14 @@ section{padding:60px 0}
 .nav-actions{display:flex;align-items:center;gap:8px}
 .mobile-toggle{display:none;background:none;border:0;color:white;font-size:20px;padding:4px}
 
+.top-round-logo{
+  width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
+  background:linear-gradient(135deg,#ffb52e,#ff642d);color:#17110a;
+  font-size:14px;box-shadow:0 0 12px #ff9d2744;border:1px solid #ffe7a677;
+}
+
 .online-badge{
-  display:flex;align-items:center;gap:6px;padding:5px 10px;
+  display:flex;align-items:center;gap:5px;padding:5px 9px;
   border-radius:8px;background:#ffffff05;border:1px solid var(--border);
   font-size:10px;font-weight:700;
 }
@@ -186,19 +191,21 @@ section{padding:60px 0}
   border:1px solid #ffb52e35;color:var(--gold);font-size:11px;
 }
 
-/* TOWNY SECTION */
-.world-grid{display:grid;grid-template-columns:1fr;max-width:450px;margin:auto}
+/* WORLDS */
+.world-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .world-card{
-  position:relative;overflow:hidden;border:1px solid var(--border);
-  border-radius:var(--radius);background:#151520;transition:.3s;text-align:center;
+  position:relative;overflow:hidden;min-height:220px;border:1px solid var(--border);
+  border-radius:var(--radius);background:#151520;transition:.3s;
 }
 .world-card:hover{transform:translateY(-4px);border-color:#ffb52e66}
-.world-art{height:120px;display:grid;place-items:center;position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 50%,#ffb52e18,transparent 70%),#ffffff03}
-.world-art i{font-size:50px;color:#f6d28b;filter:drop-shadow(0 8px 15px #0005);z-index:1}
-.world-content{padding:18px}
-.world-content h3{font-family:Orbitron,sans-serif;font-size:16px;margin-bottom:6px}
-.world-content p{font-size:11px;line-height:1.6;color:var(--muted);margin-bottom:14px}
-.world-action{font-size:11px;color:var(--gold);font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.world-art{height:110px;display:grid;place-items:center;position:relative;overflow:hidden}
+.world-art i{font-size:45px;filter:drop-shadow(0 8px 15px #0005);z-index:1}
+.world-content{padding:14px}
+.world-content h3{font-family:Orbitron,sans-serif;font-size:14px;margin-bottom:5px}
+.world-content p{font-size:11px;line-height:1.5;color:var(--muted);margin-bottom:10px}
+.world-action{font-size:10px;color:var(--gold);font-weight:800;cursor:pointer}
+
+@media(max-width:750px){.world-grid{grid-template-columns:1fr}}
 
 /* STORE TOOLBAR */
 .store-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:18px}
@@ -268,14 +275,6 @@ section{padding:60px 0}
 .news-date{font-size:8px;color:var(--gold)}
 @media(max-width:750px){.news-grid{grid-template-columns:1fr}}
 
-/* DESTEK / ŞİKAYET BÖLÜMÜ */
-.ticket-container{background:#13131e;border:1px solid var(--border);border-radius:var(--radius);padding:24px}
-.ticket-list{margin-top:20px;display:grid;gap:12px}
-.ticket-card{background:#181824;border:1px solid var(--border);border-radius:10px;padding:14px}
-.ticket-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:11px}
-.ticket-body{font-size:11px;color:var(--muted);line-height:1.5;margin-bottom:10px}
-.ticket-reply{background:#111118;border-left:3px solid var(--gold);padding:8px 12px;border-radius:6px;font-size:11px;margin-top:8px}
-
 /* CTA / FOOTER */
 .cta{
   padding:30px 18px;border:1px solid #ffb52e33;border-radius:16px;text-align:center;
@@ -318,7 +317,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 .modal-product img, .modal-product svg{width:80px;height:80px;margin-bottom:10px;object-fit:contain}
 .modal-product h3{font-size:15px;margin:6px 0 4px}
 .modal-product p{font-size:11px;line-height:1.6;color:var(--muted)}
-.modal-product .price{font-size:18px;margin-bytes:8px}
+.modal-product .price{font-size:18px;margin:8px}
 .toast{
   position:fixed;z-index:4000;bottom:16px;left:50%;transform:translate(-50%,20px);
   background:#1b1b29;border:1px solid #ffffff1a;padding:10px 14px;border-radius:9px;
@@ -344,26 +343,28 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 <header class="navbar">
   <div class="container nav-inner">
     <a href="#anasayfa" class="logo">
-      <span class="logo-icon">
-        <img src="logo.png" alt="Logo" onerror="this.replaceWith(document.createElement('i'));this.className='fa-solid fa-sun'">
-      </span>
+      <span class="logo-icon"><i class="fa-solid fa-sun"></i></span>
       <span>GÜNEŞCRAFT<small>NETWORK</small></span>
     </a>
     <nav class="nav-links" id="navLinks">
       <a href="#anasayfa" onclick="toggleMenu()">Ana Sayfa</a>
-      <a href="#towny" onclick="toggleMenu()">Towny Harita</a>
+      <a href="#dunyalar" onclick="toggleMenu()">Dünyalar</a>
       <a href="#magaza" onclick="toggleMenu()">Mağaza</a>
-      <a href="#destek" onclick="toggleMenu()">Destek</a>
+      <a href="#ozellikler" onclick="toggleMenu()">Özellikler</a>
       <a href="#duyurular" onclick="toggleMenu()">Duyurular</a>
     </nav>
     <div class="nav-actions">
       <div class="online-badge">
         <span class="online-dot"></span>
-        <span>Aktif: <strong id="headerOnline" class="gold">...</strong></span>
+        <span>Aktif: <strong id="headerOnline" class="gold">...</strong>/100</span>
       </div>
+
       <div id="userProfileArea" style="display:flex;align-items:center;gap:6px">
         <button class="btn btn-primary" onclick="openLogin()"><i class="fa-solid fa-user"></i> Giriş Yap</button>
       </div>
+
+      <div class="top-round-logo" title="GüneşCraft Network"><i class="fa-solid fa-sun"></i></div>
+
       <button class="mobile-toggle" onclick="toggleMenu()" aria-label="Menüyü aç"><i class="fa-solid fa-bars"></i></button>
     </div>
   </div>
@@ -373,27 +374,27 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 <section class="hero" id="anasayfa">
   <div class="container hero-grid">
     <div>
-      <div class="eyebrow"><i class="fa-solid fa-bolt"></i> Towny Macerası Seni Bekliyor</div>
-      <h1>ŞEHRİNİ KUR,<br><span class="gradient">GÜNEŞ GİBİ</span><br>PARLA!</h1>
+      <div class="eyebrow"><i class="fa-solid fa-bolt"></i> Yeni macera seni bekliyor</div>
+      <h1>OYUNA<br><span class="gradient">GÜNEŞ GİBİ</span><br>DOĞ!</h1>
       <p>
-        GüneşCraft Towny dünyasına katıl! Şehrini kur, arazini genişlet,
-        müttefiklerinle ticaret yap ve kendi imparatorluğunu inşa et.
+        GüneşCraft Network dünyasına katıl! Yeni maceralar keşfet,
+        ekonomini geliştir, arkadaşlarınla oyna ve kendi efsaneni yaz.
       </p>
       <div class="hero-buttons">
         <button class="btn btn-primary" onclick="copyIP()"><i class="fa-solid fa-gamepad"></i> Sunucuya Katıl</button>
         <a href="#magaza" class="btn btn-secondary"><i class="fa-solid fa-store"></i> Mağazayı Keşfet</a>
       </div>
       <div class="hero-stats">
-        <div class="stat"><strong class="gradient">7/24</strong><span>TOWNY</span></div>
-        <div class="stat"><strong>1.16+</strong><span>MINECRAFT</span></div>
-        <div class="stat"><strong class="gradient">∞</strong><span>ŞEHİR & ARAZİ</span></div>
+        <div class="stat"><strong class="gradient">7/24</strong><span>MACERA</span></div>
+        <div class="stat"><strong>1.21+</strong><span>MINECRAFT</span></div>
+        <div class="stat"><strong class="gradient">∞</strong><span>KEŞFEDİLECEK DÜNYA</span></div>
       </div>
     </div>
     <div class="hero-visual">
       <div class="orbit"></div>
       <div class="planet"><div class="planet-ring"></div></div>
-      <div class="floating-card fc-one"><i class="fa-solid fa-city"></i><b>Towny Sistemi</b><br><span class="muted">Kendi şehrini yönet.</span></div>
-      <div class="floating-card fc-two"><i class="fa-solid fa-coins"></i><b>Ekonomi & Ticaret</b></div>
+      <div class="floating-card fc-one"><i class="fa-solid fa-fire"></i><b>GüneşCraft</b><br><span class="muted">Kendi efsaneni yaz.</span></div>
+      <div class="floating-card fc-two"><i class="fa-solid fa-cube"></i><b>Maceraya hazır mısın?</b></div>
     </div>
   </div>
 </section>
@@ -403,39 +404,56 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
     <div class="status-left">
       <span class="status-dot"></span>
       <div>
-        <strong>GüneşCraft Towny</strong>
-        <small>Sunucu Durumu — Anlık Oyuncu: <span id="statusOnline" style="color:var(--green);font-weight:bold">...</span> | Ping: <span id="statusPing" class="gold" style="font-weight:bold">...</span></small>
+        <strong>GüneşCraft Network</strong>
+        <small>Sunucu Durumu — Anlık Oyuncu: <span id="statusOnline" style="color:var(--green);font-weight:bold">...</span></small>
       </div>
     </div>
     <div class="server-ip">
-      <code id="serverIP">play.gunescraft.xyz</code>
+      <code id="serverIP">gunescraft.xyz</code>
       <button class="copy-btn" onclick="copyIP()" title="IP adresini kopyala" aria-label="IP Kopyala"><i class="fa-regular fa-copy"></i></button>
     </div>
   </div>
 </div>
 
-<section id="towny">
+<section id="dunyalar">
   <div class="container">
     <div class="section-head">
-      <div class="eyebrow">Canlı Harita</div>
-      <h2 class="section-title">TOWNY <span class="gradient">DÜNYASI</span></h2>
-      <p class="section-desc">Sunucudaki şehirleri, sınırları ve oyuncuların konumlarını tam ekran canlı olarak incele.</p>
+      <div class="eyebrow">Keşfetmeye başla</div>
+      <h2 class="section-title">SENİ BEKLEYEN <span class="gradient">DÜNYALAR</span></h2>
+      <p class="section-desc">Her dünyada farklı bir macera, farklı bir hedef seni bekliyor.</p>
     </div>
     <div class="world-grid">
       <article class="world-card">
-        <div class="world-art"><i class="fa-solid fa-city"></i></div>
+        <div class="world-art"><i class="fa-solid fa-earth-europe" style="color:#8de7a8"></i></div>
         <div class="world-content">
-          <span class="badge">CANLI HARİTA</span>
-          <h3 style="margin-top:8px">GüneşCraft Towny Haritası</h3>
-          <p>Şehirlerin sınırlarını görmek ve haritada keşfe çıkmak için tıkla.</p>
-          <a class="world-action" href="http://157.90.133.100:25749/?world=world&renderer=vintage_story&zoom=-2&x=2651&z=-3147" target="_blank">TAM HARİTAYI AÇ <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+          <span class="badge">ANA DÜNYA</span>
+          <h3 style="margin-top:8px">Dünya</h3>
+          <p>Yeni yerler keşfet, kaynaklarını topla ve kendi maceranı oluştur.</p>
+          <a class="world-action" onclick="openMapModal('Ana Dünya Haritası')">CANLI HARİTAYI AÇ <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </article>
+      <article class="world-card">
+        <div class="world-art"><i class="fa-solid fa-city" style="color:#f6d28b"></i></div>
+        <div class="world-content">
+          <span class="badge">ŞEHİR KUR</span>
+          <h3 style="margin-top:8px">Towny (Şehirler)</h3>
+          <p>Kendi şehrini kur, arazini geliştir ve arkadaşlarınla büyü.</p>
+          <a class="world-action" onclick="openMapModal('Towny Şehir Haritası')">CANLI HARİTAYI AÇ <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </article>
+      <article class="world-card">
+        <div class="world-art"><i class="fa-solid fa-gem" style="color:#c4b5fd"></i></div>
+        <div class="world-content">
+          <span class="badge">KAYNAK AVCISI</span>
+          <h3 style="margin-top:8px">Madenler</h3>
+          <p>Değerli kaynakları bul, ekipmanlarını geliştir ve hazineleri keşfet.</p>
+          <a class="world-action" onclick="openMapModal('Maden Dünyası')">HARİTA BİLGİSİ <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </article>
     </div>
   </div>
 </section>
 
-<!-- MAĞAZA -->
 <section id="magaza" style="background:linear-gradient(180deg,transparent,#15152050,transparent)">
   <div class="container">
     <div class="section-head">
@@ -454,47 +472,49 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
     </div>
     <div class="product-grid" id="productGrid"></div>
     <p id="emptyProducts" class="muted hidden" style="text-align:center;padding:25px">Bu kategoride ürün bulunamadı.</p>
+    <div style="text-align:center;margin-top:20px">
+      <span class="muted" style="font-size:10px"><i class="fa-solid fa-circle-info gold"></i> Ödemeler güvenli Shopier altyapısı ile gerçekleştirilmektedir.</span>
+    </div>
   </div>
 </section>
 
-<!-- DESTEK / ŞİKAYET BÖLÜMÜ -->
-<section id="destek">
+<section id="ozellikler">
   <div class="container">
     <div class="section-head">
-      <div class="eyebrow">Yardım ve Bildirim</div>
-      <h2 class="section-title">DESTEK VE <span class="gradient">ŞİKAYET MERKEZİ</span></h2>
-      <p class="section-desc">Sorun bildirmek, şikayette bulunmak veya destek almak için talep oluştur.</p>
+      <div class="eyebrow">Neden GüneşCraft?</div>
+      <h2 class="section-title">OYUNUNU <span class="gradient">YAŞA</span></h2>
+      <p class="section-desc">Sadece oynamak değil, kendi hikâyeni yazmak için.</p>
     </div>
-    <div class="ticket-container">
-      <div id="ticketFormArea">
-        <h3 style="font-size:14px;margin-bottom:12px"><i class="fa-solid fa-headset gold"></i> Yeni Destek Talebi Oluştur</h3>
-        <form onsubmit="createTicket(event)">
-          <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
-            <div class="form-group">
-              <label for="ticketCategory">Kategori</label>
-              <select class="form-control" id="ticketCategory">
-                <option value="Destek / Soru">❓ Destek / Soru</option>
-                <option value="Oyuncu Şikayeti">⚠️ Oyuncu Şikayeti</option>
-                <option value="Hata / Bug Bildirimi">🐛 Hata / Bug Bildirimi</option>
-                <option value="Mağaza / Ödeme">💳 Mağaza / Ödeme</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="ticketSubject">Konu Başlığı</label>
-              <input class="form-control" id="ticketSubject" placeholder="Örn: Haksız ban yedim" required>
-            </div>
-          </div>
-          <div class="form-group" style="margin-bottom:10px">
-            <label for="ticketMessage">Mesajınız / Detay</label>
-            <textarea class="form-control" id="ticketMessage" rows="3" placeholder="Yaşadığınız sorunu detaylıca anlatın..." required></textarea>
-          </div>
-          <button class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Talebi Gönder</button>
-        </form>
+    <div class="feature-grid">
+      <div class="feature">
+        <div class="feature-icon"><i class="fa-solid fa-earth-americas"></i></div>
+        <h3>Geniş Oyun Dünyası</h3>
+        <p>Keşfet, kaynak topla, inşa et ve kendi oyun tarzını oluştur.</p>
       </div>
-
-      <div style="margin-top:25px">
-        <h3 style="font-size:13px;margin-bottom:10px"><i class="fa-solid fa-list gold"></i> Destek Taleplerim</h3>
-        <div class="ticket-list" id="ticketList"></div>
+      <div class="feature">
+        <div class="feature-icon"><i class="fa-solid fa-users"></i></div>
+        <h3>Topluluk</h3>
+        <p>Arkadaşlarınla oyna, yeni oyuncularla tanış ve birlikte geliş.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon"><i class="fa-solid fa-coins"></i></div>
+        <h3>Ekonomi</h3>
+        <p>Kaynaklarını değerlendir, ticaret yap ve hedeflerine ulaş.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon"><i class="fa-solid fa-cubes-stacked"></i></div>
+        <h3>Spawner Sistemi</h3>
+        <p>Mağazadaki spawner ürünlerini incele ve oyun stratejini geliştir.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon"><i class="fa-solid fa-crown"></i></div>
+        <h3>VIP Paketleri</h3>
+        <p>Sunucu için hazırlanan VIP seçeneklerini mağazadan keşfet.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon"><i class="fa-solid fa-bullhorn"></i></div>
+        <h3>Güncel Duyurular</h3>
+        <p>Etkinlikleri ve sunucuyla ilgili yenilikleri duyurular bölümünden takip et.</p>
       </div>
     </div>
   </div>
@@ -516,8 +536,8 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
     <div class="cta">
       <div class="eyebrow">Maceraya katıl</div>
       <h2>GÜNEŞCRAFT'TA <span class="gradient">YERİNİ AL!</span></h2>
-      <p>Sunucu adresini kopyala ve Minecraft Towny macerasına başla.</p>
-      <button class="btn btn-primary" onclick="copyIP()"><i class="fa-solid fa-copy"></i> play.gunescraft.xyz</button>
+      <p>Sunucu adresini kopyala ve Minecraft'ta maceraya hazırlan.</p>
+      <button class="btn btn-primary" onclick="copyIP()"><i class="fa-solid fa-copy"></i> gunescraft.xyz</button>
     </div>
   </div>
 </section>
@@ -526,21 +546,18 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 <footer>
   <div class="container footer-inner">
     <a href="#anasayfa" class="logo">
-      <span class="logo-icon" style="width:28px;height:28px;border-radius:8px;">
-        <img src="logo.png" alt="Logo" onerror="this.replaceWith(document.createElement('i'));this.className='fa-solid fa-sun'">
-      </span>
+      <span class="logo-icon"><i class="fa-solid fa-sun"></i></span>
       <span>GÜNEŞCRAFT<small>NETWORK</small></span>
     </a>
     <p>© <span id="year"></span> GüneşCraft Network. Tüm hakları saklıdır.</p>
     <div class="socials">
-      <a href="https://instagram.com/güneşcraftofficial" target="_blank" title="Instagram (@güneşcraftofficial)" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-      <a href="https://youtube.com/@güneşcraftofficial" target="_blank" title="YouTube (@güneşcraftofficial)" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-      <a href="https://discord.gg/83BwhExXm" target="_blank" title="Discord Sunucumuz" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+      <a href="https://instagram.com/güneşcraftofficial" target="_blank" title="Instagram" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://youtube.com/@güneşcraftofficial" target="_blank" title="YouTube" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+      <a href="https://discord.gg/83BwhExXm" target="_blank" title="Discord" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
     </div>
   </div>
 </footer>
 
-<!-- ÜRÜN DETAY MODALI -->
 <div class="modal-backdrop" id="productModal" onclick="backdropClose(event,'productModal')">
   <div class="modal">
     <div class="modal-header">
@@ -551,7 +568,21 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
   </div>
 </div>
 
-<!-- GİRİŞ / KAYIT / ADMIN MODALI -->
+<div class="modal-backdrop" id="mapModal" onclick="backdropClose(event,'mapModal')">
+  <div class="modal" style="width:min(880px, 95%); max-height:92vh;">
+    <div class="modal-header">
+      <h2 id="mapModalTitle"><i class="fa-solid fa-earth-europe gold"></i> CANLI DÜNYA HARİTASI</h2>
+      <button class="close-modal" onclick="closeModal('mapModal')">&times;</button>
+    </div>
+    <div style="position:relative; width:100%; height:420px; background:#0d0d15; border-radius:10px; overflow:hidden; border:1px solid var(--border);">
+      <iframe id="mapIframe" src="about:blank" style="width:100%; height:100%; border:0;"></iframe>
+    </div>
+    <p class="muted" style="font-size:10px; margin-top:10px; text-align:center;">
+      <i class="fa-solid fa-circle-info gold"></i> Sunucunuzda Dynmap aktif olduğunda harita doğrudan burada yüklenecektir.
+    </p>
+  </div>
+</div>
+
 <div class="modal-backdrop" id="loginModal" onclick="backdropClose(event,'loginModal')">
   <div class="modal">
     <div class="modal-header">
@@ -565,7 +596,6 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
       <button class="auth-tab" onclick="switchAuthTab('admin_login', this)">Admin Girişi</button>
     </div>
 
-    <!-- Oyuncu Girişi -->
     <form id="formUserLogin" onsubmit="userLogin(event)">
       <div class="form-group">
         <label for="playerUser">Minecraft Kullanıcı Adı</label>
@@ -578,7 +608,6 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
       <button class="btn btn-primary" style="width:100%"><i class="fa-solid fa-right-to-bracket"></i> Oyuncu Girişi Yap</button>
     </form>
 
-    <!-- Oyuncu Kayıt -->
     <form id="formUserRegister" class="hidden" onsubmit="userRegister(event)">
       <div class="form-group">
         <label for="regUser">Minecraft Kullanıcı Adı</label>
@@ -595,7 +624,6 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
       <button class="btn btn-primary" style="width:100%"><i class="fa-solid fa-user-plus"></i> Kayıt Ol ve Giriş Yap</button>
     </form>
 
-    <!-- Admin Girişi -->
     <form id="formAdminLogin" class="hidden" onsubmit="adminLogin(event)">
       <div class="form-group">
         <label for="adminUser">Yönetici Adı</label>
@@ -610,7 +638,6 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
   </div>
 </div>
 
-<!-- YÖNETİCİ PANELİ MODALI -->
 <div class="modal-backdrop" id="adminModal" onclick="backdropClose(event,'adminModal')">
   <div class="modal admin-panel">
     <div class="modal-header">
@@ -619,11 +646,9 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
     </div>
     <div class="admin-tabs">
       <button class="admin-tab active" onclick="adminTab('products',this)">Ürünler</button>
-      <button class="admin-tab" onclick="adminTab('tickets',this)">Destek Talepleri</button>
       <button class="admin-tab" onclick="adminTab('news',this)">Duyurular</button>
       <button class="admin-tab" onclick="adminTab('settings',this)">Site Ayarları</button>
     </div>
-    
     <div id="adminProducts">
       <h3 style="font-size:12px;margin-bottom:10px">Yeni Ürün Ekle</h3>
       <form onsubmit="addProduct(event)">
@@ -663,12 +688,6 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
       </form>
       <div class="admin-list" id="adminProductList"></div>
     </div>
-
-    <!-- Admin Destek Paneli -->
-    <div id="adminTickets" class="hidden">
-      <h3 style="font-size:12px;margin-bottom:10px">Oyuncu Destek ve Şikayetleri</h3>
-      <div class="admin-list" id="adminTicketList"></div>
-    </div>
     
     <div id="adminNews" class="hidden">
       <h3 style="font-size:12px;margin-bottom:10px">Yeni Duyuru Ekle</h3>
@@ -684,8 +703,8 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
     <div id="adminSettings" class="hidden">
       <h3 style="font-size:12px;margin-bottom:10px">Site Ayarları</h3>
       <form onsubmit="saveSettings(event)">
-        <div class="form-group"><label for="settingIP">Sunucu IP Adresi</label><input class="form-control" id="settingIP" value="play.gunescraft.xyz" required></div>
-        <div class="form-group"><label for="settingTitle">Site Başlığı</label><input class="form-control" id="settingTitle" value="GüneşCraft Towny" required></div>
+        <div class="form-group"><label for="settingIP">Sunucu IP Adresi</label><input class="form-control" id="settingIP" value="gunescraft.xyz" required></div>
+        <div class="form-group"><label for="settingTitle">Site Başlığı</label><input class="form-control" id="settingTitle" value="GüneşCraft Network" required></div>
         <button class="btn btn-primary">Ayarları Kaydet</button>
       </form>
     </div>
@@ -705,50 +724,40 @@ const BOX_ASSETS = {
 };
 
 const DEFAULT_PRODUCTS = [
-  {id:1, name:"Zombi Spawner", category:"spawner", price:149, description:"Otomatik zombi ve XP kasma spawnerı.", boxType:"spawner"},
-  {id:2, name:"İskelet Spawner", category:"spawner", price:179, description:"Kemik ve ok stoklamak için harika spawner.", boxType:"spawner"},
-  {id:3, name:"Örümcek Spawner", category:"spawner", price:169, description:"İp ve örümcek gözü üretimi için birebir.", boxType:"spawner"},
-  {id:4, name:"İnek Spawner", category:"spawner", price:129, description:"Sınırsız deri ve biftek üretimi sağlar.", boxType:"spawner"},
-  {id:5, name:"Creeper Spawner", category:"spawner", price:199, description:"TNT ve barut farmı kurmak için ideal.", boxType:"spawner"},
-  {id:6, name:"Blaze Spawner", category:"spawner", price:229, description:"İksir yapımı için blaze çubuğu kasın.", boxType:"spawner"},
-  {id:7, name:"VIP Paketi", category:"vip", price:99, description:"Özel komutlar, uçuş yetkisi ve ekstra ev hakkı.", boxType:"vip_gold"},
-  {id:8, name:"VIP+ Paketi", category:"vip", price:199, description:"Gelişmiş kitler ve renkli sohbet ayrıcalığı.", boxType:"vip_diamond"},
-  {id:9, name:"MVP Paketi", category:"vip", price:299, description:"En üst düzey yetkiler ve sınırsız özellikler.", boxType:"vip_diamond"},
-  {id:10, name:"Özel Kasa", category:"item", price:49, description:"İçerisinden nadir Minecraft eşyaları çıkar.", boxType:"chest"},
-  {id:11, name:"Anahtar Paketi", category:"item", price:39, description:"Sunucudaki gizli kasaları açmak için 5x Anahtar.", boxType:"key"},
-  {id:12, name:"Elmas Paketi", category:"item", price:79, description:"Oyun içi ekonomide yükselmek için 64x Elmas.", boxType:"diamond"}
+  {id:1, name:"Zombi Spawner", category:"spawner", price:149, description:"Otomatik zombi ve XP kasma spawnerı.", boxType:"spawner", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_1"},
+  {id:2, name:"İskelet Spawner", category:"spawner", price:179, description:"Kemik ve ok stoklamak için harika spawner.", boxType:"spawner", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_2"},
+  {id:3, name:"Örümcek Spawner", category:"spawner", price:169, description:"İp ve örümcek gözü üretimi için birebir.", boxType:"spawner", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_3"},
+  {id:4, name:"İnek Spawner", category:"spawner", price:129, description:"Sınırsız deri ve biftek üretimi sağlar.", boxType:"spawner", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_4"},
+  {id:5, name:"Creeper Spawner", category:"spawner", price:199, description:"TNT ve barut farmı kurmak için ideal.", boxType:"spawner", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_5"},
+  {id:6, name:"Blaze Spawner", category:"spawner", price:229, description:"İksir yapımı için blaze çubuğu kasın.", boxType:"spawner", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_6"},
+  {id:7, name:"VIP Paketi", category:"vip", price:99, description:"Özel komutlar, uçuş yetkisi ve ekstra ev hakkı.", boxType:"vip_gold", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_7"},
+  {id:8, name:"VIP+ Paketi", category:"vip", price:199, description:"Gelişmiş kitler ve renkli sohbet ayrıcalığı.", boxType:"vip_diamond", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_8"},
+  {id:9, name:"MVP Paketi", category:"vip", price:299, description:"En üst düzey yetkiler ve sınırsız özellikler.", boxType:"vip_diamond", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_9"},
+  {id:10, name:"Özel Kasa", category:"item", price:49, description:"İçerisinden nadir Minecraft eşyaları çıkar.", boxType:"chest", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_10"},
+  {id:11, name:"Anahtar Paketi", category:"item", price:39, description:"Sunucudaki gizli kasaları açmak için 5x Anahtar.", boxType:"key", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_11"},
+  {id:12, name:"Elmas Paketi", category:"item", price:79, description:"Oyun içi ekonomide yükselmek için 64x Elmas.", boxType:"diamond", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_12"}
 ];
 
 const DEFAULT_NEWS = [
-  {id:1, title:"Towny Sezon 1 Açıldı!", text:"GüneşCraft Towny kapılarını açtı. Şehrini kurmaya başla!", emoji:"🎉", date:"Bugün"},
-  {id:2, title:"Yeni Spawner Sistemi", text:"Marketimize yeni nesil spawner çeşitleri eklendi.", emoji:"⚡", date:"Dün"}
+  {id:1, title:"1. Sezon Açıldı!", text:"GüneşCraft Sezon 1 kapılarını oyunculara açtı. Hemen katıl!", emoji:"🎉", date:"Bugün"},
+  {id:2, title:"Yeni Spawner Sistemi", text:"Marketimize yeni nesil spawner çeşitleri ve VIP kitleri eklendi.", emoji:"⚡", date:"Dün"}
 ];
 
 let products = JSON.parse(localStorage.getItem('gc_products')) || DEFAULT_PRODUCTS;
 let newsList = JSON.parse(localStorage.getItem('gc_news')) || DEFAULT_NEWS;
-let tickets = JSON.parse(localStorage.getItem('gc_tickets')) || [];
 let registeredUsers = JSON.parse(localStorage.getItem('gc_users')) || [];
 let currentUser = JSON.parse(localStorage.getItem('gc_current_user')) || null;
 let currentCategory = 'all';
 
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// GERÇEK ANLIK OYUNCU VE MS (PİNG) ÖLÇEN FONKSİYON
 function fetchServerStatus() {
-  const startTime = performance.now();
-  
-  fetch('https://api.mcsrvstat.us/3/play.gunescraft.xyz')
+  fetch('https://api.mcsrvstat.us/3/gunescraft.xyz')
     .then(response => response.json())
     .then(data => {
-      const endTime = performance.now();
-      const pingMs = Math.round(endTime - startTime);
-      
       const headerCount = document.getElementById('headerOnline');
       const statusCount = document.getElementById('statusOnline');
-      const statusPing = document.getElementById('statusPing');
       
-      if(statusPing) statusPing.textContent = pingMs + "ms";
-
       if (data.online) {
         let players = data.players.online;
         let maxPlayers = data.players.max;
@@ -761,16 +770,19 @@ function fetchServerStatus() {
       }
     })
     .catch(err => {
-      console.log("Sunucu durumu alınamadı:", err);
       const headerCount = document.getElementById('headerOnline');
-      const statusPing = document.getElementById('statusPing');
-      if(headerCount) headerCount.textContent = "3";
-      if(statusPing) statusPing.textContent = "18ms";
+      if(headerCount) headerCount.textContent = "48";
     });
 }
 
 fetchServerStatus();
 setInterval(fetchServerStatus, 10000);
+
+function openMapModal(title){
+  document.getElementById('mapModalTitle').innerHTML = `<i class="fa-solid fa-earth-europe gold"></i> ${title}`;
+  document.getElementById('mapIframe').src = "about:blank"; 
+  document.getElementById('mapModal').classList.add('show');
+}
 
 function toggleMenu(){
   document.getElementById('navLinks').classList.toggle('open');
@@ -854,131 +866,24 @@ function renderNews(){
   `).join('');
 }
 
-// DESTEK / ŞİKAYET FONKSİYONLARI
-function createTicket(e){
-  e.preventDefault();
-  if(!currentUser){
-    showToast("Destek talebi oluşturmak için giriş yapmalısın!");
-    openLogin();
-    return;
-  }
-  const category = document.getElementById('ticketCategory').value;
-  const subject = document.getElementById('ticketSubject').value.trim();
-  const message = document.getElementById('ticketMessage').value.trim();
-
-  const newTicket = {
-    id: Date.now(),
-    username: currentUser.username,
-    category,
-    subject,
-    message,
-    reply: '',
-    status: 'Bekliyor',
-    date: 'Bugün'
-  };
-
-  tickets.unshift(newTicket);
-  localStorage.setItem('gc_tickets', JSON.stringify(tickets));
-  document.getElementById('ticketSubject').value = '';
-  document.getElementById('ticketMessage').value = '';
-  renderTickets();
-  showToast("Destek talebin başarıyla gönderildi!");
-}
-
-function renderTickets(){
-  const list = document.getElementById('ticketList');
-  if(!currentUser){
-    list.innerHTML = `<p class="muted" style="font-size:11px">Destek taleplerini görmek ve oluşturmak için giriş yapmalısın.</p>`;
-    return;
-  }
-
-  // Oyuncu sadece kendi taleplerini görür, Admin hepsini görür
-  const userTickets = currentUser.isAdmin ? tickets : tickets.filter(t => t.username === currentUser.username);
-
-  if(userTickets.length === 0){
-    list.innerHTML = `<p class="muted" style="font-size:11px">Henüz bir destek talebin bulunmuyor.</p>`;
-    return;
-  }
-
-  list.innerHTML = userTickets.map(t => `
-    <div class="ticket-card">
-      <div class="ticket-header">
-        <span><strong>[${t.category}]</strong> ${t.subject} ${currentUser.isAdmin ? `(<span class="gold">${t.username}</span>)` : ''}</span>
-        <span class="badge" style="background:${t.reply ? '#5bffab22' : '#ffb52e22'}; color:${t.reply ? 'var(--green)' : 'var(--gold)'}">${t.reply ? 'Cevaplandı' : 'Bekliyor'}</span>
-      </div>
-      <div class="ticket-body">${t.message}</div>
-      ${t.reply ? `<div class="ticket-reply"><i class="fa-solid fa-shield-halved gold"></i> <strong>Admin Cevabı:</strong> ${t.reply}</div>` : ''}
-    </div>
-  `).join('');
-}
-
-function renderAdminTickets(){
-  const list = document.getElementById('adminTicketList');
-  if(tickets.length === 0){
-    list.innerHTML = `<p class="muted" style="font-size:11px">Henüz hiç destek talebi yok.</p>`;
-    return;
-  }
-  list.innerHTML = tickets.map(t => `
-    <div class="admin-item" style="flex-direction:column;align-items:stretch;gap:6px">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <span><strong>${t.username}</strong> - <span class="gold">${t.category}</span>: ${t.subject}</span>
-        <button class="btn btn-danger" onclick="deleteTicket(${t.id})">Sil</button>
-      </div>
-      <div style="font-size:10px;color:var(--muted);background:#101017;padding:6px;border-radius:4px">${t.message}</div>
-      ${t.reply ? `<div style="font-size:10px;color:var(--green);background:#101017;padding:6px;border-radius:4px"><strong>Cevabın:</strong> ${t.reply}</div>` : ''}
-      <div style="display:flex;gap:6px;margin-top:4px">
-        <input class="form-control" id="replyInput_${t.id}" placeholder="Admin cevabını yaz..." value="${t.reply}">
-        <button class="btn btn-primary" onclick="replyTicket(${t.id})">Cevapla</button>
-      </div>
-    </div>
-  `).join('');
-}
-
-function replyTicket(id){
-  const replyText = document.getElementById(`replyInput_${id}`).value.trim();
-  if(!replyText) return;
-  const t = tickets.find(x => x.id === id);
-  if(t){
-    t.reply = replyText;
-    t.status = 'Cevaplandı';
-    localStorage.setItem('gc_tickets', JSON.stringify(tickets));
-    renderAdminTickets();
-    renderTickets();
-    showToast("Destek talebi yanıtlandı!");
-  }
-}
-
-function deleteTicket(id){
-  tickets = tickets.filter(t => t.id !== id);
-  localStorage.setItem('gc_tickets', JSON.stringify(tickets));
-  renderAdminTickets();
-  renderTickets();
-  showToast("Destek talebi silindi.");
-}
-
 function openProduct(id){
   const p = products.find(x => x.id === id);
   if(!p) return;
   const content = document.getElementById('productModalContent');
+  const shopierUrl = p.shopierLink && p.shopierLink.trim() !== '' ? p.shopierLink : 'https://www.shopier.com/';
+  
   content.innerHTML = `
     <div class="modal-product">
       ${getProductArt(p)}
       <h3>${p.name}</h3>
       <p>${p.description}</p>
       <div class="price">${p.price} ₺</div>
-      <button class="btn btn-primary" style="width:100%" onclick="buyAction('${p.name}')"><i class="fa-solid fa-cart-shopping"></i> Satın Al / Bilgi Al</button>
+      <a href="${shopierUrl}" target="_blank" class="btn btn-primary" style="width:100%; text-decoration:none; display:inline-flex; justify-content:center; align-items:center; gap:6px;">
+        <i class="fa-solid fa-cart-shopping"></i> Shopier ile Satın Al
+      </a>
     </div>
   `;
   document.getElementById('productModal').classList.add('show');
-}
-
-function buyAction(name){
-  if(currentUser){
-    showToast(`Sayın ${currentUser.username}, ${name} talebiniz alındı!`);
-  } else {
-    showToast(`${name} için satın alma talebi alındı. Yetkiliye başvur.`);
-  }
-  closeModal('productModal');
 }
 
 function openLogin(){
@@ -1017,7 +922,6 @@ function userRegister(e){
 
   closeModal('loginModal');
   updateUserUI();
-  renderTickets();
   showToast(`Hoş geldin ${username}!`);
 }
 
@@ -1033,7 +937,6 @@ function userLogin(e){
     localStorage.setItem('gc_current_user', JSON.stringify(currentUser));
     closeModal('loginModal');
     updateUserUI();
-    renderTickets();
     showToast(`Tekrar hoş geldin, ${username}!`);
   } else {
     showToast("Kullanıcı adı veya şifre hatalı!");
@@ -1049,10 +952,8 @@ function adminLogin(e){
     localStorage.setItem('gc_current_user', JSON.stringify(currentUser));
     closeModal('loginModal');
     updateUserUI();
-    renderTickets();
     document.getElementById('adminModal').classList.add('show');
     renderAdminLists();
-    renderAdminTickets();
     showToast("Admin paneline giriş yapıldı.");
   } else {
     showToast("Hatalı Admin Bilgileri!");
@@ -1063,7 +964,6 @@ function userLogout(){
   currentUser = null;
   localStorage.removeItem('gc_current_user');
   updateUserUI();
-  renderTickets();
   showToast("Çıkış yapıldı.");
 }
 
@@ -1089,7 +989,6 @@ function updateUserUI(){
 function openAdminPanel(){
   document.getElementById('adminModal').classList.add('show');
   renderAdminLists();
-  renderAdminTickets();
 }
 
 function closeModal(id){
@@ -1104,12 +1003,9 @@ function adminTab(tab, btn){
   document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('adminProducts').classList.add('hidden');
-  document.getElementById('adminTickets').classList.add('hidden');
   document.getElementById('adminNews').classList.add('hidden');
   document.getElementById('adminSettings').classList.add('hidden');
-  
   if(tab === 'products') document.getElementById('adminProducts').classList.remove('hidden');
-  if(tab === 'tickets') { document.getElementById('adminTickets').classList.remove('hidden'); renderAdminTickets(); }
   if(tab === 'news') document.getElementById('adminNews').classList.remove('hidden');
   if(tab === 'settings') document.getElementById('adminSettings').classList.remove('hidden');
 }
@@ -1124,7 +1020,8 @@ function addProduct(e){
     category: document.getElementById('newCategory').value,
     boxType: boxTypeVal,
     image: boxTypeVal === 'custom' ? document.getElementById('newImage').value : '',
-    description: document.getElementById('newDescription').value
+    description: document.getElementById('newDescription').value,
+    shopierLink: "https://www.shopier.com/"
   };
   products.push(newP);
   localStorage.setItem('gc_products', JSON.stringify(products));
@@ -1189,10 +1086,8 @@ function saveSettings(e){
   closeModal('adminModal');
 }
 
-// Initial Render
 renderProducts();
 renderNews();
-renderTickets();
 updateUserUI();
 </script>
 </body>
