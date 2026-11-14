@@ -78,6 +78,10 @@ section{padding:60px 0}
 }
 .nav-inner{min-height:65px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .logo{display:flex;align-items:center;gap:9px;font-family:Orbitron,sans-serif;font-weight:900;font-size:14px}
+.logo-img{
+  width:35px;height:35px;border-radius:10px;object-fit:cover;
+  box-shadow:0 4px 18px #ff9d2733;border:1px solid #ffe7a677;
+}
 .logo-icon{
   width:35px;height:35px;display:grid;place-items:center;border-radius:10px;
   background:linear-gradient(140deg,#ffd36a,#ff762b);color:#211305;
@@ -89,12 +93,6 @@ section{padding:60px 0}
 .nav-links a:hover{color:var(--gold)}
 .nav-actions{display:flex;align-items:center;gap:8px}
 .mobile-toggle{display:none;background:none;border:0;color:white;font-size:20px;padding:4px}
-
-.top-round-logo{
-  width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
-  background:linear-gradient(135deg,#ffb52e,#ff642d);color:#17110a;
-  font-size:14px;box-shadow:0 0 12px #ff9d2744;border:1px solid #ffe7a677;
-}
 
 .online-badge{
   display:flex;align-items:center;gap:5px;padding:5px 9px;
@@ -355,7 +353,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 <header class="navbar">
   <div class="container nav-inner">
     <a href="#anasayfa" class="logo">
-      <span class="logo-icon"><i class="fa-solid fa-sun"></i></span>
+      <img src="logo.png" class="logo-img" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-icon',innerHTML:'<i class=\'fa-solid fa-sun\'></i>'}))" alt="GüneşCraft Logo">
       <span>GÜNEŞCRAFT<small>NETWORK</small></span>
     </a>
     <nav class="nav-links" id="navLinks">
@@ -374,8 +372,6 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
       <div id="userProfileArea" style="display:flex;align-items:center;gap:6px">
         <button class="btn btn-primary" onclick="openLogin()"><i class="fa-solid fa-user"></i> Giriş Yap</button>
       </div>
-
-      <div class="top-round-logo" title="GüneşCraft Network"><i class="fa-solid fa-sun"></i></div>
 
       <button class="mobile-toggle" onclick="toggleMenu()" aria-label="Menüyü aç"><i class="fa-solid fa-bars"></i></button>
     </div>
@@ -524,9 +520,9 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
         <p>Sunucu için hazırlanan VIP seçeneklerini mağazadan keşfet.</p>
       </div>
       <div class="feature">
-        <div class="feature-icon"><i class="fa-solid fa-bullhorn"></i></div>
-        <h3>Canlı Destek</h3>
-        <p>Sorunların için sağ alttan destek talebi oluşturabilir, hızlıca yanıt alabilirsin.</p>
+        <div class="feature-icon"><i class="fa-solid fa-headset"></i></div>
+        <h3>Canlı Destek & Şikayet</h3>
+        <p>Sağ alttaki destek butonundan şikayet ve taleplerini anında ilet.</p>
       </div>
     </div>
   </div>
@@ -555,15 +551,15 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
 </section>
 </main>
 
-<!-- CANLI DESTEK WIDGET (SAĞ ALT) -->
+<!-- SAĞ ALT DESTEK WIDGET -->
 <div class="support-widget">
-  <button class="support-btn" onclick="openSupportModal()" title="Canlı Destek & İletişim" aria-label="Canlı Destek"><i class="fa-solid fa-headset"></i></button>
+  <button class="support-btn" onclick="openSupportModal()" title="Canlı Destek & Şikayet" aria-label="Canlı Destek"><i class="fa-solid fa-headset"></i></button>
 </div>
 
 <footer>
   <div class="container footer-inner">
     <a href="#anasayfa" class="logo">
-      <span class="logo-icon"><i class="fa-solid fa-sun"></i></span>
+      <img src="logo.png" class="logo-img" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-icon',innerHTML:'<i class=\'fa-solid fa-sun\'></i>'}))" alt="GüneşCraft Logo">
       <span>GÜNEŞCRAFT<small>NETWORK</small></span>
     </a>
     <p>© <span id="year"></span> GüneşCraft Network. Tüm hakları saklıdır.</p>
@@ -575,40 +571,40 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
   </div>
 </footer>
 
-<!-- ÜRÜN DETAY MODALI -->
+<!-- ÜRÜN & SHOPIER MODALI -->
 <div class="modal-backdrop" id="productModal" onclick="backdropClose(event,'productModal')">
   <div class="modal">
     <div class="modal-header">
-      <h2>SHOPIER ÖDEME</h2>
+      <h2>SHOPIER İLE SATIN AL</h2>
       <button class="close-modal" onclick="closeModal('productModal')">&times;</button>
     </div>
     <div id="productModalContent"></div>
   </div>
 </div>
 
-<!-- CANLI DESTEK MODALI -->
+<!-- CANLI DESTEK / ŞİKAYET MODALI -->
 <div class="modal-backdrop" id="supportModal" onclick="backdropClose(event,'supportModal')">
   <div class="modal">
     <div class="modal-header">
-      <h2><i class="fa-solid fa-headset gold"></i> CANLI DESTEK TALEBİ</h2>
+      <h2><i class="fa-solid fa-headset gold"></i> DESTEK & ŞİKAYET TALEBİ</h2>
       <button class="close-modal" onclick="closeModal('supportModal')">&times;</button>
     </div>
     <div id="supportModalBody">
-      <p class="muted" style="font-size:11px; margin-bottom:12px;">Sorun, öneri veya destek taleplerini yöneticilere ilet. En kısa sürede yanıt alacaksın.</p>
+      <p class="muted" style="font-size:11px; margin-bottom:12px;">Sorunlarını, önerilerini veya şikayetlerini doğrudan yönetim ekibimize ilet.</p>
       <form onsubmit="submitTicket(event)">
         <div class="form-group">
           <label for="ticketName">Minecraft Kullanıcı Adın</label>
           <input class="form-control" id="ticketName" placeholder="Steve" required>
         </div>
         <div class="form-group">
-          <label for="ticketSubject">Konu</label>
-          <input class="form-control" id="ticketSubject" placeholder="Örn: Ödeme Bildirimi / Hata" required>
+          <label for="ticketSubject">Konu / Kategori</label>
+          <input class="form-control" id="ticketSubject" placeholder="Örn: Ödeme Bildirimi / Oyuncu Şikayeti" required>
         </div>
         <div class="form-group">
-          <label for="ticketMessage">Mesajın</label>
+          <label for="ticketMessage">Mesajın / Şikayet Detayı</label>
           <textarea class="form-control" id="ticketMessage" rows="3" placeholder="Detayları buraya yaz..." required></textarea>
         </div>
-        <button class="btn btn-primary" style="width:100%"><i class="fa-solid fa-paper-plane"></i> Destek Talebi Gönder</button>
+        <button class="btn btn-primary" style="width:100%"><i class="fa-solid fa-paper-plane"></i> Talebi Gönder</button>
       </form>
     </div>
   </div>
@@ -695,13 +691,13 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
     </div>
     <div class="admin-tabs">
       <button class="admin-tab active" onclick="adminTab('products',this)">Ürünler & Shopier</button>
-      <button class="admin-tab" onclick="adminTab('tickets',this)">Destek Talepleri</button>
+      <button class="admin-tab" onclick="adminTab('tickets',this)">Destek & Şikayetler <span id="ticketBadge" style="background:#ff4545;color:white;padding:1px 5px;border-radius:10px;font-size:9px">0</span></button>
       <button class="admin-tab" onclick="adminTab('news',this)">Duyurular</button>
       <button class="admin-tab" onclick="adminTab('settings',this)">Site Ayarları</button>
     </div>
     
     <div id="adminProducts">
-      <h3 style="font-size:12px;margin-bottom:10px">Yeni Ürün Ekle / Shopier Linki Bağla</h3>
+      <h3 style="font-size:12px;margin-bottom:10px">Yeni Ürün Ekle ve Shopier Linki Bağla</h3>
       <form onsubmit="addProduct(event)">
         <div class="admin-grid">
           <div class="form-group"><label for="newName">Ürün Adı</label><input class="form-control" id="newName" placeholder="VIP Paketi" required></div>
@@ -726,7 +722,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
             </select>
           </div>
           <div class="form-group" style="grid-column: 1 / -1;">
-            <label for="newShopier">Shopier Ürün Ödeme Linki</label>
+            <label for="newShopier">Shopier Ödeme Linki</label>
             <input class="form-control" id="newShopier" placeholder="https://www.shopier.com/ShowProductNew/products.php?id=..." required>
           </div>
           <div class="form-group" style="grid-column: 1 / -1;">
@@ -739,9 +735,9 @@ footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
       <div class="admin-list" id="adminProductList"></div>
     </div>
     
-    <!-- DESTEK TALEPLERİ SEKMESİ -->
+    <!-- DESTEK / ŞİKAYET TALEPLERİ -->
     <div id="adminTickets" class="hidden">
-      <h3 style="font-size:12px;margin-bottom:10px">Gelen Canlı Destek Talepleri</h3>
+      <h3 style="font-size:12px;margin-bottom:10px">Gelen Oyuncu Destek & Şikayet Talepleri</h3>
       <div id="adminTicketList"></div>
     </div>
 
@@ -846,10 +842,16 @@ function submitTicket(e){
   localStorage.setItem('gc_tickets', JSON.stringify(tickets));
   
   closeModal('supportModal');
-  showToast("Destek talebin başarıyla iletildi!");
+  showToast("Destek ve şikayet talebin yöneticiye iletildi!");
   document.getElementById('ticketName').value = '';
   document.getElementById('ticketSubject').value = '';
   document.getElementById('ticketMessage').value = '';
+  updateTicketBadge();
+}
+
+function updateTicketBadge(){
+  const badge = document.getElementById('ticketBadge');
+  if(badge) badge.textContent = tickets.length;
 }
 
 function toggleMenu(){
@@ -1105,10 +1107,11 @@ function deleteProduct(id){
   showToast("Ürün silindi.");
 }
 
-function deleteTicket(id){
+function resolveTicket(id){
   tickets = tickets.filter(t => t.id !== id);
   localStorage.setItem('gc_tickets', JSON.stringify(tickets));
   renderAdminLists();
+  updateTicketBadge();
   showToast("Destek talebi kapatıldı.");
 }
 
@@ -1139,14 +1142,14 @@ function deleteNews(id){
 function renderAdminLists(){
   document.getElementById('adminProductList').innerHTML = products.map(p => `
     <div class="admin-item">
-      <span><strong>${p.name}</strong> (${p.price} ₺) - <a href="${p.shopierLink}" target="_blank" style="color:var(--gold)">Shopier Linki</a></span>
+      <span><strong>${p.name}</strong> (${p.price} ₺) - <a href="${p.shopierLink}" target="_blank" style="color:var(--gold)">Shopier Bağlantısı</a></span>
       <button class="btn btn-danger" onclick="deleteProduct(${p.id})">Sil</button>
     </div>
   `).join('');
   
   const ticketContainer = document.getElementById('adminTicketList');
   if(tickets.length === 0){
-    ticketContainer.innerHTML = `<p class="muted" style="font-size:11px">Henüz açık destek talebi bulunmuyor.</p>`;
+    ticketContainer.innerHTML = `<p class="muted" style="font-size:11px">Henüz açık destek ya da şikayet talebi bulunmuyor.</p>`;
   } else {
     ticketContainer.innerHTML = tickets.map(t => `
       <div class="ticket-box">
@@ -1156,7 +1159,7 @@ function renderAdminLists(){
         </div>
         <div style="color:var(--gold);font-weight:600;margin-bottom:2px">Konu: ${t.subject}</div>
         <p style="color:#aaaabd;margin-bottom:8px">${t.message}</p>
-        <button class="btn btn-danger" onclick="deleteTicket(${t.id})"><i class="fa-solid fa-check"></i> Talebi Kapat / Çözüldü İşaretle</button>
+        <button class="btn btn-danger" onclick="resolveTicket(${t.id})"><i class="fa-solid fa-check"></i> Talebi Kapat / Çözüldü İşaretle</button>
       </div>
     `).join('');
   }
@@ -1167,6 +1170,8 @@ function renderAdminLists(){
       <button class="btn btn-danger" onclick="deleteNews(${n.id})">Sil</button>
     </div>
   `).join('');
+  
+  updateTicketBadge();
 }
 
 function saveSettings(e){
@@ -1179,6 +1184,7 @@ function saveSettings(e){
 
 renderProducts();
 renderNews();
+updateTicketBadge();
 updateUserUI();
 </script>
 </body>
