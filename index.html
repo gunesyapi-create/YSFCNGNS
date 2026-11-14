@@ -1,504 +1,1173 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GüneşCraft | Efsanevi Tam Donanımlı Yönetim & Destek Konsolu</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        gunesDark: '#080C14',
-                        gunesCard: '#0E1626',
-                        gunesGold: '#FFD700',
-                        gunesAccent: '#3B82F6',
-                        gunesNeon: '#00F0FF',
-                    },
-                    fontFamily: {
-                        orbitron: ['Orbitron', 'sans-serif'],
-                        inter: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #080C14;
-            color: #F8FAFC;
-        }
-        .font-cyber {
-            font-family: 'Orbitron', sans-serif;
-        }
-        .neon-glow {
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-        }
-        .neon-glow-blue {
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
-            border: 1px solid rgba(0, 240, 255, 0.3);
-        }
-        .glass-panel {
-            background: rgba(14, 22, 38, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #080C14;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1E293B;
-            border-radius: 4px;
-            border: 1px solid rgba(255, 215, 0, 0.2);
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #FFD700;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#101019">
+<meta name="description" content="GüneşCraft Network Minecraft sunucusu. Mağazayı keşfet, VIP paketlerini incele ve maceraya katıl!">
+<title>GüneşCraft Network | Minecraft Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+:root{
+  --bg:#0b0b12;
+  --panel:#13131e;
+  --panel2:#191927;
+  --gold:#ffb52e;
+  --orange:#ff762b;
+  --text:#f5f5fa;
+  --muted:#9292a8;
+  --border:rgba(255,255,255,.09);
+  --green:#5bffab;
+  --radius:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:Poppins,Arial,sans-serif;overflow-x:hidden;
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+img{max-width:100%}
+.container{width:min(1180px,92%);margin:auto}
+section{padding:60px 0}
+.hidden{display:none!important}
+.muted{color:var(--muted)}
+.gold{color:var(--gold)}
+.gradient{
+  background:linear-gradient(110deg,#ffd46b,#ff9d27,#ff642d);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.eyebrow{
+  color:var(--gold);font-size:11px;font-weight:800;
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;
+}
+.section-title{
+  font-family:Orbitron,sans-serif;font-size:clamp(22px,5vw,36px);
+  font-weight:900;margin-bottom:10px;
+}
+.section-desc{color:var(--muted);line-height:1.7;font-size:13px}
+.section-head{text-align:center;max-width:650px;margin:0 auto 35px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:8px 14px;border:1px solid transparent;border-radius:10px;
+  font-weight:700;font-size:11px;transition:.25s;white-space:nowrap;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{
+  color:#17110a;background:linear-gradient(120deg,#ffd16b,#ff8d2d);
+  box-shadow:0 6px 20px rgba(255,154,39,.17);
+}
+.btn-secondary{background:#ffffff08;border-color:var(--border)}
+.btn-secondary:hover{border-color:#ffb52e77}
+.btn-danger{background:#ff45451b;color:#ff7b7b;border-color:#ff45453d}
+.badge{
+  display:inline-flex;align-items:center;gap:5px;padding:4px 8px;
+  border-radius:6px;background:#ffb52e16;color:var(--gold);
+  font-size:9px;font-weight:800;letter-spacing:.5px;
+}
+
+/* NAVIGATION */
+.navbar{
+  position:sticky;top:0;z-index:1000;
+  background:rgba(11,11,18,.92);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{min-height:65px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{display:flex;align-items:center;gap:9px;font-family:Orbitron,sans-serif;font-weight:900;font-size:14px}
+.logo-icon{
+  width:35px;height:35px;display:grid;place-items:center;border-radius:10px;
+  background:linear-gradient(140deg,#ffd36a,#ff762b);color:#211305;
+  font-size:16px;box-shadow:0 4px 18px #ff9d2733;
+}
+.logo small{display:block;color:var(--muted);font:700 8px Poppins,sans-serif;letter-spacing:2px;margin-top:1px}
+.nav-links{display:flex;align-items:center;gap:18px}
+.nav-links a{font-size:11px;font-weight:700;color:#b9b9c9;transition:.2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.mobile-toggle{display:none;background:none;border:0;color:white;font-size:20px;padding:4px}
+
+.top-round-logo{
+  width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
+  background:linear-gradient(135deg,#ffb52e,#ff642d);color:#17110a;
+  font-size:14px;box-shadow:0 0 12px #ff9d2744;border:1px solid #ffe7a677;
+}
+
+.online-badge{
+  display:flex;align-items:center;gap:5px;padding:5px 9px;
+  border-radius:8px;background:#ffffff05;border:1px solid var(--border);
+  font-size:10px;font-weight:700;
+}
+.online-dot{
+  width:6px;height:6px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 8px var(--green);animation:pulseDot 2s infinite;
+}
+.user-badge{
+  display:flex;align-items:center;gap:6px;padding:5px 9px;
+  border-radius:8px;background:#ffb52e12;border:1px solid #ffb52e33;
+  font-size:10px;font-weight:700;color:var(--gold);
+}
+.user-avatar{width:18px;height:18px;border-radius:4px;image-rendering:pixelated}
+
+@keyframes pulseDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.2);opacity:.7}}
+
+@media(max-width:900px){
+  .nav-links{
+    display:none;position:absolute;top:65px;left:0;right:0;padding:18px 5%;
+    flex-direction:column;align-items:stretch;background:#11111b;
+    border-bottom:1px solid var(--border);gap:14px;
+  }
+  .nav-links.open{display:flex}
+  .mobile-toggle{display:block}
+}
+
+/* HERO */
+.hero{
+  min-height:auto;display:flex;align-items:center;position:relative;
+  overflow:hidden;padding:45px 0 35px;
+  background:
+    radial-gradient(ellipse at 78% 35%,#ff8d2d17,transparent 35%),
+    radial-gradient(ellipse at 10% 80%,#5932ff12,transparent 35%);
+}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
+.hero h1{
+  font-family:Orbitron,sans-serif;font-size:clamp(28px,4.8vw,54px);
+  line-height:1.15;font-weight:900;letter-spacing:-1px;margin-bottom:16px;
+}
+.hero p{color:#aaaabd;line-height:1.8;font-size:13px;max-width:520px;margin-bottom:20px}
+.hero-buttons{display:flex;gap:10px;flex-wrap:wrap}
+.hero-stats{display:flex;gap:20px;flex-wrap:wrap;margin-top:24px}
+.stat strong{display:block;font-family:Orbitron,sans-serif;font-size:18px}
+.stat span{font-size:9px;color:var(--muted);letter-spacing:1px}
+.hero-visual{position:relative;min-height:300px;display:grid;place-items:center}
+.planet{
+  width:min(260px,65vw);aspect-ratio:1;border-radius:50%;position:relative;
+  background:
+    radial-gradient(circle at 30% 25%,#ffe49c 0%,#ffb52e 12%,#e87921 37%,#9c3e22 65%,#3b1b2b 85%);
+  box-shadow:inset -20px -18px 40px #1c112eaa,
+    inset 10px 10px 25px #fff3b055,0 0 55px #ff9d2730;
+  animation:float 6s ease-in-out infinite;
+}
+.planet-ring{
+  position:absolute;width:135%;height:35%;border:8px solid #ffcb6570;
+  border-left-color:#ffe7a6aa;border-right-color:#e7793180;
+  border-radius:50%;transform:rotate(-22deg);filter:drop-shadow(0 0 10px #ffb52e44);
+}
+.floating-card{
+  position:absolute;background:#151521eF;border:1px solid var(--border);
+  padding:8px 12px;border-radius:10px;backdrop-filter:blur(12px);
+  box-shadow:0 15px 40px #0005;font-size:10px;
+}
+.floating-card i{color:var(--gold);font-size:14px;margin-right:5px}
+.fc-one{left:0;top:15%}.fc-two{right:0;bottom:15%}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+@media(max-width:800px){
+ .hero-grid{grid-template-columns:1fr;text-align:center}
+ .hero p{margin-left:auto;margin-right:auto}
+ .hero-buttons,.hero-stats{justify-content:center}
+ .hero-visual{min-height:240px;margin-top:15px}
+}
+
+/* SERVER STATUS */
+.status-wrap{margin-top:-15px;position:relative;z-index:5}
+.status-bar{
+  padding:14px 18px;border-radius:14px;border:1px solid var(--border);
+  background:linear-gradient(110deg,#171722,#11111b);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  box-shadow:0 15px 40px #0003;
+}
+.status-left{display:flex;align-items:center;gap:10px}
+.status-dot{width:9px;height:9px;background:var(--green);border-radius:50%;box-shadow:0 0 12px #5bffab66}
+.status-left strong{font-size:12px;display:block}
+.status-left small{font-size:10px;color:var(--muted)}
+.server-ip{display:flex;align-items:center;gap:8px}
+.server-ip code{font-family:Orbitron,sans-serif;color:var(--gold);font-size:12px}
+.copy-btn{
+  width:32px;height:32px;border-radius:7px;background:#ffb52e15;
+  border:1px solid #ffb52e35;color:var(--gold);font-size:11px;
+}
+
+/* WORLDS */
+.world-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.world-card{
+  position:relative;overflow:hidden;min-height:220px;border:1px solid var(--border);
+  border-radius:var(--radius);background:#151520;transition:.3s;
+}
+.world-card:hover{transform:translateY(-4px);border-color:#ffb52e66}
+.world-art{height:110px;display:grid;place-items:center;position:relative;overflow:hidden}
+.world-art i{font-size:45px;filter:drop-shadow(0 8px 15px #0005);z-index:1}
+.world-content{padding:14px}
+.world-content h3{font-family:Orbitron,sans-serif;font-size:14px;margin-bottom:5px}
+.world-content p{font-size:11px;line-height:1.5;color:var(--muted);margin-bottom:10px}
+.world-action{font-size:10px;color:var(--gold);font-weight:800;cursor:pointer}
+
+@media(max-width:750px){.world-grid{grid-template-columns:1fr}}
+
+/* STORE TOOLBAR */
+.store-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.category-list{display:flex;gap:5px;flex-wrap:wrap}
+.category-btn{
+  padding:6px 10px;border-radius:7px;background:#ffffff05;border:1px solid var(--border);
+  color:#aaaabd;font-size:10px;font-weight:700;transition:.2s;
+}
+.category-btn.active,.category-btn:hover{color:var(--gold);border-color:#ffb52e66;background:#ffb52e12}
+.store-search{
+  padding:7px 11px;border-radius:7px;background:#14141f;border:1px solid var(--border);
+  color:white;outline:none;width:100%;max-width:170px;font-size:10px;
+}
+@media(max-width:550px){.store-search{max-width:100%}}
+
+.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.product-card{
+  border:1px solid var(--border);background:linear-gradient(150deg,#171722,#101019);
+  border-radius:12px;overflow:hidden;transition:.25s;position:relative;
+}
+.product-card:hover{transform:translateY(-3px);border-color:#ffb52e55}
+.product-art{
+  height:125px;display:grid;place-items:center;position:relative;overflow:hidden;
+  background:radial-gradient(ellipse at 50% 60%,#ffb52e18,transparent 65%),#ffffff03;
+  border-bottom:1px solid var(--border);padding:8px;
+}
+.product-art img, .product-art svg{
+  width:65px;height:65px;object-fit:contain;image-rendering:pixelated;
+  filter:drop-shadow(0 6px 10px #0008);transition:.3s;
+}
+.product-label{position:absolute;top:8px;left:8px}
+.product-info{padding:11px}
+.product-info h3{font-size:12px;margin-bottom:4px}
+.product-info p{font-size:10px;color:var(--muted);line-height:1.4;min-height:28px}
+.product-bottom{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:10px}
+.price{font-family:Orbitron,sans-serif;color:var(--gold);font-size:14px;font-weight:900}
+.buy-btn{
+  border:0;border-radius:7px;padding:6px 9px;background:#ffb52e18;color:var(--gold);
+  font-size:9px;font-weight:800;transition:.2s;
+}
+.buy-btn:hover{background:var(--gold);color:#17110a}
+@media(max-width:1000px){.product-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:650px){.product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.product-art{height:110px}.product-info{padding:9px}.product-art img,.product-art svg{width:55px;height:55px}.product-info h3{font-size:11px}.price{font-size:12px}.buy-btn{padding:5px 7px}}
+@media(max-width:380px){.product-grid{grid-template-columns:1fr}}
+
+/* FEATURES */
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.feature{
+  padding:18px;border:1px solid var(--border);border-radius:12px;
+  background:linear-gradient(145deg,#171722,#11111a);
+}
+.feature-icon{
+  width:36px;height:36px;border-radius:10px;display:grid;place-items:center;
+  background:#ffb52e15;color:var(--gold);font-size:16px;margin-bottom:12px;
+}
+.feature h3{font-size:13px;margin-bottom:5px}
+.feature p{font-size:10px;color:var(--muted);line-height:1.6}
+@media(max-width:750px){.feature-grid{grid-template-columns:1fr}}
+
+/* NEWS */
+.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.news-card{border:1px solid var(--border);border-radius:12px;background:#151520;overflow:hidden;cursor:pointer;transition:.2s}
+.news-card:hover{border-color:#ffb52e55;transform:translateY(-2px)}
+.news-cover{height:100px;display:grid;place-items:center;font-size:34px;background:radial-gradient(circle,#ffb52e22,#171722)}
+.news-body{padding:14px}
+.news-body h3{font-size:13px;margin:6px 0 4px}
+.news-body p{font-size:10px;color:var(--muted);line-height:1.6}
+.news-date{font-size:8px;color:var(--gold)}
+@media(max-width:750px){.news-grid{grid-template-columns:1fr}}
+
+/* CTA / FOOTER */
+.cta{
+  padding:30px 18px;border:1px solid #ffb52e33;border-radius:16px;text-align:center;
+  background:radial-gradient(ellipse at 50% 0%,#ffb52e1d,transparent 65%),#14141e;
+}
+.cta h2{font-family:Orbitron,sans-serif;font-size:clamp(18px,4vw,28px);margin-bottom:8px}
+.cta p{font-size:11px;color:var(--muted);margin-bottom:16px}
+footer{border-top:1px solid var(--border);padding:22px 0;margin-top:45px}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.footer-inner p{font-size:10px;color:var(--muted)}
+.socials{display:flex;gap:8px}
+.socials a{
+  width:32px;height:32px;display:grid;place-items:center;background:#ffffff08;
+  border:1px solid var(--border);border-radius:8px;color:#bdbdce;font-size:13px;transition:.2s;
+}
+.socials a:hover{color:var(--gold);border-color:#ffb52e55;transform:translateY(-2px)}
+
+/* MODALS */
+.modal-backdrop{
+  position:fixed;inset:0;z-index:2000;background:#000b;backdrop-filter:blur(8px);
+  display:none;align-items:center;justify-content:center;padding:12px;
+}
+.modal-backdrop.show{display:flex}
+.modal{
+  width:min(440px,100%);max-height:88vh;overflow-y:auto;
+  background:#151520;border:1px solid var(--border);border-radius:16px;padding:18px;
+  box-shadow:0 20px 80px #0009;
+}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px}
+.modal-header h2{font-family:Orbitron,sans-serif;font-size:15px}
+.close-modal{border:0;background:#ffffff0b;color:white;width:30px;height:30px;border-radius:8px;font-size:16px}
+.form-group{margin-bottom:10px}
+.form-group label{display:block;color:#aaaabd;font-size:10px;font-weight:700;margin-bottom:4px}
+.form-control{
+  width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:7px;
+  background:#0d0d15;color:white;outline:none;font-size:11px;
+}
+.form-control:focus{border-color:#ffb52e66}
+.modal-product{text-align:center;padding:8px 0}
+.modal-product img, .modal-product svg{width:80px;height:80px;margin-bottom:10px;object-fit:contain}
+.modal-product h3{font-size:15px;margin:6px 0 4px}
+.modal-product p{font-size:11px;line-height:1.6;color:var(--muted)}
+.modal-product .price{font-size:18px;margin:8px}
+.toast{
+  position:fixed;z-index:4000;bottom:16px;left:50%;transform:translate(-50%,20px);
+  background:#1b1b29;border:1px solid #ffffff1a;padding:10px 14px;border-radius:9px;
+  font-size:11px;box-shadow:0 10px 30px #0007;opacity:0;pointer-events:none;transition:.25s;
+  width:max-content;max-width:92%;text-align:center;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.admin-panel{width:min(820px,100%)}
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.admin-list{margin-top:12px;display:grid;gap:6px}
+.admin-item{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#ffffff06;padding:8px;border-radius:7px;border:1px solid var(--border);font-size:10px}
+.admin-item button{font-size:9px;padding:4px 7px}
+.admin-tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.admin-tab{background:#ffffff08;border:1px solid var(--border);color:#aaaabd;padding:6px 9px;border-radius:7px;font-size:10px;font-weight:700}
+.admin-tab.active{color:var(--gold);border-color:#ffb52e66}
+.auth-tabs{display:flex;gap:5px;margin-bottom:12px;background:#ffffff05;padding:3px;border-radius:8px;border:1px solid var(--border)}
+.auth-tab{flex:1;padding:6px;text-align:center;border-radius:6px;border:0;background:transparent;color:var(--muted);font-size:10px;font-weight:700}
+.auth-tab.active{background:#ffb52e18;color:var(--gold)}
+
+/* BAKIM MODU EKRANI STİLİ */
+#maintenanceScreen {
+  position: fixed; inset: 0; z-index: 99999;
+  background: #080C14; display: flex; align-items: center; justify-content: center;
+  padding: 20px; text-align: center;
+}
+.maintenance-card {
+  max-width: 500px; width: 100%; background: #13131e; border: 1px solid rgba(255,181,46,0.3);
+  padding: 40px 30px; border-radius: 20px; box-shadow: 0 0 50px rgba(255,181,46,0.15);
+}
+.maintenance-card i { font-size: 50px; color: var(--gold); margin-bottom: 20px; animation: bounce 2s infinite; }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+</style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-gunesGold selection:text-black">
+<body>
 
-    <!-- TOP NAVIGATION BAR -->
-    <header class="glass-panel border-b border-gunesGold/20 sticky top-0 z-50 px-6 py-4 flex items-center justify-between">
-        <div class="flex items-center space-x-4">
-            <div class="relative">
-                <div class="absolute -inset-1 rounded-lg bg-gradient-to-r from-gunesGold to-gunesAccent opacity-75 blur-sm animate-pulse"></div>
-                <div class="relative bg-gunesDark px-4 py-2 rounded-lg border border-gunesGold/50 flex items-center space-x-2">
-                    <i class="fa-solid fa-cube text-gunesGold text-xl"></i>
-                    <span class="font-cyber font-black tracking-wider text-xl text-transparent bg-clip-text bg-gradient-to-r from-gunesGold via-white to-gunesNeon">GÜNEŞCRAFT NETWORK</span>
-                </div>
-            </div>
-            <span class="hidden md:inline-block px-3 py-1 rounded-full text-xs font-cyber bg-gunesGold/10 text-gunesGold border border-gunesGold/30">
-                <i class="fa-solid fa-circle text-[8px] animate-ping mr-1 text-green-400"></i> SUNUCU AKTİF: play.gunescraft.xyz
-            </span>
+<!-- BAKIM MODU EKRANI (Eğer bakım aktifse ve kullanıcı admin değilse görünür) -->
+<div id="maintenanceScreen" class="hidden">
+  <div class="maintenance-card">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    <h1 style="font-family:Orbitron,sans-serif; font-size:22px; margin-bottom:10px; color:var(--gold);">SİTEDE BAKIM VAR</h1>
+    <p class="muted" style="font-size:12px; line-height:1.6; margin-bottom:20px;">
+      GüneşCraft Network şu anda daha iyi bir deneyim sunabilmek için bakım modundadır. Çok yakında buradayız!
+    </p>
+    <button class="btn btn-primary" onclick="openLogin()"><i class="fa-solid fa-user-shield"></i> Yönetici Olarak Giriş Yap</button>
+  </div>
+</div>
+
+<header class="navbar">
+  <div class="container nav-inner">
+    <a href="#anasayfa" class="logo">
+      <span class="logo-icon"><i class="fa-solid fa-sun"></i></span>
+      <span>GÜNEŞCRAFT<small>NETWORK</small></span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#anasayfa" onclick="toggleMenu()">Ana Sayfa</a>
+      <a href="#dunyalar" onclick="toggleMenu()">Dünyalar</a>
+      <a href="#magaza" onclick="toggleMenu()">Mağaza</a>
+      <a href="#ozellikler" onclick="toggleMenu()">Özellikler</a>
+      <a href="#duyurular" onclick="toggleMenu()">Duyurular</a>
+    </nav>
+    <div class="nav-actions">
+      <div class="online-badge">
+        <span class="online-dot"></span>
+        <span>Aktif: <strong id="headerOnline" class="gold">...</strong>/100</span>
+      </div>
+
+      <div id="userProfileArea" style="display:flex;align-items:center;gap:6px">
+        <button class="btn btn-primary" onclick="openLogin()"><i class="fa-solid fa-user"></i> Giriş Yap</button>
+      </div>
+
+      <div class="top-round-logo" title="GüneşCraft Network"><i class="fa-solid fa-sun"></i></div>
+
+      <button class="mobile-toggle" onclick="toggleMenu()" aria-label="Menüyü aç"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="anasayfa">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow"><i class="fa-solid fa-bolt"></i> Yeni macera seni bekliyor</div>
+      <h1>OYUNA<br><span class="gradient">GÜNEŞ GİBİ</span><br>DOĞ!</h1>
+      <p>
+        GüneşCraft Network dünyasına katıl! Yeni maceralar keşfet,
+        ekonomini geliştir, arkadaşlarınla oyna ve kendi efsaneni yaz.
+      </p>
+      <div class="hero-buttons">
+        <button class="btn btn-primary" onclick="copyIP()"><i class="fa-solid fa-gamepad"></i> Sunucuya Katıl</button>
+        <a href="#magaza" class="btn btn-secondary"><i class="fa-solid fa-store"></i> Mağazayı Keşfet</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><strong class="gradient">7/24</strong><span>MACERA</span></div>
+        <div class="stat"><strong>1.21+</strong><span>MINECRAFT</span></div>
+        <div class="stat"><strong class="gradient">∞</strong><span>KEŞFEDİLECEK DÜNYA</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="orbit"></div>
+      <div class="planet"><div class="planet-ring"></div></div>
+      <div class="floating-card fc-one"><i class="fa-solid fa-fire"></i><b>GüneşCraft</b><br><span class="muted">Kendi efsaneni yaz.</span></div>
+      <div class="floating-card fc-two"><i class="fa-solid fa-cube"></i><b>Maceraya hazır mısın?</b></div>
+    </div>
+  </div>
+</section>
+
+<div class="container status-wrap">
+  <div class="status-bar">
+    <div class="status-left">
+      <span class="status-dot"></span>
+      <div>
+        <strong>GüneşCraft Network</strong>
+        <small>Sunucu Durumu — Anlık Oyuncu: <span id="statusOnline" style="color:var(--green);font-weight:bold">...</span></small>
+      </div>
+    </div>
+    <div class="server-ip">
+      <code id="serverIP">gunescraft.xyz</code>
+      <button class="copy-btn" onclick="copyIP()" title="IP adresini kopyala" aria-label="IP Kopyala"><i class="fa-regular fa-copy"></i></button>
+    </div>
+  </div>
+</div>
+
+<section id="dunyalar">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Keşfetmeye başla</div>
+      <h2 class="section-title">SENİ BEKLEYEN <span class="gradient">DÜNYALAR</span></h2>
+      <p class="section-desc">Her dünyada farklı bir macera, farklı bir hedef seni bekliyor.</p>
+    </div>
+    <div class="world-grid">
+      <article class="world-card">
+        <div class="world-art"><i class="fa-solid fa-earth-europe" style="color:#8de7a8"></i></div>
+        <div class="world-content">
+          <span class="badge">ANA DÜNYA</span>
+          <h3 style="margin-top:8px">Dünya</h3>
+          <p>Yeni yerler keşfet, kaynaklarını topla ve kendi maceranı oluştur.</p>
+          <a class="world-action" onclick="openMapModal('Ana Dünya Haritası')">CANLI HARİTAYI AÇ <i class="fa-solid fa-arrow-right"></i></a>
         </div>
-
-        <div class="flex items-center space-x-4">
-            <div class="hidden sm:flex flex-col text-right">
-                <span class="text-xs font-cyber text-gunesGold">KURUCU: .YSFCNGNS_1950</span>
-                <span class="text-[10px] text-slate-400">Ana Sistem Yöneticisi & Geliştirici</span>
-            </div>
-            <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-gunesGold to-gunesAccent p-[2px] flex items-center justify-center shadow-lg">
-                <div class="h-full w-full bg-gunesDark rounded-[10px] flex items-center justify-center text-gunesGold font-bold font-cyber text-xs">
-                    YC
-                </div>
-            </div>
+      </article>
+      <article class="world-card">
+        <div class="world-art"><i class="fa-solid fa-city" style="color:#f6d28b"></i></div>
+        <div class="world-content">
+          <span class="badge">ŞEHİR KUR</span>
+          <h3 style="margin-top:8px">Towny (Şehirler)</h3>
+          <p>Kendi şehrini kur, arazini geliştir ve arkadaşlarınla büyü.</p>
+          <a class="world-action" onclick="openMapModal('Towny Şehir Haritası')">CANLI HARİTAYI AÇ <i class="fa-solid fa-arrow-right"></i></a>
         </div>
-    </header>
+      </article>
+      <article class="world-card">
+        <div class="world-art"><i class="fa-solid fa-gem" style="color:#c4b5fd"></i></div>
+        <div class="world-content">
+          <span class="badge">KAYNAK AVCISI</span>
+          <h3 style="margin-top:8px">Madenler</h3>
+          <p>Değerli kaynakları bul, ekipmanlarını geliştir ve hazineleri keşfet.</p>
+          <a class="world-action" onclick="openMapModal('Maden Dünyası')">HARİTA BİLGİSİ <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
 
-    <!-- MAIN CONTAINER -->
-    <div class="flex-1 flex flex-col lg:flex-row p-4 lg:p-6 gap-6 max-w-[1700px] mx-auto w-full">
+<section id="magaza" style="background:linear-gradient(180deg,transparent,#15152050,transparent)">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Gücünü yükselt</div>
+      <h2 class="section-title">GÜNEŞCRAFT <span class="gradient">MAĞAZA</span></h2>
+      <p class="section-desc">Spawnerlar, VIP paketleri ve daha fazlası burada.</p>
+    </div>
+    <div class="store-toolbar">
+      <div class="category-list" id="categoryList">
+        <button class="category-btn active" data-category="all" onclick="filterCategory('all', this)">Tümü</button>
+        <button class="category-btn" data-category="spawner" onclick="filterCategory('spawner', this)">Spawnerlar</button>
+        <button class="category-btn" data-category="vip" onclick="filterCategory('vip', this)">VIP Paketleri</button>
+        <button class="category-btn" data-category="item" onclick="filterCategory('item', this)">Eşyalar</button>
+      </div>
+      <input class="store-search" id="storeSearch" placeholder="Ürün ara..." oninput="renderProducts()">
+    </div>
+    <div class="product-grid" id="productGrid"></div>
+    <p id="emptyProducts" class="muted hidden" style="text-align:center;padding:25px">Bu kategoride ürün bulunamadı.</p>
+    <div style="text-align:center;margin-top:20px">
+      <span class="muted" style="font-size:10px"><i class="fa-solid fa-circle-info gold"></i> Ödemeler güvenli Shopier altyapısı ile gerçekleştirilmektedir.</span>
+    </div>
+  </div>
+</section>
 
-        <!-- SOL MENÜ & TÜM MODÜLLER -->
-        <aside class="w-full lg:w-72 flex flex-col gap-6">
-            <div class="glass-panel p-4 rounded-2xl neon-glow flex flex-col gap-2">
-                <h3 class="text-xs font-cyber text-gunesGold tracking-widest px-3 mb-2 opacity-80">YÖNETİM & DESTEK MENÜSÜ</h3>
-                
-                <button onclick="switchTab('dashboard')" id="btn-dashboard" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-gradient-to-r from-gunesGold/20 to-transparent border-l-4 border-gunesGold text-gunesGold font-medium transition-all text-sm">
-                    <i class="fa-solid fa-chart-line w-5"></i>
-                    <span>Sunucu Paneli</span>
-                </button>
+<section id="ozellikler">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Neden GüneşCraft?</div>
+      <h2 class="section-title">OYUNUNU <span class="gradient">YAŞA</span></h2>
+      <p class="section-desc">Sadece oynamak değil, kendi hikâyeni yazmak için.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature">
+        <div class="feature-icon"><i class="fa-solid fa-earth-americas"></i></div>
+        <h3>Geniş Oyun Dünyası</h3>
+        <p>Keşfet, kaynak topla, inşa et ve kendi oyun tarzını oluştur.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon"><i class="fa-solid fa-users"></i></div>
+        <h3>Topluluk</h3>
+        <p>Arkadaşlarınla oyna, yeni oyuncularla tanış ve birlikte geliş.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon"><i class="fa-solid fa-coins"></i></div>
+        <h3>Ekonomi</h3>
+        <p>Kaynaklarını değerlendir, ticaret yap ve hedeflerine ulaş.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon"><i class="fa-solid fa-cubes-stacked"></i></div>
+        <h3>Spawner Sistemi</h3>
+        <p>Mağazadaki spawner ürünlerini incele ve oyun stratejini geliştir.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon"><i class="fa-solid fa-crown"></i></div>
+        <h3>VIP Paketleri</h3>
+        <p>Sunucu için hazırlanan VIP seçeneklerini mağazadan keşfet.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon"><i class="fa-solid fa-bullhorn"></i></div>
+        <h3>Güncel Duyurular</h3>
+        <p>Etkinlikleri ve sunucuyla ilgili yenilikleri duyurular bölümünden takip et.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-                <button onclick="switchTab('players')" id="btn-players" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800/50 text-slate-300 hover:text-white transition-all text-sm">
-                    <i class="fa-solid fa-users-gear w-5"></i>
-                    <span>Oyuncu Yönetimi</span>
-                </button>
+<section id="duyurular">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Gelişmeleri takip et</div>
+      <h2 class="section-title">SON <span class="gradient">DUYURULAR</span></h2>
+      <p class="section-desc">GüneşCraft dünyasındaki gelişmeler.</p>
+    </div>
+    <div class="news-grid" id="newsGrid"></div>
+  </div>
+</section>
 
-                <button onclick="switchTab('ai')" id="btn-ai" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800/50 text-slate-300 hover:text-white transition-all text-sm">
-                    <i class="fa-solid fa-robot w-5 text-gunesNeon"></i>
-                    <span class="flex-1 text-left">Yapay Zeka & Destek</span>
-                    <span class="bg-gunesNeon/20 text-gunesNeon text-[10px] px-2 py-0.5 rounded-full font-cyber">AI</span>
-                </button>
+<section>
+  <div class="container">
+    <div class="cta">
+      <div class="eyebrow">Maceraya katıl</div>
+      <h2>GÜNEŞCRAFT'TA <span class="gradient">YERİNİ AL!</span></h2>
+      <p>Sunucu adresini kopyala ve Minecraft'ta maceraya hazırlan.</p>
+      <button class="btn btn-primary" onclick="copyIP()"><i class="fa-solid fa-copy"></i> gunescraft.xyz</button>
+    </div>
+  </div>
+</section>
+</main>
 
-                <button onclick="switchTab('logs')" id="btn-logs" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800/50 text-slate-300 hover:text-white transition-all text-sm">
-                    <i class="fa-solid fa-terminal w-5"></i>
-                    <span>Konsol & Loglar</span>
-                </button>
-            </div>
+<footer>
+  <div class="container footer-inner">
+    <a href="#anasayfa" class="logo">
+      <span class="logo-icon"><i class="fa-solid fa-sun"></i></span>
+      <span>GÜNEŞCRAFT<small>NETWORK</small></span>
+    </a>
+    <p>© <span id="year"></span> GüneşCraft Network. Tüm hakları saklıdır.</p>
+    <div class="socials">
+      <a href="https://instagram.com/güneşcraftofficial" target="_blank" title="Instagram" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://youtube.com/@güneşcraftofficial" target="_blank" title="YouTube" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+      <a href="https://discord.gg/83BwhExXm" target="_blank" title="Discord" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+    </div>
+  </div>
+</footer>
 
-            <!-- Hızlı Sunucu Komutları -->
-            <div class="glass-panel p-4 rounded-2xl neon-glow-blue flex flex-col gap-3">
-                <h3 class="text-xs font-cyber text-gunesNeon tracking-widest">HIZLI AKSİYONLAR</h3>
-                <button onclick="quickCommand('save-all')" class="w-full py-2.5 px-3 bg-gunesCard hover:bg-slate-800 border border-blue-500/30 rounded-xl text-xs font-cyber text-blue-300 flex items-center justify-between transition-all">
-                    <span>Dünyayı Kaydet</span>
-                    <i class="fa-solid fa-floppy-disk"></i>
-                </button>
-                <button onclick="quickCommand('reload')" class="w-full py-2.5 px-3 bg-gunesCard hover:bg-slate-800 border border-yellow-500/30 rounded-xl text-xs font-cyber text-yellow-300 flex items-center justify-between transition-all">
-                    <span>Pluginleri Yenile</span>
-                    <i class="fa-solid fa-rotate"></i>
-                </button>
-                <button onclick="quickCommand('broadcast')" class="w-full py-2.5 px-3 bg-gunesCard hover:bg-slate-800 border border-purple-500/30 rounded-xl text-xs font-cyber text-purple-300 flex items-center justify-between transition-all">
-                    <span>Duyuru Gönder</span>
-                    <i class="fa-solid fa-bullhorn"></i>
-                </button>
-            </div>
-        </aside>
+<!-- MODALLAR -->
+<div class="modal-backdrop" id="productModal" onclick="backdropClose(event,'productModal')">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>ÜRÜN DETAYI</h2>
+      <button class="close-modal" onclick="closeModal('productModal')">&times;</button>
+    </div>
+    <div id="productModalContent"></div>
+  </div>
+</div>
 
-        <!-- ORTA İÇERİK ALANI (TÜM SEKMELER) -->
-        <main class="flex-1 flex flex-col gap-6">
+<div class="modal-backdrop" id="newsModal" onclick="backdropClose(event,'newsModal')">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>DUYURU DETAYI</h2>
+      <button class="close-modal" onclick="closeModal('newsModal')">&times;</button>
+    </div>
+    <div id="newsModalContent" style="padding:10px 0; font-size:12px; line-height:1.7;"></div>
+  </div>
+</div>
 
-            <!-- TAB 1: SUNUCU PANELI (DASHBOARD) -->
-            <div id="tab-dashboard" class="tab-content flex flex-col gap-6">
-                <!-- İstatistik Kartları -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div class="glass-panel p-5 rounded-2xl neon-glow flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-cyber text-slate-400">ÇEVRİMİÇİ OYUNCU</p>
-                            <h4 class="text-3xl font-black font-cyber text-gunesGold mt-1">142<span class="text-xs font-normal text-slate-500">/500</span></h4>
-                            <span class="text-[10px] text-green-400 flex items-center mt-1"><i class="fa-solid fa-arrow-up mr-1"></i> %12 artış</span>
-                        </div>
-                        <div class="h-12 w-12 rounded-xl bg-gunesGold/10 border border-gunesGold/30 flex items-center justify-center text-gunesGold text-xl">
-                            <i class="fa-solid fa-users"></i>
-                        </div>
-                    </div>
+<div class="modal-backdrop" id="mapModal" onclick="backdropClose(event,'mapModal')">
+  <div class="modal" style="width:min(880px, 95%); max-height:92vh;">
+    <div class="modal-header">
+      <h2 id="mapModalTitle"><i class="fa-solid fa-earth-europe gold"></i> CANLI DÜNYA HARİTASI</h2>
+      <button class="close-modal" onclick="closeModal('mapModal')">&times;</button>
+    </div>
+    <div style="position:relative; width:100%; height:420px; background:#0d0d15; border-radius:10px; overflow:hidden; border:1px solid var(--border);">
+      <iframe id="mapIframe" src="about:blank" style="width:100%; height:100%; border:0;"></iframe>
+    </div>
+    <p class="muted" style="font-size:10px; margin-top:10px; text-align:center;">
+      <i class="fa-solid fa-circle-info gold"></i> Sunucunuzda Dynmap aktif olduğunda harita doğrudan burada yüklenecektir.
+    </p>
+  </div>
+</div>
 
-                    <div class="glass-panel p-5 rounded-2xl neon-glow flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-cyber text-slate-400">SUNUCU TPS</p>
-                            <h4 class="text-3xl font-black font-cyber text-green-400 mt-1">19.98</h4>
-                            <span class="text-[10px] text-green-400 flex items-center mt-1"><i class="fa-solid fa-bolt mr-1"></i> Kararlı</span>
-                        </div>
-                        <div class="h-12 w-12 rounded-xl bg-green-500/10 border border-green-500/30 flex items-center justify-center text-green-400 text-xl">
-                            <i class="fa-solid fa-gauge-high"></i>
-                        </div>
-                    </div>
-
-                    <div class="glass-panel p-5 rounded-2xl neon-glow flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-cyber text-slate-400">BELLEK KULLANIMI</p>
-                            <h4 class="text-3xl font-black font-cyber text-gunesNeon mt-1">12.4 GB</h4>
-                            <span class="text-[10px] text-slate-400 mt-1">Toplam 32 GB RAM</span>
-                        </div>
-                        <div class="h-12 w-12 rounded-xl bg-gunesNeon/10 border border-gunesNeon/30 flex items-center justify-center text-gunesNeon text-xl">
-                            <i class="fa-solid fa-microchip"></i>
-                        </div>
-                    </div>
-
-                    <div class="glass-panel p-5 rounded-2xl neon-glow flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-cyber text-slate-400">AKTİF DÜNYA</p>
-                            <h4 class="text-2xl font-black font-cyber text-purple-400 mt-1">Earth-Towny</h4>
-                            <span class="text-[10px] text-purple-300 mt-1">Cross-Play Java & Bedrock</span>
-                        </div>
-                        <div class="h-12 w-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 text-xl">
-                            <i class="fa-solid fa-earth-americas"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Grafik ve Hızlı AI Özet -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="glass-panel p-6 rounded-2xl neon-glow lg:col-span-2 flex flex-col justify-between">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="font-cyber font-bold text-gunesGold flex items-center gap-2">
-                                <i class="fa-solid fa-chart-area"></i> Sunucu Performans Akışı
-                            </h3>
-                            <span class="text-xs text-slate-400">Son 1 Saat</span>
-                        </div>
-                        <div class="h-48 w-full flex items-end gap-2 pt-6 pb-2 border-b border-slate-800">
-                            <div class="flex-1 bg-gradient-to-t from-gunesGold/20 to-gunesGold rounded-t h-[60%]"></div>
-                            <div class="flex-1 bg-gradient-to-t from-gunesGold/20 to-gunesGold rounded-t h-[75%]"></div>
-                            <div class="flex-1 bg-gradient-to-t from-gunesGold/20 to-gunesGold rounded-t h-[85%]"></div>
-                            <div class="flex-1 bg-gradient-to-t from-gunesGold/20 to-gunesGold rounded-t h-[70%]"></div>
-                            <div class="flex-1 bg-gradient-to-t from-gunesGold/20 to-gunesGold rounded-t h-[95%]"></div>
-                            <div class="flex-1 bg-gradient-to-t from-gunesGold/20 to-gunesGold rounded-t h-[90%]"></div>
-                            <div class="flex-1 bg-gradient-to-t from-gunesGold/20 to-gunesGold rounded-t h-[100%]"></div>
-                        </div>
-                        <div class="flex justify-between text-[10px] font-cyber text-slate-500 mt-2">
-                            <span>19:00</span>
-                            <span>19:20</span>
-                            <span>19:40</span>
-                            <span>20:00 (Şimdi)</span>
-                        </div>
-                    </div>
-
-                    <div class="glass-panel p-6 rounded-2xl neon-glow-blue flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center justify-between mb-3">
-                                <h3 class="font-cyber font-bold text-gunesNeon flex items-center gap-2 text-sm">
-                                    <i class="fa-solid fa-robot"></i> Güneş AI Özet
-                                </h3>
-                                <span class="h-2 w-2 rounded-full bg-green-400 animate-pulse"></span>
-                            </div>
-                            <p class="text-xs text-slate-300 leading-relaxed bg-gunesDark/60 p-3 rounded-xl border border-gunesNeon/20">
-                                "Sistem analizi tamamlandı. Son 24 saat içinde kritik bir hata tespit edilmedi. TPS kararlı (19.98). Towny bölge sınırlarında hafif bir optimizasyon öneriliyor."
-                            </p>
-                        </div>
-                        <button onclick="switchTab('ai')" class="mt-4 w-full py-2.5 bg-gunesNeon/20 hover:bg-gunesNeon/30 border border-gunesNeon/50 rounded-xl text-xs font-cyber text-gunesNeon transition-all flex items-center justify-center gap-2">
-                            <span>Yapay Zeka & Destek Ekranına Git</span>
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 2: OYUNCU YÖNETİMİ -->
-            <div id="tab-players" class="tab-content hidden flex flex-col gap-6">
-                <div class="glass-panel p-6 rounded-2xl neon-glow flex flex-col gap-4">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                        <div>
-                            <h3 class="font-cyber font-bold text-gunesGold text-lg">Çevrimiçi Oyuncu Listesi</h3>
-                            <p class="text-xs text-slate-400">Aktif oyuncuları denetleyin, banlayın veya yetki verin.</p>
-                        </div>
-                        <div class="flex items-center gap-2 w-full sm:w-auto">
-                            <input type="text" id="player-search" placeholder="Oyuncu Ara..." class="bg-gunesDark border border-slate-700 px-4 py-2 rounded-xl text-xs text-white focus:outline-none focus:border-gunesGold w-full sm:w-64">
-                            <button class="bg-gunesGold text-black px-4 py-2 rounded-xl text-xs font-bold font-cyber hover:bg-yellow-400 transition-all">Ara</button>
-                        </div>
-                    </div>
-
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="border-b border-slate-800 text-xs font-cyber text-slate-400">
-                                    <th class="py-3 px-4">KULLANICI ADI</th>
-                                    <th class="py-3 px-4">PLATFORM</th>
-                                    <th class="py-3 px-4">RÜTBE / YETKİ</th>
-                                    <th class="py-3 px-4">DURUM</th>
-                                    <th class="py-3 px-4 text-right">İŞLEMLER</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-sm divide-y divide-slate-800/50">
-                                <tr class="hover:bg-slate-800/30 transition-all">
-                                    <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
-                                        <div class="h-7 w-7 rounded bg-gunesGold/20 text-gunesGold flex items-center justify-center font-cyber text-xs">Y</div>
-                                        .YSFCNGNS_1950
-                                    </td>
-                                    <td class="py-3 px-4 text-xs text-slate-300"><span class="px-2 py-1 bg-blue-500/10 text-blue-400 rounded border border-blue-500/30">Java 1.20.4</span></td>
-                                    <td class="py-3 px-4"><span class="text-gunesGold font-cyber text-xs font-bold">Kurucu</span></td>
-                                    <td class="py-3 px-4"><span class="inline-block h-2 w-2 rounded-full bg-green-400 mr-1"></span> Aktif</td>
-                                    <td class="py-3 px-4 text-right space-x-2">
-                                        <button onclick="alertAction('Yetki paneli açılıyor.')" class="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
-                                        <button onclick="alertAction('Oyuncu susturuldu.')" class="p-1.5 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-400 rounded-lg text-xs" title="Mute"><i class="fa-solid fa-microphone-slash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-slate-800/30 transition-all">
-                                    <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
-                                        <div class="h-7 w-7 rounded bg-purple-500/20 text-purple-400 flex items-center justify-center font-cyber text-xs">A</div>
-                                        AhmetPro_TR
-                                    </td>
-                                    <td class="py-3 px-4 text-xs text-slate-300"><span class="px-2 py-1 bg-green-500/10 text-green-400 rounded border border-green-500/30">Bedrock (MCPE)</span></td>
-                                    <td class="py-3 px-4"><span class="text-purple-400 font-cyber text-xs">VIP+</span></td>
-                                    <td class="py-3 px-4"><span class="inline-block h-2 w-2 rounded-full bg-green-400 mr-1"></span> Aktif</td>
-                                    <td class="py-3 px-4 text-right space-x-2">
-                                        <button onclick="alertAction('Yetki paneli açılıyor.')" class="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
-                                        <button onclick="alertAction('Oyuncu susturuldu.')" class="p-1.5 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-400 rounded-lg text-xs" title="Mute"><i class="fa-solid fa-microphone-slash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-slate-800/30 transition-all">
-                                    <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
-                                        <div class="h-7 w-7 rounded bg-red-500/20 text-red-400 flex items-center justify-center font-cyber text-xs">C</div>
-                                        Creeze_Gamer
-                                    </td>
-                                    <td class="py-3 px-4 text-xs text-slate-300"><span class="px-2 py-1 bg-blue-500/10 text-blue-400 rounded border border-blue-500/30">Java 1.20.4</span></td>
-                                    <td class="py-3 px-4"><span class="text-slate-400 font-cyber text-xs">Oyuncu</span></td>
-                                    <td class="py-3 px-4"><span class="inline-block h-2 w-2 rounded-full bg-green-400 mr-1"></span> Aktif</td>
-                                    <td class="py-3 px-4 text-right space-x-2">
-                                        <button onclick="alertAction('Yetki paneli açılıyor.')" class="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
-                                        <button onclick="alertAction('Oyuncu susturuldu.')" class="p-1.5 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-400 rounded-lg text-xs" title="Mute"><i class="fa-solid fa-microphone-slash"></i></button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 3: YAPAY ZEKA & DESTEK ASİSTANI -->
-            <div id="tab-ai" class="tab-content hidden flex flex-col gap-6 flex-1">
-                <div class="glass-panel p-6 rounded-2xl neon-glow-blue flex flex-col flex-1 h-[650px]">
-                    <div class="flex items-center justify-between pb-4 border-b border-slate-800">
-                        <div class="flex items-center gap-3">
-                            <div class="h-10 w-10 rounded-xl bg-gunesNeon/20 border border-gunesNeon/40 flex items-center justify-center text-gunesNeon text-lg">
-                                <i class="fa-solid fa-robot"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-cyber font-bold text-gunesNeon">GüneşCraft Yapay Zeka & Destek Asistanı</h3>
-                                <p class="text-xs text-slate-400">Sunucu hakkında soru sorabilir, teknik destek alabilir ve komut/skript üretebilirsin.</p>
-                            </div>
-                        </div>
-                        <span class="px-3 py-1 bg-gunesNeon/10 border border-gunesNeon/30 rounded-full text-xs font-cyber text-gunesNeon">
-                            <i class="fa-solid fa-circle text-[8px] text-green-400 mr-1"></i> Destek Hattı Aktif
-                        </span>
-                    </div>
-
-                    <!-- Chat Mesaj Alanı -->
-                    <div id="chat-messages" class="flex-1 overflow-y-auto py-4 flex flex-col gap-4 pr-2">
-                        <div class="flex items-start gap-3">
-                            <div class="h-8 w-8 rounded-lg bg-gunesNeon/20 border border-gunesNeon/40 flex items-center justify-center text-gunesNeon shrink-0">
-                                <i class="fa-solid fa-robot text-xs"></i>
-                            </div>
-                            <div class="bg-slate-800/70 border border-gunesNeon/20 p-4 rounded-2xl rounded-tl-none max-w-2xl text-sm text-slate-200">
-                                Selam Kurucum <span class="text-gunesGold font-bold">.YSFCNGNS_1950</span>! GüneşCraft yapay zeka destek ve soru-cevap asistanı emrinizde. Sunucu yönetimi, plugin hataları veya herhangi bir konuda bana soru sorabilir ya da skript yazdırabilirsin!
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Mesaj Gönderme Çubuğu -->
-                    <div class="pt-4 border-t border-slate-800 flex items-center gap-3">
-                        <input type="text" id="ai-input" placeholder="Yapay zekaya destek ya da soru için birşeyler yazın (Örn: Towny plugini nasıl ayarlanır?)..." class="flex-1 bg-gunesDark border border-slate-700 px-4 py-3 rounded-xl text-sm text-white focus:outline-none focus:border-gunesNeon" onkeypress="handleAIKey(event)">
-                        <button onclick="sendAIMessage()" class="bg-gradient-to-r from-gunesNeon to-blue-600 text-black font-bold font-cyber px-6 py-3 rounded-xl text-xs hover:opacity-90 transition-all flex items-center gap-2">
-                            <span>Gönder</span>
-                            <i class="fa-solid fa-paper-plane"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 4: KONSOL & LOGLAR -->
-            <div id="tab-logs" class="tab-content hidden flex flex-col gap-6">
-                <div class="glass-panel p-6 rounded-2xl neon-glow flex flex-col gap-4">
-                    <div class="flex items-center justify-between pb-3 border-b border-slate-800">
-                        <h3 class="font-cyber font-bold text-gunesGold flex items-center gap-2">
-                            <i class="fa-solid fa-terminal"></i> Canlı Sunucu Konsolu (Server Console)
-                        </h3>
-                        <div class="flex items-center gap-2">
-                            <button onclick="clearConsole()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-cyber">Temizle</button>
-                            <span class="h-2 w-2 rounded-full bg-green-400 animate-pulse"></span>
-                        </div>
-                    </div>
-                    
-                    <!-- Konsol Akışı -->
-                    <div id="console-output" class="bg-black/80 border border-slate-800 p-4 rounded-xl font-mono text-xs text-green-400 h-96 overflow-y-auto flex flex-col gap-1.5 shadow-inner">
-                        <div>[19:28:01] [Server thread/INFO]: [GunesCore] GüneşCraft eklentisi başarıyla yüklendi!</div>
-                        <div>[19:28:05] [Server thread/INFO]: .YSFCNGNS_1950 [/127.0.0.1:54321] logged in with entity id 1950 at ([world] 0.0, 64.0, 0.0)</div>
-                        <div>[19:28:15] [Server thread/INFO]: [Towny] 142 bölge verisi senkronize edildi.</div>
-                        <div>[19:28:30] [Vault/INFO]: Ekonomi sistemi (EssentialsX Economy) aktif.</div>
-                        <div>[19:29:00] [GunesAI/INFO]: Destek ve Yapay zeka modülü hazır durumda bekliyor.</div>
-                    </div>
-
-                    <!-- Konsol Komut Satırı -->
-                    <div class="flex items-center gap-2">
-                        <span class="text-gunesGold font-mono text-sm">>&nbsp;</span>
-                        <input type="text" id="console-input" placeholder="Sunucu komutu girin (Örn: /op .YSFCNGNS_1950 veya /reload)..." class="flex-1 bg-gunesDark border border-slate-700 px-4 py-2.5 rounded-xl text-xs font-mono text-white focus:outline-none focus:border-gunesGold" onkeypress="handleConsoleKey(event)">
-                        <button onclick="executeConsoleCommand()" class="bg-gunesGold text-black font-cyber font-bold px-5 py-2.5 rounded-xl text-xs hover:bg-yellow-400 transition-all">Çalıştır</button>
-                    </div>
-                </div>
-            </div>
-
-        </main>
+<div class="modal-backdrop" id="loginModal" onclick="backdropClose(event,'loginModal')">
+  <div class="modal">
+    <div class="modal-header">
+      <h2><i class="fa-solid fa-user-shield gold"></i> PORTAL GİRİŞİ</h2>
+      <button class="close-modal" onclick="closeModal('loginModal')">&times;</button>
+    </div>
+    
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchAuthTab('user_login', this)">Oyuncu Girişi</button>
+      <button class="auth-tab" onclick="switchAuthTab('user_register', this)">Kayıt Ol</button>
+      <button class="auth-tab" onclick="switchAuthTab('admin_login', this)">Admin Girişi</button>
     </div>
 
-    <!-- FOOTER -->
-    <footer class="glass-panel border-t border-gunesGold/10 py-4 px-6 text-center text-xs text-slate-500 font-cyber">
-        GüneşCraft Network © 2026 — Tüm Hakları Saklıdır. Geliştirici: .YSFCNGNS_1950
-    </footer>
+    <form id="formUserLogin" onsubmit="userLogin(event)">
+      <div class="form-group">
+        <label for="playerUser">Minecraft Kullanıcı Adı</label>
+        <input class="form-control" id="playerUser" placeholder="Steve" required>
+      </div>
+      <div class="form-group">
+        <label for="playerPass">Şifre</label>
+        <input class="form-control" id="playerPass" type="password" placeholder="••••••" required>
+      </div>
+      <button class="btn btn-primary" style="width:100%"><i class="fa-solid fa-right-to-bracket"></i> Oyuncu Girişi Yap</button>
+    </form>
 
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.getElementById('tab-' + tabId).classList.remove('hidden');
+    <form id="formUserRegister" class="hidden" onsubmit="userRegister(event)">
+      <div class="form-group">
+        <label for="regUser">Minecraft Kullanıcı Adı</label>
+        <input class="form-control" id="regUser" placeholder="Steve" required>
+      </div>
+      <div class="form-group">
+        <label for="regEmail">E-Posta Adresi</label>
+        <input class="form-control" id="regEmail" type="email" placeholder="ornek@mail.com" required>
+      </div>
+      <div class="form-group">
+        <label for="regPass">Şifre Oluştur</label>
+        <input class="form-control" id="regPass" type="password" placeholder="••••••" required>
+      </div>
+      <button class="btn btn-primary" style="width:100%"><i class="fa-solid fa-user-plus"></i> Kayıt Ol ve Giriş Yap</button>
+    </form>
 
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('bg-gradient-to-r', 'from-gunesGold/20', 'to-transparent', 'border-l-4', 'border-gunesGold', 'text-gunesGold');
-                btn.classList.add('text-slate-300', 'hover:bg-slate-800/50', 'hover:text-white');
-            });
+    <form id="formAdminLogin" class="hidden" onsubmit="adminLogin(event)">
+      <div class="form-group">
+        <label for="adminUser">Yönetici Adı</label>
+        <input class="form-control" id="adminUser" placeholder="Admin" autocomplete="username" required>
+      </div>
+      <div class="form-group">
+        <label for="adminPass">Şifre</label>
+        <input class="form-control" id="adminPass" type="password" placeholder="••••••" autocomplete="current-password" required>
+      </div>
+      <button class="btn btn-primary" style="width:100%"><i class="fa-solid fa-shield-halved"></i> Admin Paneline Giriş</button>
+    </form>
+  </div>
+</div>
 
-            const activeBtn = document.getElementById('btn-' + tabId);
-            if(activeBtn) {
-                activeBtn.classList.remove('text-slate-300', 'hover:bg-slate-800/50', 'hover:text-white');
-                activeBtn.classList.add('bg-gradient-to-r', 'from-gunesGold/20', 'to-transparent', 'border-l-4', 'border-gunesGold', 'text-gunesGold');
-            }
-        }
+<div class="modal-backdrop" id="adminModal" onclick="backdropClose(event,'adminModal')">
+  <div class="modal admin-panel">
+    <div class="modal-header">
+      <div><div class="eyebrow" style="margin-bottom:2px">GÜNEŞCRAFT NETWORK</div><h2>YÖNETİCİ PANELİ</h2></div>
+      <button class="close-modal" onclick="closeModal('adminModal')">&times;</button>
+    </div>
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="adminTab('products',this)">Ürünler</button>
+      <button class="admin-tab" onclick="adminTab('news',this)">Duyurular</button>
+      <button class="admin-tab" onclick="adminTab('settings',this)">Site Ayarları & Bakım</button>
+    </div>
+    <div id="adminProducts">
+      <h3 style="font-size:12px;margin-bottom:10px">Yeni Ürün Ekle</h3>
+      <form onsubmit="addProduct(event)">
+        <div class="admin-grid">
+          <div class="form-group"><label for="newName">Ürün Adı</label><input class="form-control" id="newName" placeholder="VIP Paketi" required></div>
+          <div class="form-group"><label for="newPrice">Fiyat (₺)</label><input class="form-control" id="newPrice" type="number" min="0" step="0.01" placeholder="99" required></div>
+          <div class="form-group">
+            <label for="newCategory">Kategori</label>
+            <select class="form-control" id="newCategory">
+              <option value="spawner">Spawner</option>
+              <option value="vip">VIP</option>
+              <option value="item">Eşya</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="newBoxType">Kutu / Görsel Tipi</label>
+            <select class="form-control" id="newBoxType">
+              <option value="spawner">🧱 Spawner Kutusu</option>
+              <option value="chest">📦 Hazine Kasası</option>
+              <option value="vip_gold">👑 VIP Altın Kask</option>
+              <option value="vip_diamond">💎 VIP Elmas Kask</option>
+              <option value="diamond">💎 Elmas Paketi</option>
+              <option value="key">🗝️ Kasa Anahtarı</option>
+              <option value="custom">🌐 Özel URL Kullan</option>
+            </select>
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label for="newImage">Özel Görsel URL'si (Opsiyonel)</label>
+            <input class="form-control" id="newImage" placeholder="https://...">
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label for="newDescription">Açıklama</label>
+            <input class="form-control" id="newDescription" value="GüneşCraft mağaza ürünü.">
+          </div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:3px;"><i class="fa-solid fa-plus"></i> Ürünü Ekle</button>
+      </form>
+      <div class="admin-list" id="adminProductList"></div>
+    </div>
+    
+    <div id="adminNews" class="hidden">
+      <h3 style="font-size:12px;margin-bottom:10px">Yeni Duyuru Ekle</h3>
+      <form onsubmit="addNews(event)">
+        <div class="form-group"><label for="newsTitle">Duyuru Başlığı</label><input class="form-control" id="newsTitle" required></div>
+        <div class="form-group"><label for="newsText">Açıklama</label><textarea class="form-control" id="newsText" rows="3" required></textarea></div>
+        <div class="form-group"><label for="newsEmoji">Emoji / İkon</label><input class="form-control" id="newsEmoji" value="📢"></div>
+        <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> Duyuru Ekle</button>
+      </form>
+      <div class="admin-list" id="adminNewsList"></div>
+    </div>
+    
+    <div id="adminSettings" class="hidden">
+      <h3 style="font-size:12px;margin-bottom:10px">Site Ayarları & Bakım Modu</h3>
+      <form onsubmit="saveSettings(event)">
+        <div class="form-group"><label for="settingIP">Sunucu IP Adresi</label><input class="form-control" id="settingIP" value="gunescraft.xyz" required></div>
+        <div class="form-group"><label for="settingTitle">Site Başlığı</label><input class="form-control" id="settingTitle" value="GüneşCraft Network" required></div>
+        <div class="form-group">
+          <label for="settingMaintenance">Bakım Modu Durumu</label>
+          <select class="form-control" id="settingMaintenance">
+            <option value="false">Kapalı (Normal Site)</option>
+            <option value="true">Açık (Bakım Modu Aktif)</option>
+          </select>
+        </div>
+        <button class="btn btn-primary">Ayarları ve Bakım Modunu Kaydet</button>
+      </form>
+    </div>
+  </div>
+</div>
 
-        function quickCommand(type) {
-            const consoleOut = document.getElementById('console-output');
-            let timeStr = new Date().toLocaleTimeString();
-            let msg = "";
-            if(type === 'save-all') msg = `[${timeStr}] [Server thread/INFO]: Dünya verileri kaydediliyor... Başarılı!`;
-            if(type === 'reload') msg = `[${timeStr}] [Server thread/INFO]: Tüm eklentiler yeniden başlatıldı!`;
-            if(type === 'broadcast') msg = `[${timeStr}] [Broadcast]: §6[GüneşCraft] §eSunucu güncellemeleri tamamlandı!`;
-            
-            consoleOut.innerHTML += `<div>${msg}</div>`;
-            consoleOut.scrollTop = consoleOut.scrollHeight;
-            alert("İşlem başarıyla tetiklendi!");
-        }
+<div class="toast" id="toast"></div>
 
-        function alertAction(text) {
-            alert("GüneşCraft Admin: " + text);
-        }
+<script>
+const BOX_ASSETS = {
+  spawner: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="15" y="15" width="70" height="70" rx="8" fill="#1e222d" stroke="#ffb52e" stroke-width="4"/><path d="M15 38H85M15 62H85M38 15V85M62 15V85" stroke="#ffb52e" stroke-width="2" stroke-dasharray="4 4"/><circle cx="50" cy="50" r="14" fill="#ff762b" opacity="0.8"/></svg>`,
+  chest: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="15" y="25" width="70" height="55" rx="6" fill="#8b5a2b" stroke="#4a2e16" stroke-width="4"/><rect x="15" y="42" width="70" height="6" fill="#322010"/><rect x="44" y="38" width="12" height="14" rx="2" fill="#ffb52e" stroke="#000" stroke-width="2"/></svg>`,
+  vip_gold: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 75L15 30L35 50L50 20L65 50L85 30L80 75H20Z" fill="#ffb52e" stroke="#d48806" stroke-width="4"/><rect x="25" y="75" width="50" height="10" fill="#d48806"/></svg>`,
+  vip_diamond: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 75L15 30L35 50L50 20L65 50L85 30L80 75H20Z" fill="#5bffab" stroke="#13c2c2" stroke-width="4"/><rect x="25" y="75" width="50" height="10" fill="#13c2c2"/></svg>`,
+  diamond: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="50,15 80,40 50,85 20,40" fill="#5bffab" stroke="#13c2c2" stroke-width="4"/></svg>`,
+  key: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="35" cy="35" r="15" stroke="#ffb52e" stroke-width="6"/><path d="M46 46L75 75M65 65L75 55M72 72L82 62" stroke="#ffb52e" stroke-width="6" stroke-linecap="round"/></svg>`
+};
 
-        function sendAIMessage() {
-            const input = document.getElementById('ai-input');
-            const chatMessages = document.getElementById('chat-messages');
-            const query = input.value.trim();
-            if(!query) return;
+const DEFAULT_PRODUCTS = [
+  {id:1, name:"Zombi Spawner", category:"spawner", price:149, description:"Otomatik zombi ve XP kasma spawnerı.", boxType:"spawner", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_1"},
+  {id:2, name:"İskelet Spawner", category:"spawner", price:179, description:"Kemik ve ok stoklamak için harika spawner.", boxType:"spawner", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_2"},
+  {id:3, name:"Örümcek Spawner", category:"spawner", price:169, description:"İp ve örümcek gözü üretimi için birebir.", boxType:"spawner", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_3"},
+  {id:4, name:"İnek Spawner", category:"spawner", price:129, description:"Sınırsız deri ve biftek üretimi sağlar.", boxType:"spawner", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_4"},
+  {id:5, name:"Creeper Spawner", category:"spawner", price:199, description:"TNT ve barut farmı kurmak için ideal.", boxType:"spawner", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_5"},
+  {id:6, name:"Blaze Spawner", category:"spawner", price:229, description:"İksir yapımı için blaze çubuğu kasın.", boxType:"spawner", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_6"},
+  {id:7, name:"VIP Paketi", category:"vip", price:99, description:"Özel komutlar, uçuş yetkisi ve ekstra ev hakkı.", boxType:"vip_gold", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_7"},
+  {id:8, name:"VIP+ Paketi", category:"vip", price:199, description:"Gelişmiş kitler ve renkli sohbet ayrıcalığı.", boxType:"vip_diamond", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_8"},
+  {id:9, name:"MVP Paketi", category:"vip", price:299, description:"En üst düzey yetkiler ve sınırsız özellikler.", boxType:"vip_diamond", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_9"},
+  {id:10, name:"Özel Kasa", category:"item", price:49, description:"İçerisinden nadir Minecraft eşyaları çıkar.", boxType:"chest", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_10"},
+  {id:11, name:"Anahtar Paketi", category:"item", price:39, description:"Sunucudaki gizli kasaları açmak için 5x Anahtar.", boxType:"key", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_11"},
+  {id:12, name:"Elmas Paketi", category:"item", price:79, description:"Oyun içi ekonomide yükselmek için 64x Elmas.", boxType:"diamond", shopierLink:"https://www.shopier.com/ShowProductNew/products.php?id=ORNEK_ID_12"}
+];
 
-            chatMessages.innerHTML += `
-                <div class="flex items-start gap-3 justify-end">
-                    <div class="bg-gunesGold/10 border border-gunesGold/30 p-4 rounded-2xl rounded-tr-none max-w-2xl text-sm text-slate-200">
-                        ${escapeHtml(query)}
-                    </div>
-                    <div class="h-8 w-8 rounded-lg bg-gunesGold/20 border border-gunesGold/40 flex items-center justify-center text-gunesGold shrink-0 font-cyber text-xs font-bold">
-                        YC
-                    </div>
-                </div>
-            `;
-            input.value = '';
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+const DEFAULT_NEWS = [
+  {id:1, title:"1. Sezon Açıldı!", text:"GüneşCraft Sezon 1 kapılarını oyunculara açtı. Hemen katıl ve Towny dünyasında kendi krallığını kurmaya başla!", emoji:"🎉", date:"Bugün"},
+  {id:2, title:"Yeni Spawner Sistemi", text:"Marketimize yeni nesil spawner çeşitleri ve VIP kitleri eklendi. Avantajlı fiyatları kaçırma.", emoji:"⚡", date:"Dün"}
+];
 
-            setTimeout(() => {
-                let aiReply = "GüneşAI Destek Yanıtı: Sorunuz ve talebiniz analiz edildi. GüneşCraft alt yapısı için en doğru çözüm yolu uygulanmıştır.";
-                if(query.toLowerCase().includes('skript') || query.toLowerCase().includes('kod')) {
-                    aiReply = "İşte GüneşCraft için özel hazırladığım skript kodu:\n\n```skript\non join:\n    set join message to \"&6[GüneşCraft] &e%player% §asunucuya katıldı! Hoş geldin.\"\n```\nBu kodu `scripts/welcome.sk` olarak kaydedebilirsin Kurucum!";
-                } else if(query.toLowerCase().includes('nasıl') || query.toLowerCase().includes('yardım') || query.toLowerCase().includes('destek')) {
-                    aiReply = "Destek talebiniz incelendi Kurucum. Bu konuda Towny veya EssentialsX ayarlarından gerekli yetkilendirmeleri kontrol edebilirsiniz.";
-                }
+let products = JSON.parse(localStorage.getItem('gc_products')) || DEFAULT_PRODUCTS;
+let newsList = JSON.parse(localStorage.getItem('gc_news')) || DEFAULT_NEWS;
+let registeredUsers = JSON.parse(localStorage.getItem('gc_users')) || [];
+let currentUser = JSON.parse(localStorage.getItem('gc_current_user')) || null;
+let isMaintenance = JSON.parse(localStorage.getItem('gc_maintenance')) || false;
+let currentCategory = 'all';
 
-                chatMessages.innerHTML += `
-                    <div class="flex items-start gap-3">
-                        <div class="h-8 w-8 rounded-lg bg-gunesNeon/20 border border-gunesNeon/40 flex items-center justify-center text-gunesNeon shrink-0">
-                            <i class="fa-solid fa-robot text-xs"></i>
-                        </div>
-                        <div class="bg-slate-800/70 border border-gunesNeon/20 p-4 rounded-2xl rounded-tl-none max-w-2xl text-sm text-slate-200 whitespace-pre-wrap">
-                            ${aiReply}
-                        </div>
-                    </div>
-                `;
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, 800);
-        }
+document.getElementById('year').textContent = new Date().getFullYear();
 
-        function handleAIKey(e) {
-            if(e.key === 'Enter') sendAIMessage();
-        }
+// Bakım modunu kontrol et ve uygula
+function checkMaintenance() {
+  const mScreen = document.getElementById('maintenanceScreen');
+  if (isMaintenance && (!currentUser || !currentUser.isAdmin)) {
+    mScreen.classList.remove('hidden');
+  } else {
+    mScreen.classList.add('hidden');
+  }
+}
+checkMaintenance();
 
-        function executeConsoleCommand() {
-            const input = document.getElementById('console-input');
-            const consoleOut = document.getElementById('console-output');
-            const cmd = input.value.trim();
-            if(!cmd) return;
+function fetchServerStatus() {
+  fetch('https://api.mcsrvstat.us/3/gunescraft.xyz')
+    .then(response => response.json())
+    .then(data => {
+      const headerCount = document.getElementById('headerOnline');
+      const statusCount = document.getElementById('statusOnline');
+      
+      if (data.online) {
+        let players = data.players.online;
+        let maxPlayers = data.players.max;
+        
+        if(headerCount) headerCount.textContent = players;
+        if(statusCount) statusCount.textContent = players + "/" + maxPlayers + " Oyuncu";
+      } else {
+        if(headerCount) headerCount.textContent = "0";
+        if(statusCount) statusCount.textContent = "Sunucu Kapalı";
+      }
+    })
+    .catch(err => {
+      const headerCount = document.getElementById('headerOnline');
+      if(headerCount) headerCount.textContent = "48";
+    });
+}
 
-            let timeStr = new Date().toLocaleTimeString();
-            consoleOut.innerHTML += `<div class="text-white">>[${timeStr}] .YSFCNGNS_1950 issued server command: ${escapeHtml(cmd)}</div>`;
-            consoleOut.innerHTML += `<div>[${timeStr}] [Server thread/INFO]: Komut başarıyla uygulandı.</div>`;
-            input.value = '';
-            consoleOut.scrollTop = consoleOut.scrollHeight;
-        }
+fetchServerStatus();
+setInterval(fetchServerStatus, 10000);
 
-        function handleConsoleKey(e) {
-            if(e.key === 'Enter') executeConsoleCommand();
-        }
+function openMapModal(title){
+  document.getElementById('mapModalTitle').innerHTML = `<i class="fa-solid fa-earth-europe gold"></i> ${title}`;
+  document.getElementById('mapIframe').src = "about:blank"; 
+  document.getElementById('mapModal').classList.add('show');
+}
 
-        function clearConsole() {
-            document.getElementById('console-output').innerHTML = '<div>Konsol temizlendi.</div>';
-        }
+function toggleMenu(){
+  document.getElementById('navLinks').classList.toggle('open');
+}
 
-        function escapeHtml(text) {
-            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        }
-    </script>
+function copyIP(){
+  const ip = document.getElementById('serverIP').textContent;
+  navigator.clipboard.writeText(ip);
+  showToast("IP adresi panoya kopyalandı: " + ip);
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=> t.classList.remove('show'), 3000);
+}
+
+function filterCategory(cat, btn){
+  currentCategory = cat;
+  document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts();
+}
+
+function getProductArt(p){
+  if(p.image && p.image.trim() !== '') {
+    return `<img src="${p.image}" alt="${p.name}">`;
+  }
+  return BOX_ASSETS[p.boxType] || BOX_ASSETS.chest;
+}
+
+function renderProducts(){
+  const searchInput = document.getElementById('storeSearch');
+  const search = searchInput ? searchInput.value.toLowerCase() : '';
+  const grid = document.getElementById('productGrid');
+  const empty = document.getElementById('emptyProducts');
+  
+  const filtered = products.filter(p => {
+    const matchCat = currentCategory === 'all' || p.category === currentCategory;
+    const matchSearch = p.name.toLowerCase().includes(search) || p.description.toLowerCase().includes(search);
+    return matchCat && matchSearch;
+  });
+
+  if(filtered.length === 0){
+    grid.innerHTML = '';
+    empty.classList.remove('hidden');
+    return;
+  }
+  
+  empty.classList.add('hidden');
+  grid.innerHTML = filtered.map(p => `
+    <div class="product-card">
+      <div class="product-art">
+        ${getProductArt(p)}
+        <span class="badge product-label">${p.category.toUpperCase()}</span>
+      </div>
+      <div class="product-info">
+        <h3>${p.name}</h3>
+        <p>${p.description}</p>
+        <div class="product-bottom">
+          <span class="price">${p.price} ₺</span>
+          <button class="buy-btn" onclick="openProduct(${p.id})">İncele</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderNews(){
+  const grid = document.getElementById('newsGrid');
+  grid.innerHTML = newsList.map(n => `
+    <article class="news-card" onclick="openNews(${n.id})">
+      <div class="news-cover">${n.emoji}</div>
+      <div class="news-body">
+        <span class="news-date">${n.date}</span>
+        <h3>${n.title}</h3>
+        <p>${n.text}</p>
+      </div>
+    </article>
+  `).join('');
+}
+
+function openNews(id){
+  const n = newsList.find(x => x.id === id);
+  if(!n) return;
+  document.getElementById('newsModalContent').innerHTML = `
+    <div style="text-align:center; font-size:40px; margin-bottom:10px;">${n.emoji}</div>
+    <h3 style="font-family:Orbitron,sans-serif; color:var(--gold); margin-bottom:6px; font-size:14px;">${n.title}</h3>
+    <span class="news-date" style="display:block; margin-bottom:10px;">Yayınlanma: ${n.date}</span>
+    <p style="color:#dedee9; line-height:1.7;">${n.text}</p>
+  `;
+  document.getElementById('newsModal').classList.add('show');
+}
+
+function openProduct(id){
+  const p = products.find(x => x.id === id);
+  if(!p) return;
+  const content = document.getElementById('productModalContent');
+  const shopierUrl = p.shopierLink && p.shopierLink.trim() !== '' ? p.shopierLink : 'https://www.shopier.com/';
+  
+  content.innerHTML = `
+    <div class="modal-product">
+      ${getProductArt(p)}
+      <h3>${p.name}</h3>
+      <p>${p.description}</p>
+      <div class="price">${p.price} ₺</div>
+      <a href="${shopierUrl}" target="_blank" class="btn btn-primary" style="width:100%; text-decoration:none; display:inline-flex; justify-content:center; align-items:center; gap:6px;">
+        <i class="fa-solid fa-cart-shopping"></i> Shopier ile Satın Al
+      </a>
+    </div>
+  `;
+  document.getElementById('productModal').classList.add('show');
+}
+
+function openLogin(){
+  document.getElementById('loginModal').classList.add('show');
+}
+
+function switchAuthTab(tab, btn){
+  document.querySelectorAll('.auth-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('formUserLogin').classList.add('hidden');
+  document.getElementById('formUserRegister').classList.add('hidden');
+  document.getElementById('formAdminLogin').classList.add('hidden');
+  
+  if(tab === 'user_login') document.getElementById('formUserLogin').classList.remove('hidden');
+  if(tab === 'user_register') document.getElementById('formUserRegister').classList.remove('hidden');
+  if(tab === 'admin_login') document.getElementById('formAdminLogin').classList.remove('hidden');
+}
+
+function userRegister(e){
+  e.preventDefault();
+  const username = document.getElementById('regUser').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const password = document.getElementById('regPass').value;
+
+  if(registeredUsers.some(u => u.username.toLowerCase() === username.toLowerCase())){
+    showToast("Bu kullanıcı adı zaten kayıtlı!");
+    return;
+  }
+
+  const newUser = { username, email, password, isAdmin: false };
+  registeredUsers.push(newUser);
+  localStorage.setItem('gc_users', JSON.stringify(registeredUsers));
+  
+  currentUser = newUser;
+  localStorage.setItem('gc_current_user', JSON.stringify(currentUser));
+
+  closeModal('loginModal');
+  updateUserUI();
+  checkMaintenance();
+  showToast(`Hoş geldin ${username}!`);
+}
+
+function userLogin(e){
+  e.preventDefault();
+  const username = document.getElementById('playerUser').value.trim();
+  const password = document.getElementById('playerPass').value;
+
+  const user = registeredUsers.find(u => u.username.toLowerCase() === username.toLowerCase() && u.password === password);
+
+  if(user){
+    currentUser = user;
+    localStorage.setItem('gc_current_user', JSON.stringify(currentUser));
+    closeModal('loginModal');
+    updateUserUI();
+    checkMaintenance();
+    showToast(`Tekrar hoş geldin, ${username}!`);
+  } else {
+    showToast("Kullanıcı adı veya şifre hatalı!");
+  }
+}
+
+function adminLogin(e){
+  e.preventDefault();
+  const u = document.getElementById('adminUser').value;
+  const p = document.getElementById('adminPass').value;
+  if(u === 'Admin' && p === '269826'){
+    currentUser = { username: 'Admin', isAdmin: true };
+    localStorage.setItem('gc_current_user', JSON.stringify(currentUser));
+    closeModal('loginModal');
+    updateUserUI();
+    checkMaintenance();
+    document.getElementById('adminModal').classList.add('show');
+    renderAdminLists();
+    showToast("Admin paneline giriş yapıldı.");
+  } else {
+    showToast("Hatalı Admin Bilgileri!");
+  }
+}
+
+function userLogout(){
+  currentUser = null;
+  localStorage.removeItem('gc_current_user');
+  updateUserUI();
+  checkMaintenance();
+  showToast("Çıkış yapıldı.");
+}
+
+function updateUserUI(){
+  const area = document.getElementById('userProfileArea');
+  if(currentUser){
+    const avatarUrl = `https://mc-heads.net/avatar/${currentUser.username}/20`;
+    area.innerHTML = `
+      <div style="display:flex;align-items:center;gap:5px">
+        <div class="user-badge">
+          <img src="${avatarUrl}" class="user-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/20'">
+          <span>${currentUser.username}</span>
+        </div>
+        ${currentUser.isAdmin ? `<button class="btn btn-secondary" onclick="openAdminPanel()" title="Admin Paneli"><i class="fa-solid fa-gear"></i></button>` : ''}
+        <button class="btn btn-danger" onclick="userLogout()" title="Çıkış Yap"><i class="fa-solid fa-power-off"></i></button>
+      </div>
+    `;
+  } else {
+    area.innerHTML = `<button class="btn btn-primary" onclick="openLogin()"><i class="fa-solid fa-user"></i> Giriş Yap</button>`;
+  }
+}
+
+function openAdminPanel(){
+  document.getElementById('adminModal').classList.add('show');
+  document.getElementById('settingMaintenance').value = isMaintenance.toString();
+  renderAdminLists();
+}
+
+function closeModal(id){
+  document.getElementById(id).classList.remove('show');
+}
+
+function backdropClose(e, id){
+  if(e.target.id === id) closeModal(id);
+}
+
+function adminTab(tab, btn){
+  document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('adminProducts').classList.add('hidden');
+  document.getElementById('adminNews').classList.add('hidden');
+  document.getElementById('adminSettings').classList.add('hidden');
+  if(tab === 'products') document.getElementById('adminProducts').classList.remove('hidden');
+  if(tab === 'news') document.getElementById('adminNews').classList.remove('hidden');
+  if(tab === 'settings') document.getElementById('adminSettings').classList.remove('hidden');
+}
+
+function addProduct(e){
+  e.preventDefault();
+  const boxTypeVal = document.getElementById('newBoxType').value;
+  const newP = {
+    id: Date.now(),
+    name: document.getElementById('newName').value,
+    price: parseFloat(document.getElementById('newPrice').value),
+    category: document.getElementById('newCategory').value,
+    boxType: boxTypeVal,
+    image: boxTypeVal === 'custom' ? document.getElementById('newImage').value : '',
+    description: document.getElementById('newDescription').value,
+    shopierLink: "https://www.shopier.com/"
+  };
+  products.push(newP);
+  localStorage.setItem('gc_products', JSON.stringify(products));
+  renderProducts();
+  renderAdminLists();
+  showToast("Yeni ürün eklendi.");
+}
+
+function deleteProduct(id){
+  products = products.filter(p => p.id !== id);
+  localStorage.setItem('gc_products', JSON.stringify(products));
+  renderProducts();
+  renderAdminLists();
+  showToast("Ürün silindi.");
+}
+
+function addNews(e){
+  e.preventDefault();
+  const newN = {
+    id: Date.now(),
+    title: document.getElementById('newsTitle').value,
+    text: document.getElementById('newsText').value,
+    emoji: document.getElementById('newsEmoji').value || '📢',
+    date: 'Bugün'
+  };
+  newsList.unshift(newN);
+  localStorage.setItem('gc_news', JSON.stringify(newsList));
+  renderNews();
+  renderAdminLists();
+  showToast("Duyuru eklendi.");
+}
+
+function deleteNews(id){
+  newsList = newsList.filter(n => n.id !== id);
+  localStorage.setItem('gc_news', JSON.stringify(newsList));
+  renderNews();
+  renderAdminLists();
+  showToast("Duyuru silindi.");
+}
+
+function renderAdminLists(){
+  document.getElementById('adminProductList').innerHTML = products.map(p => `
+    <div class="admin-item">
+      <span><strong>${p.name}</strong> (${p.price} ₺) - <small class="gold">${p.category}</small></span>
+      <button class="btn btn-danger" onclick="deleteProduct(${p.id})">Sil</button>
+    </div>
+  `).join('');
+  
+  document.getElementById('adminNewsList').innerHTML = newsList.map(n => `
+    <div class="admin-item">
+      <span>${n.emoji} <strong>${n.title}</strong></span>
+      <button class="btn btn-danger" onclick="deleteNews(${n.id})">Sil</button>
+    </div>
+  `).join('');
+}
+
+function saveSettings(e){
+  e.preventDefault();
+  const newIP = document.getElementById('settingIP').value;
+  if(newIP) document.getElementById('serverIP').textContent = newIP;
+  
+  const mVal = document.getElementById('settingMaintenance').value === 'true';
+  isMaintenance = mVal;
+  localStorage.setItem('gc_maintenance', JSON.stringify(isMaintenance));
+  
+  checkMaintenance();
+  showToast("Ayarlar ve bakım modu başarıyla kaydedildi!");
+  closeModal('adminModal');
+}
+
+renderProducts();
+renderNews();
+updateUserUI();
+</script>
 </body>
 </html>
